@@ -15,7 +15,7 @@
 		<form method="post" action="StudentCreateExecute.action">
 			<div class="col-4">
 				
-				<%--<label>入学年度</label>
+				<label>入学年度</label>
 				<select name="entYear" class="form-select">
 					<option value="0">-------</option>
 					<c:forEach var="year" items="${ent_year_set}">
@@ -40,10 +40,11 @@
 					<select class="form-select" id="student-f2-select" name="f2">
 						<c:forEach var="num" items="${class_num_set}">
 							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記--%>
-							<%--<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
+							<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
 								${num}
 							</option>
 						</c:forEach>
+						
 					</select>
 				</div>
 
@@ -57,4 +58,4 @@
 		</div>
 	</c:param>
 	
-</c:import> --%>
+</c:import> 
