@@ -16,7 +16,7 @@ public class TestListSubjectDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement(
+	        statement = connection.prepareStatement(//SQL文
 	            "SELECT s.ENT_YEAR, s.NO, s.NAME, s.CLASS_NUM, " +
 	            "t.TEST_NO, t.POINT " +
 	            "FROM STUDENT s " +
