@@ -18,7 +18,7 @@
     </div>
 </c:if>
 
-<form action="SubjectUpdateExecute.action" method="post">
+<form action="${pageContext.request.contextPath}/SubjectUpdateExecute.action" method="post">
 
 <table>
     <tr>
@@ -45,7 +45,7 @@
           </button>
           
 		<div class="mt-2">
-          <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action"
+          <a href="${pageContext.request.contextPath}SubjectList.action"
              class="btn btn-secondary ms-2">
             戻る
           </a>
