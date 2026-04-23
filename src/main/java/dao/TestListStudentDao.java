@@ -25,7 +25,7 @@ public class TestListStudentDao {
      * @param studentNo 学生番号
      * @return 成績一覧（科目ごとの点数）
      */
-    public List<TestListStudent> findByStudentNo(String studentNo)
+    public List<TestListStudent> filterstu(String studentNo)
             throws Exception {
 
         List<TestListStudent> list = new ArrayList<>();
