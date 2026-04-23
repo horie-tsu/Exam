@@ -9,7 +9,7 @@ import java.util.List;
 import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
-	public List<TestListSubject> filter(int entYear, String classNum, String subCd) throws Exception {
+	public List<TestListSubject> filtersub(int entYear, String classNum, String subCd) throws Exception {
 
 	    List<TestListSubject> list = new ArrayList<>();
 	    Connection connection = getConnection();
