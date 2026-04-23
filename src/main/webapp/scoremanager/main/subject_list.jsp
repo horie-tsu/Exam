@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
+
 <c:import url="/common/base.jsp">
 	<c:param name="title">
 		得点管理システム
@@ -15,8 +17,8 @@
 				<a href="SubjectCreate.action">新規登録</a>
 			</div>
 			
-			
 			<c:choose>
+				<c:when test="${not empty subjects}">
 					<table class="table table-hover">
 						<tr>
 							<th>科目コード</th>
@@ -30,7 +32,7 @@
 								<td>${subject.cd}</td>
 								<td>${subject.name}</td>
 								<td>
-									<a href="StudentUpdate.action?cd=${subject.cd}">
+									<a href="SubjectUpdate.action?cd=${subject.cd}">
 										変更
 									</a>
 								</td>
