@@ -20,7 +20,7 @@ public class SubjectListAction extends Action {
 		HttpSession session=req.getSession();//セッション
 		Teacher teacher =(Teacher)session.getAttribute("user");
 		List<Subject>subjects=null;
-		SubjectDao sDao=new SubjectDao();//学生DAO 
+		SubjectDao sDao=new SubjectDao();//科目DAO 
 		Map<String,String> errors=new HashMap<>();//エラーメッセージ
 		
 		
@@ -35,7 +35,7 @@ public class SubjectListAction extends Action {
 			//リクエストに学生リストをセット
 			req.setAttribute("subjects", subjects);
 			//リクエストにデータをセット
-			req.setAttribute("_set", list);
+			req.setAttribute("subject_set", list);
 			
 			
 		//JSPへフォワード
