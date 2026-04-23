@@ -9,53 +9,47 @@
 	
 	<c:param name="content">
 		<section class="me-4">
-			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生情報登録</h2>
-		</section>
-		
-		<form method="post" action="StudentCreateExecute.action">
-			<div class="col-4">
-				
-				<label>入学年度</label>
-				<select name="entYear" class="form-select">
-					<option value="0">-------</option>
-					<c:forEach var="year" items="${ent_year_set}">
-						<option value="${year}" <c:if test="${year==param.entYear}">selected</c:if>>
-							${year}
-						</option>
-					</c:forEach>
-				</select>
-				<span class="text-danger">${errors.entYear}</span>
-
-				<label>学生番号</label>
-				<input type="text" name="stuId" value="${param.stuId}">
-				<span class="text-danger">${errors.stuId}</span>
-
-				<br>
-
-				<label>氏名</label>
-				<input type="text" name="stuName" required="required">
-
-				<div class="col-4">
-					<label class="form-label" for="student-f2-select">クラス</label>
-					<select class="form-select" id="student-f2-select" name="f2">
-						<c:forEach var="num" items="${class_num_set}">
-							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記--%>
-							<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
-								${num}
-							</option>
+			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生管理</h2>
+			
+			<div class="my-2 text-end px-4">
+				<a href="SubjectCreate.action">新規登録</a>
+			</div>
+			
+			
+			<c:choose>
+					<table class="table table-hover">
+						<tr>
+							<th>科目コード</th>
+							<th>科目名</th>
+							<th></th>
+							<th></th>
+						</tr>
+						
+						<c:forEach var="subject" items="${subjects}">
+							<tr>
+								<td>${subject.cd}</td>
+								<td>${subject.name}</td>
+								<td>
+									<a href="StudentUpdate.action?cd=${subject.cd}">
+										変更
+									</a>
+								</td>
+								<td>
+									<a href="SubjectDelete.action?cd=${subject.cd}">
+										削除
+									</a>
+								</td>
+							</tr>
 						</c:forEach>
 						
-					</select>
-				</div>
-
-				<button type="submit" class="btn btn-secondary">登録して終了</button>
+					</table>
+				</c:when>
+				
+				<c:otherwise>
+					<div>科目情報が存在しませんでした。</div>
+				</c:otherwise>
+			</c:choose>
 			
-			</div>
-		</form>
-
-		<div class="my-2 text-end px-4">
-			<a href="StudentList.action">戻る</a>
-		</div>
+		</section>
 	</c:param>
-	
-</c:import> 
+</c:import>
