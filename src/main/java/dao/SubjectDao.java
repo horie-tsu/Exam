@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.School;
-import bean.Student;
+import bean.Subject;
 
 public class SubjectDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
-	public Student get(String cd) throws Exception{
+	public Subject get(String cd) throws Exception{
+		//
+		Subject subject = new Subject();
 		//データベースへのコネクションを確立
 		Connection connection=getConnection();
 		//プリペアードステートメント
@@ -25,23 +27,16 @@ public class SubjectDao extends Dao {
 			//プリペアードステートメントを実行
 			ResultSet rSet=statement.executeQuery();
 			
-			//学校Daoを初期化
-			SchoolDao schoolDao=new SchoolDao();
 			if(rSet.next()) {
 				//リザルトセットが存在している場合
 				//学生インスタンスに検索結果をセット
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				//学校フィールドには学校コードで検索した学校インスタンスをセット
-				student.setSchool(schoolDao.get(rSet.getString("school_cd")));
+				subject.setCd(rSet.getString("cd"));
+				subject.setName(rSet.getString("name"));
 				
 			}else {
 				//リザルトセットが存在しない場合
 				//学生インスタンスにnullをセット
-				student=null;
+				subject=null;
 			}
 		}catch(Exception e) {
 			throw e;
@@ -63,27 +58,24 @@ public class SubjectDao extends Dao {
 				}
 			}
 		}
-		return student;
+		return subject;
 		
 	}
-	public List<Student> filter(ResultSet rSet,School school)throws Exception{
+	public List<Subject> filter(School school)throws Exception{
 		//リストを初期化
-		List<Student>list=new ArrayList<>();
+		List<Subject>list=new ArrayList<>();
+		ResultSet rSet = null;
 		try {
 			//リザルトセットを全件走査
 			while(rSet.next()) {
-				//学生インスタンスの初期化
-				Student student=new Student();
-				//学生インスタンスに検索結果をセット
-				student.setNo(rSet.getString("no"));
-				student.setName(rSet.getString("name"));
-				student.setEntYear(rSet.getInt("ent_year"));
-				student.setClassNum(rSet.getString("class_num"));
-				student.setAttend(rSet.getBoolean("is_attend"));
-				student.setSchool(school);
+				//科目インスタンスの初期化
+				Subject subject=new Subject();
+				//インスタンスに検索結果をセット
+				subject.setCd(rSet.getString("cd"));
+				subject.setName(rSet.getString("name"));
 				
 				//リストに追加
-				list.add(student);
+				list.add(subject);
 				
 			}
 		}catch(SQLException | NullPointerException e) {
@@ -91,63 +83,8 @@ public class SubjectDao extends Dao {
 		}
 		return list;
 	}
-	public List<Student> filter(School school,int entYear,String classNum,boolean isAttend) throws Exception{
-		//リストを初期化
-		List<Student>list=new ArrayList<>();
-		//コネクションを確立
-		Connection connection=getConnection();
-		//プリペアードステートメント
-		PreparedStatement statement=null;
-		//リザルトセット
-		ResultSet rSet=null;
-		//SQL文の条件
-		String condition=" and ent_year=? and class_num=?";
-		//SQL文のソート
-		String order=" order by no asc";
 		
-		//SQL文の在学フラグ条件
-		String conditionIsAttend="";
-		//在学フラグがtrueの場合 
-		if(isAttend) {
-			conditionIsAttend=" and is_attend=true";
-		}
-		try {
-			//プリペアードステートメントにSQL文をセット
-			statement = connection.prepareStatement(baseSql+condition+conditionIsAttend+order);
-			//プリペアードステートメントに学校コードをバインド
-			statement.setString(1,school.getCd());
-			//プリペアードステートメントに入学年度をバインド
-			statement.setInt(2,entYear);
-			//プリペアードステートメントにクラス番号をバインド
-			statement.setString(3,classNum);
-			//プリペアードステートメントを実行
-			rSet=statement.executeQuery();
-			//リストへの格納処理を実行
-			list=postFilter(rSet,school);
-		}catch(Exception e) {
-			throw e;
-		}finally{
-			//プリペアードステートメントを閉じる
-			if(statement!=null) {
-				try {
-					statement.close();
-				}catch(SQLException sqle) {
-					throw sqle;
-				}
-			}
-			//コネクションを閉じる
-			if(connection!=null) {
-				try {
-					connection.close();
-				}catch(SQLException sqle) {
-					throw sqle;
-				}
-			}
-		}
-		return list;
-	}
-		
-	public boolean save(Student student)throws Exception{
+	public boolean save(Subject subject)throws Exception{
 		//コネクションを確立
 		Connection connection=getConnection();
 		//プリペアードステートメント
@@ -155,32 +92,22 @@ public class SubjectDao extends Dao {
 		//実行件数
 		int count=0;
 		try {
-			//データベースから学生を取得
-			Student old=get(student.getNo());
+			//データベースから科目を取得
+			Subject old=get(subject.getCd());
 			if(old==null) {
-				//学生が存在しなかった場合
+				//科目が存在しなかった場合
 				//プリペアードステートメントにINSERT文をセット
-				statement=connection.prepareStatement("insert into student(no,name,ent_year,"
-						+ "class_num,is_attend,school_cd) values(?,?,?,?,?,?)");
+				statement=connection.prepareStatement("insert into student(cd,name) values(?,?)");
 				//プリペアードステートメントに値をバインド
-				statement.setString(1, student.getNo());
-				statement.setString(2,student.getName());
-				statement.setInt(3, student.getEntYear());
-				statement.setString(4, student.getClassNum());
-				statement.setBoolean(5, student.isAttend());
-				statement.setString(6, student.getSchool().getCd());
+				statement.setString(1, subject.getCd());
+				statement.setString(2, subject.getName());
 			}else {
-				//学生が存在した場合
+				//科目が存在した場合
 				//プリペアードステートメントにupdate文をセット
-				statement=connection.prepareStatement("update student set name=?,"
-						+ " ent_year=?,class_num=?,is_attend=? where no=?");
+				statement=connection.prepareStatement("update student set name=? where cd=?");
 				//プリペアードステートメントに値をバインド
-				statement.setString(1, student.getName());
-				statement.setInt(2, student.getEntYear());
-				statement.setString(3, student.getClassNum());
-				statement.setBoolean(4, student.isAttend());
-				statement.setString(5, student.getNo());
-			}
+				statement.setString(1, subject.getCd());
+				statement.setString(2, subject.getName());			}
 			//プリペアードステートメントを実行
 			count=statement.executeUpdate();
 		}catch(Exception e) {
