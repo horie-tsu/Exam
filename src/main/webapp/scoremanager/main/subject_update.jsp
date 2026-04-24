@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:import url="/common/base.jsp">
   <c:param name="title">得点管理システム</c:param>
@@ -18,7 +19,7 @@
     </div>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/SubjectUpdateExecute.action" method="post">
+<form action="${pageContext.request.contextPath}/scoremanager/main/SubjectUpdateExecute.action" method="post">
 
 <table>
     <tr>
@@ -45,7 +46,7 @@
           </button>
           
 		<div class="mt-2">
-          <a href="${pageContext.request.contextPath}SubjectList.action"
+          <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action"
              class="btn btn-secondary ms-2">
             戻る
           </a>
