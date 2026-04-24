@@ -6,31 +6,27 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.Subject;
 import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
-	public List<TestListSubject> filtersub(int entYear, String classNum, String subCd) throws Exception {
+	public List<TestListSubject> filtersub(Subject sub) throws Exception {
 
 	    List<TestListSubject> list = new ArrayList<>();
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement(//SQL文
-	            "SELECT s.ENT_YEAR, s.NO, s.NAME, s.CLASS_NUM, " +
-	            "t.TEST_NO, t.POINT " +
-	            "FROM STUDENT s " +
-	            "INNER JOIN TEST t " +
-	            "ON s.NO = t.STUDENT_NO " +
-	            "WHERE s.ENT_YEAR=? " +
-	            "AND t.CLASS_NUM=? " +
-	            "AND t.SUBJECT_CD=? " +
-	            "ORDER BY s.NO, t.TEST_NO"
-	        );
+	    	statement = connection.prepareStatement(//SQL文
+	    		    "SELECT s.ENT_YEAR, s.NO, s.NAME, s.CLASS_NUM, " +
+	    		    "t.TEST_NO, t.POINT " +
+	    		    "FROM STUDENT s " +
+	    		    "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
+	    		    "WHERE t.SUBJECT_CD = ? " +
+	    		    "ORDER BY s.NO, t.TEST_NO"
+	    		);
 
-	        statement.setInt(1, entYear);
-	        statement.setString(2, classNum);
-	        statement.setString(3, subCd);
+	    		statement.setString(1, sub.getCd());
 
 	        ResultSet rSet = statement.executeQuery();
 
