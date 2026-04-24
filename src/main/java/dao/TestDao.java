@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.School;
+import bean.Student;
+import bean.Subject;
 import bean.Test;
 //コミットテスト
 public class TestDao extends Dao {
@@ -197,5 +199,61 @@ public class TestDao extends Dao {
 			}
 		}
 	return count > 0;
+	}
+	public List<Test> findAll() throws Exception {
+
+	    List<Test> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+
+	    try {
+	        statement = connection.prepareStatement(
+	            "SELECT t.NO, t.CLASS_NUM, t.POINT, " +
+	            "s.NO AS STUDENT_NO, s.NAME AS STUDENT_NAME, " +
+	            "sub.CD AS SUBJECT_CD, sub.NAME AS SUBJECT_NAME, " +
+	            "sc.CD AS SCHOOL_CD, sc.NAME AS SCHOOL_NAME " +
+	            "FROM TEST t " +
+	            "JOIN STUDENT s ON t.STUDENT_NO = s.NO " +
+	            "JOIN SUBJECT sub ON t.SUBJECT_CD = sub.CD " +
+	            "JOIN SCHOOL sc ON t.SCHOOL_CD = sc.CD"
+	        );
+
+	        ResultSet rSet = statement.executeQuery();
+
+	        while (rSet.next()) {
+
+	            Test test = new Test();
+
+	            test.setNo(rSet.getInt("NO"));
+	            test.setClassNum(rSet.getString("CLASS_NUM"));
+	            test.setPoint(rSet.getInt("POINT"));
+
+	            // Student
+	            Student student = new Student();
+	            student.setNo(rSet.getString("STUDENT_NO"));
+	            student.setName(rSet.getString("STUDENT_NAME"));
+	            test.setStudent(student);
+
+	            // Subject
+	            Subject subject = new Subject();
+	            subject.setCd(rSet.getString("SUBJECT_CD"));
+	            subject.setName(rSet.getString("SUBJECT_NAME"));
+	            test.setSubject(subject);
+
+	            // School
+	            School school = new School();
+	            school.setCd(rSet.getString("SCHOOL_CD"));
+	            school.setName(rSet.getString("SCHOOL_NAME"));
+	            test.setSchool(school);
+
+	            list.add(test);
+	        }
+
+	    } finally {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+
+	    return list;
 	}
 }
