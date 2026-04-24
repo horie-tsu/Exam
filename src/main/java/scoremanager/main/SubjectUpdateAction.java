@@ -25,7 +25,7 @@ public class SubjectUpdateAction extends Action {
 
         // ===== DB取得 =====
         SubjectDao dao = new SubjectDao();
-        Subject subject = dao.findByCd(cd);
+        Subject subject = dao.get(cd);  // ← ここ修正！！
 
         // ===== データなし =====
         if (subject == null) {

@@ -20,7 +20,7 @@
         </p>
        
 
-        <!-- ④ 学生番号一覧リンク（学生管理一覧へ） -->
+        <!-- ④ 科目一覧へ -->
         <a href="SubjectList.action" class="btn btn-primary">
           科目一覧
         </a>
