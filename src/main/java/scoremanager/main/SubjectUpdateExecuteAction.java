@@ -16,11 +16,13 @@ public class SubjectUpdateExecuteAction extends Action {
 
         String cd = req.getParameter("cd");
         String name = req.getParameter("name");
+        
+        //System.out.println("check:"+cd+name);
 
         SubjectDao dao = new SubjectDao();
 
-        // ② 更新前に存在チェック（別画面で削除された場合）
-        Subject before = dao.findByCd(cd);
+        // ② 更新前に存在チェック
+        Subject before = dao.get(cd);  // ← 修正
         if (before == null) {
             req.setAttribute("errorMsg", "科目が存在していません。");
             req.getRequestDispatcher("/scoremanager/main/subject_update.jsp")
@@ -39,6 +41,7 @@ public class SubjectUpdateExecuteAction extends Action {
             return;
         }
 
+        // 文字数チェック
         if (name.length() > 20) {
             req.setAttribute("errorMsg", "科目名は20文字以内で入力してください。");
             req.setAttribute("cd", cd);
@@ -54,7 +57,7 @@ public class SubjectUpdateExecuteAction extends Action {
         subject.setCd(cd);
         subject.setName(name);
 
-        dao.update(subject);
+        dao.save(subject);  // ← 修正（update → save）
 
         req.getRequestDispatcher("/scoremanager/main/subject_update_done.jsp")
            .forward(req, res);
