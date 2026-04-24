@@ -12,13 +12,14 @@
                 科目削除情報
             </h2>
             <div>「${param.name}」を削除してもよろしいですか</div>
-            <div class="col-2 text-left">
-                        <button class="btn btn-danger">削除</button>
-            </div>
-            <div class="col-2 text-left mt-3">
-			<a href="SubjectDelete.action?cd=${param.cd}">
-			戻る
-			</a>
+            	<div class="row mt-3">
+            		<div class="col-2 text-left">
+                        	<button class="btn btn-danger mb-3">削除</button>
+            		
+					<a href="SubjectDelete.action?cd=${param.cd}" class="d-block mt-5">
+						戻る
+					</a>
+				</div>
 			</div>
         </section>
     </c:param>
