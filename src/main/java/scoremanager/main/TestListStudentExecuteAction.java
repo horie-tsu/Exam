@@ -5,11 +5,11 @@ import java.util.List;
 
 import bean.Student;
 import bean.Teacher;
-import bean.Test;
+import bean.TestListStudent;
 import dao.ClassNumDao;
 import dao.StudentDao;
 import dao.SubjectDao;
-import dao.TestDao;
+import dao.TestListStudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -25,47 +25,64 @@ public class TestListStudentExecuteAction extends Action {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("user");
 
+        if (teacher == null) {
+            res.sendRedirect("login.jsp");
+            return;
+        }
+
         List<String> errors = new ArrayList<>();
 
-        // ===== パラメータ =====
         String studentNo = req.getParameter("studentNo");
+        String entYear   = req.getParameter("entYear");
+        String classNum  = req.getParameter("classNum");
+        String subjectCd = req.getParameter("subjectCd");
 
-        // ===== DAO =====
         StudentDao studentDao = new StudentDao();
-        TestDao testDao = new TestDao();
+        TestListStudentDao testDao = new TestListStudentDao();
         SubjectDao subjectDao = new SubjectDao();
         ClassNumDao classNumDao = new ClassNumDao();
 
-        // ===== プルダウン =====
-        req.setAttribute("ent_year_set", studentDao.getEntYearSet());
-        req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchoolCd()));
-        req.setAttribute("subject_set", subjectDao.filter(teacher.getSchoolCd()));
+        List<Integer> entYearSet = List.of(2021, 2022, 2023, 2024);
 
-        // ===== 入力チェック =====
-        if (studentNo == null || studentNo.isEmpty()) {
-            errors.add("学生番号を入力してください");
-        }
+        req.setAttribute("ent_year_set", entYearSet);
+        req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+        req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
 
+        List<TestListStudent> list = null;
         Student student = null;
 
-        if (errors.size() == 0) {
+        // ======================
+        // 学生番号優先
+        // ======================
+        if (studentNo != null && !studentNo.isEmpty()) {
 
             student = studentDao.get(studentNo);
 
             if (student == null) {
                 errors.add("学生が存在しません");
             } else {
-
-                // ===== 成績取得 =====
-                List<Test> list = testDao.filter(studentNo);
-
+                list = testDao.filterstu(studentNo);
                 req.setAttribute("student", student);
-                req.setAttribute("test_list", list);
             }
+
+        // ======================
+        // 条件検索
+        // ======================
+        } else if (
+            entYear != null && !entYear.isEmpty() &&
+            classNum != null && !classNum.isEmpty() &&
+            subjectCd != null && !subjectCd.isEmpty()
+        ) {
+            list = testDao.filterByCondition(entYear, classNum, subjectCd);
+
+        } else {
+            errors.add("検索条件を入力してください");
         }
 
+        req.setAttribute("test_list", list);
         req.setAttribute("errors", errors);
 
-        req.getRequestDispatcher("/scoremanager/main/test_list_student.jsp").forward(req, res);
+        req.getRequestDispatcher("/scoremanager/main/test_list_student.jsp")
+           .forward(req, res);
     }
 }
