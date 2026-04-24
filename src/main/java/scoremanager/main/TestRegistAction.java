@@ -28,6 +28,7 @@ public class TestRegistAction extends Action {
 		//JSPへフォワード
 		req.getRequestDispatcher("test_regist.jsp").forward(req, res);
 		
+	
 	}
 
 }
