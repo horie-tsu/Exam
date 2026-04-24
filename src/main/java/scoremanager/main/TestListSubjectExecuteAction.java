@@ -29,37 +29,42 @@ public class TestListSubjectExecuteAction extends Action {
         String subCd = req.getParameter("subCd");
         String classNum = req.getParameter("ClassNum");
 		
-        int entYear;
-        
-		// 入学年度チェック
-        if (entYearStr == null || entYearStr.equals("0")) {
-            errors.put("entYear", "入学年度を選択してください");
-        } else {
-            entYear = Integer.parseInt(entYearStr);
-        }
+        int entYear = 0;
 
-        // 科目コードチェック
-        if (subCd == null || subCd.isEmpty()) {
-            errors.put("subCd", "科目コードを入力してください");
-            req.setAttribute("errors", errors);
-        }
-		//ログインチェック
-		if (teacher == null) {
-		    errors.put("teacher", "ログイン情報がありません");
-		    req.setAttribute("errors", errors);
-		    return; // ←これ必須
-		}
-		// エラーがある場合
-        if (!errors.isEmpty()) {
-            req.setAttribute("errors", errors);
-            req.getRequestDispatcher("StudentCreate.action").forward(req, res);
-            return;
-        }
+     // 入学年度チェック
+     if (entYearStr == null || entYearStr.equals("0")) {
+         errors.put("entYear", "入学年度を選択してください");
+     } else {
+         entYear = Integer.parseInt(entYearStr);
+     }
+
+     // 科目コードチェック
+     if (subCd == null || subCd.isEmpty()) {
+         errors.put("subCd", "科目コードを入力してください");
+     }
+
+     // クラス番号チェック
+     if (classNum == null || classNum.isEmpty()) {
+         errors.put("classNum", "クラス番号を入力してください");
+     }
+
+     // ログインチェック
+     if (teacher == null) {
+         errors.put("teacher", "ログイン情報がありません");
+     }
+
+     // エラー処理
+     if (!errors.isEmpty()) {
+         req.setAttribute("errors", errors);
+         req.getRequestDispatcher("TestListSubject.action").forward(req, res);
+         return;
+     }
         
-        Subject sub= new Subject();
-        sub.setSchool(teacher.getSchool());
+     Subject sub = new Subject();
+     sub.setCd(subCd);
+     sub.setSchool(teacher.getSchool());
 		
-		TBDao.filtersub(sub);
+     TBDao.filtersub(sub, entYear, classNum);
 
 	}
 

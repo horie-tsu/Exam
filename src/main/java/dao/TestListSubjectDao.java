@@ -10,7 +10,7 @@ import bean.Subject;
 import bean.TestListSubject;
 
 public class TestListSubjectDao extends Dao {
-	public List<TestListSubject> filtersub(Subject sub) throws Exception {
+	public List<TestListSubject> filtersub(Subject sub, int entYear, String classNum) throws Exception {
 
 	    List<TestListSubject> list = new ArrayList<>();
 	    Connection connection = getConnection();
@@ -25,8 +25,10 @@ public class TestListSubjectDao extends Dao {
 	    		    "WHERE t.SUBJECT_CD = ? " +
 	    		    "ORDER BY s.NO, t.TEST_NO"
 	    		);
-
-	    		statement.setString(1, sub.getCd());
+	    		
+		    	statement.setInt(1, entYear);
+		    	statement.setString(2, classNum);
+		    	statement.setString(3, sub.getCd());
 
 	        ResultSet rSet = statement.executeQuery();
 
