@@ -17,7 +17,7 @@
 			</h2>
 		</section>
 
-		<form method="post" action="SubjectCreate.action">
+		<form method="post" action="SubjectCreateExecute.action">
 			<div class="col-4 px-4">
 
 				<label class="form-label">科目コード</label>
