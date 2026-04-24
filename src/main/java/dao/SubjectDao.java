@@ -151,4 +151,42 @@ public class SubjectDao extends Dao {
 		}
 		
 	}
+	public boolean delete(String cd) throws Exception {
+		//Conectionを確立
+		Connection connection = getConnection();
+		//プライベートステートメント
+		PreparedStatement statement = null;
+		//削除が成功したか判断するための変数
+		int count = 0;
+		
+		try {
+			statement = connection.prepareStatement("delete from subject where cd=?");
+			//パラメーターをセット
+			statement.setString(1, cd);
+			
+			//SQLの実行
+			count = statement.executeUpdate();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			//プライベートステートメントを閉じる
+			if (statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+			//コネクションを閉じる
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+		//削除成功かどうかを返す
+		return count > 0;
+	}
 }
