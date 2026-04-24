@@ -31,10 +31,10 @@ public class TestListAction extends Action {
 		List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
 		// クラス一覧（必要ならDAOで作る）
-		List<String> classNumList = tDao.get(teacher.getSchool());
+		List<String> classNumList = tDao.(teacher.getSchool());
 
 		// テスト一覧
-		List<Test> tests = tDao.filter(teacher.getSchool(), classNum, subjectCd);
+		List<Test> tests = tDao.findAll(teacher.getSchool(), classNum, subjectCd);
 
 		// セット
 		req.setAttribute("subject_list", subjectList);

@@ -200,7 +200,7 @@ public class TestDao extends Dao {
 		}
 	return count > 0;
 	}
-	public List<Test> findAll() throws Exception {
+	public List<Test> findAll(School school) throws Exception {//一覧表示
 
 	    List<Test> list = new ArrayList<>();
 	    Connection connection = getConnection();
@@ -215,8 +215,11 @@ public class TestDao extends Dao {
 	            "FROM TEST t " +
 	            "JOIN STUDENT s ON t.STUDENT_NO = s.NO " +
 	            "JOIN SUBJECT sub ON t.SUBJECT_CD = sub.CD " +
-	            "JOIN SCHOOL sc ON t.SCHOOL_CD = sc.CD"
+	            "JOIN SCHOOL sc ON t.SCHOOL_CD = sc.CD " +
+	            "WHERE t.SCHOOL_CD = ?" 
 	        );
+
+	        statement.setString(1, school.getCd());
 
 	        ResultSet rSet = statement.executeQuery();
 
@@ -241,10 +244,10 @@ public class TestDao extends Dao {
 	            test.setSubject(subject);
 
 	            // School
-	            School school = new School();
-	            school.setCd(rSet.getString("SCHOOL_CD"));
-	            school.setName(rSet.getString("SCHOOL_NAME"));
-	            test.setSchool(school);
+	            School sc = new School();
+	            sc.setCd(rSet.getString("SCHOOL_CD"));
+	            sc.setName(rSet.getString("SCHOOL_NAME"));
+	            test.setSchool(sc);
 
 	            list.add(test);
 	        }
