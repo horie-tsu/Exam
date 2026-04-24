@@ -11,7 +11,7 @@ public class SubjectCreateAction extends Action {
 		// TODO 自動生成されたメソッド・スタブ
 		
 		// JSPへフォワード 7
-		req.getRequestDispatcher("student_create.jsp").forward(req, res);
+		req.getRequestDispatcher("subject_create.jsp").forward(req, res);
 
 	}
 
