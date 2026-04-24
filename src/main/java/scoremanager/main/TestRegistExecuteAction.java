@@ -1,5 +1,7 @@
 package scoremanager.main;
 
-public class TestRegistExecuteAction {
+import tool.Action;
+
+public class TestRegistExecuteAction extends Action {
 
 }
