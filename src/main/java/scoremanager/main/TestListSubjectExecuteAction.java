@@ -1,10 +1,12 @@
 package scoremanager.main;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bean.Subject;
 import bean.Teacher;
+import bean.TestListSubject;
 import dao.SubjectDao;
 import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +29,7 @@ public class TestListSubjectExecuteAction extends Action {
 		 // パラメータ取得
         String entYearStr = req.getParameter("entYear");
         String subCd = req.getParameter("subCd");
-        String classNum = req.getParameter("ClassNum");
+        String classNum = req.getParameter("classNum");
 		
         int entYear = 0;
 
@@ -60,11 +62,25 @@ public class TestListSubjectExecuteAction extends Action {
          return;
      }
         
+     
+     //情報セット
      Subject sub = new Subject();
      sub.setCd(subCd);
      sub.setSchool(teacher.getSchool());
 		
-     TBDao.filtersub(sub, entYear, classNum);
+    
+  // データ取得
+     List<TestListSubject>list= TBDao.filtersub(sub, entYear, classNum);
+  // 科目一覧
+     List<Subject> subjects = subDao.filter(teacher.getSchool());
+  // リクエストにセット
+     req.setAttribute("subject_list", subjects);
+     req.setAttribute("list", list);
+   			
+     
+   		//JSPへフォワード
+   			req.getRequestDispatcher("test_list_subject.jsp").forward(req, res);
+   			
 
 	}
 
