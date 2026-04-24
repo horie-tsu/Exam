@@ -19,7 +19,7 @@ public class SubjectListAction extends Action {
 		// TODO 自動生成されたメソッド・スタブ
 		HttpSession session=req.getSession();//セッション
 		Teacher teacher =(Teacher)session.getAttribute("user");
-		List<Subject>subjects=null;
+		List<Subject>subjects=null;//空の科目Dao
 		SubjectDao sDao=new SubjectDao();//科目DAO 
 		Map<String,String> errors=new HashMap<>();//エラーメッセージ
 		
