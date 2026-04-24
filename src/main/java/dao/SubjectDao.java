@@ -64,26 +64,36 @@ public class SubjectDao extends Dao {
 	public List<Subject> filter(School school)throws Exception{
 		//リストを初期化
 		List<Subject>list=new ArrayList<>();
+		//リザルトセット取得
 		ResultSet rSet = null;
-		try {
-			//リザルトセットを全件走査
-			while(rSet.next()) {
-				//科目インスタンスの初期化
-				Subject subject=new Subject();
-				//インスタンスに検索結果をセット
-				subject.setCd(rSet.getString("cd"));
-				subject.setName(rSet.getString("name"));
-				
-				//リストに追加
-				list.add(subject);
-				
-			}
-		}catch(SQLException | NullPointerException e) {
-			e.printStackTrace();
-		}
-		return list;
+		//コネクション確立
+		Connection connection = getConnection();
+		//プリペアードステートメント
+	    PreparedStatement statement = null;
+
+	    try {
+	        String sql = "SELECT cd, name FROM subject WHERE school_cd = ?";
+	        statement = connection.prepareStatement(sql);
+	        statement.setString(1, school.getCd());
+
+	        rSet = statement.executeQuery();
+
+	        while (rSet.next()) {
+	            Subject subject = new Subject();
+	            subject.setCd(rSet.getString("cd"));
+	            subject.setName(rSet.getString("name"));
+	            list.add(subject);
+	        }
+
+	    } finally {
+	        if (rSet != null) rSet.close();
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+
+	    return list;
 	}
-		
+
 	public boolean save(Subject subject)throws Exception{
 		//コネクションを確立
 		Connection connection=getConnection();
