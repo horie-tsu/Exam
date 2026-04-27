@@ -37,17 +37,9 @@ public class TestListAction extends Action {
 		// デフォルト全件表示
 		List<Test> tests;
 
-		if ((classNum == null || classNum.isEmpty()) &&
-		    (subjectCd == null || subjectCd.isEmpty())) {
-
 		    // 初回 or 未選択 → 全件
 		    tests = tDao.findAll(teacher.getSchool());
 
-		} else {
-
-		    // 条件あり → 絞り込み
-		    tests = tDao.filter(teacher.getSchool(), classNum, subjectCd);
-		}
 
 		// 科目一覧
 		List<Subject> subjectList = sDao.filter(teacher.getSchool());

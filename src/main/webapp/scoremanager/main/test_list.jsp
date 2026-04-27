@@ -18,41 +18,29 @@
             </div>
 
             <!-- 絞り込みフォーム -->
-            <form method="get" action="TestList.action">
-                <div class="row border mx-3 mb-3 py-2 align-items-center rounded">
+    <form method="get">
+    <div class="row border mx-3 mb-3 py-2 align-items-center rounded">
 
-                    <div class="col-4">
-                        <label class="form-label">クラス</label>
-                        <select class="form-select" name="classNum">
-                            <option value="">--------</option>
-                            <c:forEach var="num" items="${class_num_set}">
-                                <option value="${num}" 
-                                    <c:if test="${num == classNum}">selected</c:if>>
-                                    ${num}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
+        <!-- ボタン①：クラス検索 -->
+        <div class="col-2 text-center">
+            <button type="submit"
+                formaction="TestListStudentExecute.action"
+                class="btn btn-secondary">
+                クラス検索
+            </button>
+        </div>
 
-                    <div class="col-4">
-                        <label class="form-label">科目</label>
-                        <select class="form-select" name="subjectCd">
-                            <option value="">--------</option>
-                            <c:forEach var="sub" items="${subject_list}">
-                                <option value="${sub.cd}"
-                                    <c:if test="${sub.cd == subjectCd}">selected</c:if>>
-                                    ${sub.name}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
+        <!-- ボタン②：科目検索 -->
+        <div class="col-2 text-center">
+            <button type="submit"
+                formaction="TestListSubjectExecute.action"
+                class="btn btn-primary">
+                科目検索
+            </button>
+        </div>
 
-                    <div class="col-2 text-center">
-                        <button class="btn btn-secondary">絞込み</button>
-                    </div>
-
-                </div>
-            </form>
+    </div>
+</form>
 
             <!-- 検索結果 -->
             <c:choose>
