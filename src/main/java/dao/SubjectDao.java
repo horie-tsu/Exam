@@ -113,6 +113,8 @@ public class SubjectDao extends Dao {
 				statement.setString(3, subject.getSchool().getCd());
 				statement.setString(1, subject.getCd());
 				statement.setString(2, subject.getName());
+				// insertでの登録を実行
+				count = statement.executeUpdate();
 			}else {
 				System.out.println("update");
 				//科目が存在した場合
