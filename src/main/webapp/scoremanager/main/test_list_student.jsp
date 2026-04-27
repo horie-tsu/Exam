@@ -99,6 +99,17 @@
 </table>
 
 </section>
+<!-- データなし -->
+		<c:if test="${list == null || list.size() == 0}">
+			<div class="text-danger px-4 mt-3">
+				成績情報が存在しません
+			</div>
+		</c:if>
+
+		<div class="my-2 text-end px-4">
+			<a href="Menu.action">戻る</a>
+		</div>
+	</c:param>
 
   </c:param>
 </c:import>
