@@ -2,14 +2,14 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <c:import url="/common/base.jsp">
-  <c:param name="title">得点管理システム</c:param>
+  <c:param name="title">成績一覧(学生)</c:param>
 
   <c:param name="content">
 
 <section class="me-4">
 
 <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-3">
-成績一覧（学生）
+成績一覧(学生)
 </h2>
 
 <!-- ===== 検索フォーム ===== -->
@@ -20,11 +20,11 @@
 <select name="entYear">
   <option value="">----</option>
   <c:forEach var="year" items="${ent_year_set}">
-                <option value="${year}"
-                  <c:if test="${year == f1}">selected</c:if>>
-                  ${year}
-                </option>
-              </c:forEach>
+    <option value="${year}"
+      <c:if test="${year == f1}">selected</c:if>>
+      ${year}
+    </option>
+  </c:forEach>
 </select>
 
 <!-- クラス -->
@@ -32,7 +32,8 @@
 <select name="classNum">
   <option value="">----</option>
   <c:forEach var="c" items="${class_num_set}">
-    <option value="${c.classNum}" ${param.classNum == c.classNum ? 'selected' : ''}>
+    <option value="${c.classNum}"
+      <c:if test="${c.classNum == f2}">selected</c:if>>
       ${c.classNum}
     </option>
   </c:forEach>
@@ -43,7 +44,8 @@
 <select name="subjectCd">
   <option value="">----</option>
   <c:forEach var="s" items="${subject_set}">
-    <option value="${s.cd}" ${param.subjectCd == s.cd ? 'selected' : ''}>
+    <option value="${s.cd}"
+      <c:if test="${s.cd == f3}">selected</c:if>>
       ${s.name}
     </option>
   </c:forEach>
@@ -52,9 +54,7 @@
 <br><br>
 
 学生番号：
-<input type="text" name="studentNo" value="${param.studentNo}">
-
-
+<input type="text" name="studentNo" value="${studentNo}">
 
 <input type="submit" value="検索">
 
@@ -89,9 +89,9 @@
 
 <c:forEach var="t" items="${test_list}">
 <tr>
-  <td>${t.subjectname}</td>
-  <td>${t.subjectcd}</td>
-  <td>${t.num}</td>
+  <td>${t.subjectName}</td>
+  <td>${t.subjectCd}</td>
+  <td>${t.no}</td>
   <td>${t.point}</td>
 </tr>
 </c:forEach>
