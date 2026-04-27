@@ -14,7 +14,7 @@
             </h2>
 
             <div class="my-2 text-end px-4">
-                <a href="TestInsert.action">新規登録</a>
+                <a href="TestList.action">新規登録</a>
             </div>
 
             <!-- 絞り込みフォーム -->
