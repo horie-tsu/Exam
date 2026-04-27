@@ -18,7 +18,7 @@
             </div>
 
             <!-- 絞り込みフォーム -->
-            <form method="get">
+            <form method="get" action="TestList.action">
                 <div class="row border mx-3 mb-3 py-2 align-items-center rounded">
 
                     <div class="col-4">
