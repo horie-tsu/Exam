@@ -42,38 +42,57 @@ public class TestListStudentExecuteAction extends Action {
         SubjectDao subjectDao = new SubjectDao();
         ClassNumDao classNumDao = new ClassNumDao();
 
-        List<Integer> entYearSet = List.of(2021, 2022, 2023, 2024);
+        // プルダウン
+        List<Integer> entYearSet = new ArrayList<>();
+        for (int i = 2020; i <= 2026; i++) {
+            entYearSet.add(i);
+        }
 
         req.setAttribute("ent_year_set", entYearSet);
         req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
         req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
 
-        List<TestListStudent> list = null;
+        // 入力保持
+        req.setAttribute("f1", entYear);
+        req.setAttribute("f2", classNum);
+        req.setAttribute("f3", subjectCd);
+        req.setAttribute("studentNo", studentNo);
+
+        List<TestListStudent> list = new ArrayList<>();
         Student student = null;
 
         // ======================
-        // 学生番号優先
+        // 学生番号検索
         // ======================
         if (studentNo != null && !studentNo.isEmpty()) {
 
             student = studentDao.get(studentNo);
 
             if (student == null) {
-                errors.add("学生が存在しません");
+                errors.add("学生番号が間違っています");
             } else {
                 list = testDao.filterstu(studentNo);
                 req.setAttribute("student", student);
+
+                if (list.isEmpty()) {
+                    errors.add("成績データが存在しません");
+                }
             }
 
         // ======================
         // 条件検索
         // ======================
         } else if (
-            entYear != null && !entYear.isEmpty() &&
-            classNum != null && !classNum.isEmpty() &&
-            subjectCd != null && !subjectCd.isEmpty()
+            (entYear != null && !entYear.isEmpty()) ||
+            (classNum != null && !classNum.isEmpty()) ||
+            (subjectCd != null && !subjectCd.isEmpty())
         ) {
+
             list = testDao.filterByCondition(entYear, classNum, subjectCd);
+
+            if (list.isEmpty()) {
+                errors.add("該当する成績が見つかりません");
+            }
 
         } else {
             errors.add("検索条件を入力してください");
