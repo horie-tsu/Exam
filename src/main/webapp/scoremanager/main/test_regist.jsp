@@ -46,6 +46,34 @@
 							</c:forEach>
 						</select>
 					</div>
+					
+					<div class="col-4">
+						<label class="form-label" for="student-f3-select">科目</label>
+						<select class="form-select" id="student-f3-select" name="f3">
+							<option value="0">-------</option>
+							
+							<c:forEach var="sub" items="${sub_set}">
+								<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
+								<option value="${sub}" <c:if test="${sub==f3}">selected</c:if>>
+									${}
+								</option>
+							</c:forEach>
+						</select>
+					</div>
+					
+					<div class="col-4">
+						<label class="form-label" for="student-f4-select">回数</label>
+						<select class="form-select" id="student-f4-select" name="f4">
+							<option value="0">-------</option>
+							
+							<c:forEach var="" items="${_set}">
+								<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
+								<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
+									${num}
+								</option>
+							</c:forEach>
+						</select>
+					</div>
 
 				<button type="submit" class="btn btn-secondary">
 					登録して終了
@@ -67,12 +95,14 @@
 							<th>点数</th>
 						</tr>
 						
-						<c:forEach var="test" items="${students}">
+						<c:forEach var="test" items="${tests}">
 							<tr>
-								<td>${student.entYear}</td>
-								<td>${student.no}</td>
-								<td>${student.name}</td>
+								<td>${test.entYear}</td>
+								<td>${test.student.no}</td>
+								
 								<td>${student.classNum}</td>
+								<td>${student.name}</td>
+								<td>
 								
 								<td class="text-center">
 									<%--在学フラグが立っている場合「〇」それ以外は「×」 --%>
@@ -92,7 +122,7 @@
 				
 			</c:choose>
 		<div class="my-2 text-end px-4">
-			<a href="SubjectList.action">戻る</a>
+			<a href="TestList.action">戻る</a>
 		</div>
 	</c:param>
 	
