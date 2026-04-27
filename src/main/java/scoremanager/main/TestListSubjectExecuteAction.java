@@ -66,7 +66,7 @@ public class TestListSubjectExecuteAction extends Action {
             classNum == null || classNum.isEmpty() ||
             subjectCd == null || subjectCd.isEmpty()) {
 
-            errors.add("入学年度・クラス・科目をすべて選択してください");
+            errors.add("入学年度・クラス・科目を選択してください");
 
         } else {
 
