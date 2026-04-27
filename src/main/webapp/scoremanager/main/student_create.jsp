@@ -1,4 +1,4 @@
-<%-- ログアウトJSP --%>
+<%-- 学生登録JSP --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
@@ -14,9 +14,9 @@
 		</section>
 		
 		<form method="post" action="StudentCreateExecute.action">
-			<div class="col-4">
+			<div class="col-11">
 				
-				<label>入学年度</label>
+				<label class="form-label">入学年度</label>
 				<select name="entYear" class="form-select">
 					<option value="0">-------</option>
 					<c:forEach var="year" items="${ent_year_set}">
@@ -27,35 +27,45 @@
 				</select>
 				<span class="text-danger">${errors.entYear}</span>
 
-				<label>学生番号</label>
-				<input type="text" name="stuId" value="${param.stuId}">
+				<label class="form-label">学生番号</label>
+				<input type="text"
+					   name="cd"
+					   class="form-control"
+					   maxlength="10"
+					   required
+					   placeholder="学生番号を入力してください"
+					   value="${stuId}">
 				<span class="text-danger">${errors.stuId}</span>
 
 				<br>
 
-				<label>氏名</label>
-				<input type="text" name="stuName" required="required">
+				<label class="form-label">氏名</label>
+				<input type="text"
+					   name="cd"
+					   class="form-control"
+					   maxlength="30"
+					   required
+					   placeholder="氏名を入力してください"
+					   value="${stuId}">
+				<span class="text-danger">${errors.cd}</span>
 
-				<div class="col-4">
-					<label class="form-label" for="student-f2-select">クラス</label>
-					<select class="form-select" id="student-f2-select" name="f2">
-						<c:forEach var="num" items="${class_num_set}">
-							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-							<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
-								${num}
-							</option>
-						</c:forEach>
-					</select>
-				</div>
+				<br>
+				<label class="form-label" for="student-f2-select">クラス</label>
+				<select class="form-select" id="student-f2-select" name="f2">
+					<c:forEach var="num" items="${class_num_set}">
+						<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
+						<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
+							${num}
+						</option>
+					</c:forEach>
+				</select>
+				<br>
 
 				<button type="submit" class="btn btn-secondary">登録して終了</button>
-			
+				<a href="StudentList.action" class="d-block mt-2">戻る</a>
 			</div>
 		</form>
 
-		<div class="my-2 text-end px-4">
-			<a href="StudentList.action">戻る</a>
-		</div>
 	</c:param>
 	
 </c:import>
