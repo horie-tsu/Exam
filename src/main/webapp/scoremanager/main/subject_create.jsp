@@ -44,15 +44,11 @@
 
 				<br>
 
-				<button type="submit" class="btn btn-secondary">
-					登録して終了
+				<button type="submit" class="btn btn-primary">
+					登録
 				</button>
-
+				<a href="SubjectList.action" class="d-block mt-2">戻る</a>
 			</div>
 		</form>
-
-		<div class="my-2 text-end px-4">
-			<a href="SubjectList.action">戻る</a>
-		</div>
 	</c:param>
 </c:import>
