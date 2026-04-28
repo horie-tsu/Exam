@@ -6,6 +6,9 @@ import java.util.List;
 import bean.Subject;
 import bean.Teacher;
 import bean.TestListSubject;
+import dao.ClassNumDao;
+import dao.SubjectDao;
+import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,16 +31,33 @@ public class TestListSubjectExecuteAction extends Action {
 
         List<String> errors = new ArrayList<>();
 
-        // パラメータ
-        String entYearStr = req.getParameter("entYear");
-        String classNum   = req.getParameter("classNum");
-        String subjectCd  = req.getParameter("subjectCd");
+        // ★ JSPに合わせる（ここが超重要）
+        String entYearStr = req.getParameter("f1");
+        String classNum   = req.getParameter("f2");
+        String subjectCd  = req.getParameter("f3");
+
+        SubjectDao subjectDao = new SubjectDao();
+        TestListSubjectDao testDao = new TestListSubjectDao();
+        ClassNumDao classNumDao = new ClassNumDao();
+
+        // プルダウン用
+        List<Integer> entYearSet = new ArrayList<>();
+        for (int i = 2020; i <= 2026; i++) {
+            entYearSet.add(i);
+        }
+
+        req.setAttribute("ent_year_set", entYearSet);
+        req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+        req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
+
+        // 入力保持（JSPと一致）
+        req.setAttribute("f1", entYearStr);
+        req.setAttribute("f2", classNum);
+        req.setAttribute("f3", subjectCd);
 
         List<TestListSubject> list = new ArrayList<>();
 
-        // ======================
         // 条件チェック
-        // ======================
         if (entYearStr == null || entYearStr.isEmpty() ||
             classNum == null || classNum.isEmpty() ||
             subjectCd == null || subjectCd.isEmpty()) {
@@ -48,12 +68,10 @@ public class TestListSubjectExecuteAction extends Action {
 
             int entYear = Integer.parseInt(entYearStr);
 
-            // Subject作成
             Subject subject = new Subject();
             subject.setCd(subjectCd);
             subject.setSchool(teacher.getSchool());
 
-            // データ取得
             list = testDao.filtersub(subject, entYear, classNum);
 
             if (list.isEmpty()) {
@@ -61,11 +79,10 @@ public class TestListSubjectExecuteAction extends Action {
             }
         }
 
-        // セット
         req.setAttribute("test_list", list);
         req.setAttribute("errors", errors);
 
-        // JSPへ
+        // JSPも合わせる
         req.getRequestDispatcher("/scoremanager/main/test_list.jsp")
            .forward(req, res);
     }

@@ -9,7 +9,6 @@ import bean.Test;
 import dao.ClassNumDao;
 import dao.SubjectDao;
 import dao.TestDao;
-import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -33,51 +32,34 @@ public class TestListAction extends Action {
 		ClassNumDao cDao = new ClassNumDao();
 
 		// パラメータ取得
-		String classNum = req.getParameter("classNum");
-		String subjectCd = req.getParameter("subjectCd");
-		 SubjectDao subjectDao = new SubjectDao();
-	        TestListSubjectDao testDao = new TestListSubjectDao();
-	        ClassNumDao classNumDao = new ClassNumDao();
+		String entYearStr = req.getParameter("f1");
+		String classNum   = req.getParameter("f2");
+		String subjectCd  = req.getParameter("f3");
 
-	        
-		
-		// ======================
-        // プルダウン用
-        // ======================
-        List<Integer> entYearSet = new ArrayList<>();
-        for (int i = 2020; i <= 2026; i++) {
-            entYearSet.add(i);
-        }
+		// プルダウン用
+		List<Integer> entYearSet = new ArrayList<>();
+		for (int i = 2020; i <= 2026; i++) {
+		    entYearSet.add(i);
+		}
 
-        req.setAttribute("ent_year_set", entYearSet);
-        req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
-        req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
-
-        // 入力保持
-        req.setAttribute("f1", entYearStr);
-        req.setAttribute("f2", classNum);
-        req.setAttribute("f3", subjectCd);
-
-		// デフォルト全件表示
-		List<Test> tests;
-
-		    // 初回 or 未選択 → 全件
-		    tests = tDao.findAll(teacher.getSchool());
-
-
-		// 科目一覧
+		List<String> classNumList = cDao.filter(teacher.getSchool());
 		List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
-		// クラス一覧
-		List<String> classNumList = cDao.filter(teacher.getSchool());
+		// 入力保持
+		req.setAttribute("f1", entYearStr);
+		req.setAttribute("f2", classNum);
+		req.setAttribute("f3", subjectCd);
+
+		// デフォルト全件表示
+		List<Test> tests = tDao.findAll(teacher.getSchool());
 
 		// JSPへ渡す
-		req.setAttribute("classNum", classNum);
-		req.setAttribute("subjectCd", subjectCd);
 		req.setAttribute("tests", tests);
-		req.setAttribute("subject_list", subjectList);
+		req.setAttribute("subject_set", subjectList);
 		req.setAttribute("class_num_set", classNumList);
-
+		req.setAttribute("ent_year_set", entYearSet);
+		
+		
 		req.getRequestDispatcher("test_list.jsp").forward(req, res);
 	}
 }
