@@ -20,7 +20,6 @@
 
             <!-- 絞り込みフォーム -->
             <jsp:include page="test_list_subject.jsp" />
-            
             <jsp:include page="test_list_student.jsp" />
 
             <!-- 検索結果 -->

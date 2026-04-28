@@ -62,7 +62,7 @@ public class TestListStudentExecuteAction extends Action {
         }
 
         // 画面遷移
-        request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
+        request.getRequestDispatcher("/scoremanager/main/test_list_student.jsp")
                .forward(request, response);
     }
 }
