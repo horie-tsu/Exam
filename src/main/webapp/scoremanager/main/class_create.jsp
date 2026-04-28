@@ -19,35 +19,35 @@
 
 		<form method="post" action="SubjectCreateExecute.action">
 			<div class="col-11 px-4">
+			
+				<label class="form-label">学校名</label>
+				<input type="text"
+					   name="name"
+					   class="form-control"
+					   maxlength="20"
+					   required
+					   placeholder="学校名を入力してください"
+					   value="${param.name}">
+				<span class="text-danger">${errors.name}</span>
 
+				<br>
 				<label class="form-label">クラス番号</label>
 				<input type="text"
 					   name="cd"
 					   class="form-control"
 					   maxlength="3"
 					   required
-					   placeholder="科目コードを入力してください"
+					   placeholder="クラス番号を入力してください"
 					   value="${param.cd}">
 				<span class="text-danger">${errors.cd}</span>
 
 				<br>
 
-				<label class="form-label">クラス名</label>
-				<input type="text"
-					   name="name"
-					   class="form-control"
-					   maxlength="20"
-					   required
-					   placeholder="科目名を入力してください"
-					   value="${param.name}">
-				<span class="text-danger">${errors.name}</span>
-
-				<br>
 
 				<button type="submit" class="btn btn-primary">
 					登録
 				</button>
-				<a href="SubjectList.action" class="d-block mt-2">戻る</a>
+				<a href="ClassList.action" class="d-block mt-2">戻る</a>
 			</div>
 		</form>
 	</c:param>

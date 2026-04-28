@@ -10,7 +10,9 @@
 	<c:param name="content">
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">クラス管理</h2>
-			
+			<div class="my-2 text-end px-4">
+				<a href="ClassCreate.action">新規登録</a>
+			</div>
 			<form method="get">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					
@@ -21,15 +23,15 @@
 							
 							<c:forEach var="school" items="${schools}">
 								<option value="${school.cd}"
-    <c:if test="${school.cd == f1}">selected</c:if>>
-    ${school.name}
-</option>
+								<c:if test="${school.cd == f1}">selected</c:if>>
+								${school.name}
+								</option>
 							</c:forEach>
 						</select>
 					</div>
 					
 					<div class="col-2 text-center">
-						<button class="btn btn-secondary" id="filter-button">絞り込み</button>
+						<button class="btn btn-primary" id="filter-button">絞り込み</button>
 					</div>
 					
 					<div class="mt-2 text-warning">
