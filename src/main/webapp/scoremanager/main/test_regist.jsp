@@ -62,29 +62,29 @@
 					</div>
 					
 					<div class="col-4">
-						<label class="form-label" for="student-f4-select">回数</label>
-						<select class="form-select" id="student-f4-select" name="f4">
+						<label class="form-label" for="test-f4-select">回数</label>
+						<select class="form-select" id="test-f4-select" name="f4">
 							<option value="0">-------</option>
 							
-							<c:forEach var="no" items="${s.no}">
+							<c:forEach var="no" items="${no_set}">
 								<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-								<%-- <option value="${}" <c:if test="${num==f2}">selected</c:if>>
-									${num}
-								</option>--%>
+								<option value="${no}" <c:if test="${no==f4}">selected</c:if>>
+									${no}
+								</option>
 							</c:forEach>
 						</select>
 					</div>
 					
 				<div class="col-2 text-center">
-					<button class="btn btn-secondary">絞込み</button>
+					<button class="btn btn">絞り込み</button>
 				</div>
 				
 			</div>
 		</form>
 		
 		<c:choose>
-				<c:when test="${not empty students}">
-					<div>科目:${param.name}(${subject.no}回目)</div>
+				<c:when test="${not empty tests}">
+					<div>科目:${param.name}(${test.no}回目)</div>
 					
 					<table class="table table-hover">
 						<tr>

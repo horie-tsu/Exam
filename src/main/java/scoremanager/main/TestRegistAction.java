@@ -34,11 +34,13 @@ public class TestRegistAction extends Action {
 	int year = todaysDate.getYear();
 
 	// パラメータ
-	String classNum = req.getParameter("classNum");
-	String subjectCd = req.getParameter("subjectCd");
+	String entYear = req.getParameter("year");
+	String num = req.getParameter("num");
+	String sub = req.getParameter("sub");
+	String no = req.getParameter("no");
 
 	// 一覧取得（←ここが重要）
-	List<Test> tests = tDao.filter(teacher.getSchool(), classNum, subjectCd);
+	List<Test> tests = tDao.filter(teacher.getSchool(), entYear, num);
 
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
@@ -46,18 +48,28 @@ public class TestRegistAction extends Action {
 	// クラス一覧
 	List<String> classNumList = cDao.filter(teacher.getSchool());
 	
+	//入学年度
 	List<Integer> entYearSet = new ArrayList<>();
 	// 10年前から1年後まで年をリストに追加
 	for (int i = year - 10; i < year + 1; i++) {
 		entYearSet.add(i);
 	}
 	
+	//試験回数
+	List<Integer> noSet = new ArrayList<>();
+	// 10年前から1年後まで年をリストに追加
+	for (int j = 1; j < 11; j++) {
+		noSet.add(j);
+	}
+	
+	
+	
 	// セット
 	req.setAttribute("tests", tests);
 	req.setAttribute("subject_list", subjectList);
 	req.setAttribute("class_num_set", classNumList);
 	req.setAttribute("ent_year_set", entYearSet);
-	req.setAttribute("no",tests);
+	req.setAttribute("no_set", noSet);
 
 	// JSPへ
 	req.getRequestDispatcher("test_regist.jsp").forward(req, res);

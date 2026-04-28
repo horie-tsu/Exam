@@ -1,7 +1,7 @@
 package scoremanager.main;
 
-import bean.Subject;
-import dao.SubjectDao;
+import bean.Test;
+import dao.TestDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import tool.Action;
@@ -16,16 +16,17 @@ public class TestRegistExecuteAction extends Action {
 
 	        String cd = req.getParameter("cd");
 	        String name = req.getParameter("name");
+	        int no = 0;
 	        
 	        //System.out.println("check:"+cd+name);
 
-	        SubjectDao dao = new SubjectDao();
+	        TestDao dao = new TestDao();
 
 	        // ② 更新前に存在チェック
-	        Subject before = dao.get(cd);  // ← 修正
+	        Test before = dao.get(no);  // ← 修正
 	        if (before == null) {
 	            req.setAttribute("errorMsg", "科目が存在していません。");
-	            req.getRequestDispatcher("/scoremanager/main/subject_update.jsp")
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
 	               .forward(req, res);
 	            return;
 	        }
@@ -36,7 +37,7 @@ public class TestRegistExecuteAction extends Action {
 	            req.setAttribute("cd", cd);
 	            req.setAttribute("name", name);
 
-	            req.getRequestDispatcher("/scoremanager/main/subject_update.jsp")
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
 	               .forward(req, res);
 	            return;
 	        }
@@ -47,19 +48,19 @@ public class TestRegistExecuteAction extends Action {
 	            req.setAttribute("cd", cd);
 	            req.setAttribute("name", name);
 
-	            req.getRequestDispatcher("/scoremanager/main/subject_update.jsp")
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
 	               .forward(req, res);
 	            return;
 	        }
 
 	        // 更新処理
-	        Subject subject = new Subject();
-	        subject.setCd(cd);
-	        subject.setName(name);
+	        Test test = new Test();
+	        //subject.setCd(cd);
+	        //subject.setName(name);
 
-	        dao.save(subject);  // ← 修正（update → save）
+	        dao.save(test);  // ← 修正（update → save）
 
-	        req.getRequestDispatcher("/scoremanager/main/subject_update_done.jsp")
+	        req.getRequestDispatcher("/scoremanager/main/test_regist_done.jsp")
 	           .forward(req, res);
 	    }
 }
