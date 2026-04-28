@@ -62,25 +62,52 @@
           
             <c:when test="${mode == 'student'}">
 
-                <div class="fw-bold">
-                    氏名：${student.name}（${student.no}）
-                </div>
+                 <!-- エラー表示 -->
+  
+  <c:if test="${not empty errors}">
+    <div class="text-danger mt-2 px-4">
+      <c:forEach var="e" items="${errors}">
+        ${e}<br>
+      </c:forEach>
+    </div>
+  </c:if>
 
-                <table class="table table-striped">
-                    <tr>
-                        <th>科目</th>
-                        <th>回数</th>
-                        <th>点数</th>
-                    </tr>
+  <hr>
 
-                    <c:forEach var="t" items="${test_list}">
-                        <tr>
-                            <td>${t.subject.name}</td>
-                            <td>${t.no}</td>
-                            <td>${t.point}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
+  
+  <!-- 学生情報表示 -->
+  
+  <c:if test="${student != null}">
+    <div class="fw-bold px-4 mb-2">
+      氏名：${student.name}（${student.no}）
+    </div>
+  </c:if>
+
+ 
+  <!-- 成績一覧テーブル -->
+
+  <c:if test="${student != null}">
+    <table class="table table-bordered table-striped w-75 ms-4">
+      <thead class="table-secondary">
+        <tr>
+            <th>科目コード</th>
+            <th>科目名</th>
+            <th>回数</th>
+            <th>点数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="t" items="${test_list}">
+          <tr>
+          <td>${t.subject.cd}</td>
+            <td>${t.subject.name}</td>
+            <td>${t.no}</td>
+            <td>${t.point}</td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+  </c:if>
 
             </c:when>
 
