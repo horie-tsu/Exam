@@ -75,7 +75,7 @@
 
                     <c:forEach var="t" items="${test_list}">
                         <tr>
-                            <td>${t.subjectName}</td>
+                            <td>${t.subject.name}</td>
                             <td>${t.no}</td>
                             <td>${t.point}</td>
                         </tr>
