@@ -17,7 +17,7 @@
 			</h2>
 		</section>
 
-		<form method="post" action="TestRegistExecute.action">
+		<form method="post" action="TestRegist.action">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					
 					<div class="col-4">
@@ -76,7 +76,7 @@
 					</div>
 					
 				<div class="col-2 text-center">
-					<button type="submit" class="btn btn-primary" name="search">絞り込み</button>
+						<button class="btn btn-primary" id="search-button">絞り込み</button>
 				</div>
 				
 			</div>
@@ -84,7 +84,7 @@
 		
 		<c:choose>
 				<c:when test="${not empty tests}">
-					<div>科目:${param.name}(${test.no}回目)</div>
+					<div>科目:${f3}(${f4}回目)</div>
 					
 					<table class="table table-hover">
 						<tr>
@@ -101,7 +101,7 @@
 								<td>${t.classNum}</td>
 								<td>${t.student.no}</td>
 								<td>${t.student.name}</td>
-								<td>${t.point}</td>
+								<td><input type="text" value="${t.point}"</td>
 								
 								
 								<td>

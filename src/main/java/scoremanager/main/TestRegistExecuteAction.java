@@ -14,7 +14,7 @@ public class TestRegistExecuteAction extends Action {
 
 	        req.setCharacterEncoding("UTF-8");
 
-	        String entYear = req.getParameter("year");
+	        String entYearStr = req.getParameter("year");
 	    	String num = req.getParameter("num");
 	    	String sub = req.getParameter("sub");
 	    	String no = req.getParameter("no");
@@ -33,9 +33,9 @@ public class TestRegistExecuteAction extends Action {
 	        }
 
 	        // ① 科目名未入力チェック
-	        if (entYear == null || entYear.trim().isEmpty()) {
+	        if (entYearStr == null || entYearStr.trim().isEmpty()) {
 	            req.setAttribute("errorMsg", "年度を入力してください。");
-	            req.setAttribute("year",entYear);
+	            req.setAttribute("year",entYearStr);
 	        	req.setAttribute("num",num);
 	        	req.setAttribute("sub",sub);
 	        	req.setAttribute("no",no);
@@ -47,7 +47,7 @@ public class TestRegistExecuteAction extends Action {
 	        
 	        if (num == null || num.trim().isEmpty()) {
 	            req.setAttribute("errorMsg", "クラスを入力してください。");
-	            req.setAttribute("year",entYear);
+	            req.setAttribute("year",entYearStr);
 	        	req.setAttribute("num",num);
 	        	req.setAttribute("sub",sub);
 	        	req.setAttribute("no",no);
@@ -59,7 +59,7 @@ public class TestRegistExecuteAction extends Action {
 	        
 	        if (sub == null || sub.trim().isEmpty()) {
 	            req.setAttribute("errorMsg", "科目を入力してください。");
-	            req.setAttribute("year",entYear);
+	            req.setAttribute("year",entYearStr);
 	        	req.setAttribute("num",num);
 	        	req.setAttribute("sub",sub);
 	        	req.setAttribute("no",no);
@@ -71,7 +71,7 @@ public class TestRegistExecuteAction extends Action {
 	        
 	        if (no == null || no.trim().isEmpty()) {
 	            req.setAttribute("errorMsg", "試験回数を入力してください。");
-	            req.setAttribute("year",entYear);
+	            req.setAttribute("year",entYearStr);
 	        	req.setAttribute("num",num);
 	        	req.setAttribute("sub",sub);
 	        	req.setAttribute("no",no);

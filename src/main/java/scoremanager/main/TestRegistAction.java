@@ -35,7 +35,7 @@ public class TestRegistAction extends Action {
 	int year = todaysDate.getYear();
 
 	// パラメータ
-	String entYear = req.getParameter("year");
+	String entYearStr = req.getParameter("year");
 	String num = req.getParameter("num");
 	String sub = req.getParameter("sub");
 	String no = req.getParameter("no");
@@ -72,7 +72,7 @@ public class TestRegistAction extends Action {
 	req.setAttribute("ent_year_set", entYearSet);
 	req.setAttribute("no_set", noSet);
 	
-	req.setAttribute("f1",entYear);
+	req.setAttribute("f1",entYearStr);
 	req.setAttribute("f2",num);
 	req.setAttribute("f3",sub);
 	req.setAttribute("f4",no);
