@@ -17,18 +17,25 @@ public class TestListSubjectDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	    	statement = connection.prepareStatement(//SQL文
-	    		    "SELECT s.ENT_YEAR, s.NO, s.NAME, s.CLASS_NUM, " +
-	    		    "t.TEST_NO, t.POINT " +
+	    	statement = connection.prepareStatement(
+	    		    "SELECT " +
+	    		    " s.ENT_YEAR, " +
+	    		    " s.NO, " +
+	    		    " s.NAME, " +
+	    		    " s.CLASS_NUM, " +
+	    		    " t.NO AS TEST_NO, " +
+	    		    " t.POINT " +
 	    		    "FROM STUDENT s " +
 	    		    "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
 	    		    "WHERE t.SUBJECT_CD = ? " +
-	    		    "ORDER BY s.NO, t.TEST_NO"
+	    		    "AND s.ENT_YEAR = ? " +
+	    		    "AND s.CLASS_NUM = ? " +
+	    		    "ORDER BY s.NO, t.NO"
 	    		);
 	    		
-		    	statement.setInt(1, entYear);
-		    	statement.setString(2, classNum);
-		    	statement.setString(3, sub.getCd());
+	    	statement.setString(1, sub.getCd());
+	    	statement.setInt(2, entYear);
+	    	statement.setString(3, classNum);
 
 	        ResultSet rSet = statement.executeQuery();
 

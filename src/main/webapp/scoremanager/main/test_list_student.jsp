@@ -7,7 +7,15 @@
   <div class="border px-4 py-3 mb-4" style="border-radius:0;">
 
     
-    
+    <c:if test="${not empty errors}">
+    <div class="alert alert-danger mx-4 mt-3">
+        <ul class="mb-0">
+            <c:forEach var="e" items="${errors}">
+                <li>${e}</li>
+            </c:forEach>
+        </ul>
+    </div>
+</c:if>
 
     
     <!-- 下段：学生番号検索 -->
