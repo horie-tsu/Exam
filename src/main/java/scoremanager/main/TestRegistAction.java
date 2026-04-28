@@ -26,6 +26,7 @@ public class TestRegistAction extends Action {
 	    res.sendRedirect("login.jsp"); // またはログインAction
 	    return;
 	}
+	
 
 	SubjectDao sDao = new SubjectDao();
 	TestDao tDao = new TestDao();
