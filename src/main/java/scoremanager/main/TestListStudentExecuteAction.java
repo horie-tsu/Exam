@@ -43,7 +43,7 @@ public class TestListStudentExecuteAction extends Action {
             if (student == null) {
                 errors.add("該当する学生が存在しません。");
                 request.setAttribute("errors", errors);
-                request.getRequestDispatcher("/scoremanager/main/test_list_student.jsp")
+                request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
                        .forward(request, response);
                 return;
             }
@@ -62,7 +62,7 @@ public class TestListStudentExecuteAction extends Action {
         }
 
         // 画面遷移
-        request.getRequestDispatcher("/scoremanager/main/test_list_student.jsp")
+        request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
                .forward(request, response);
     }
 }

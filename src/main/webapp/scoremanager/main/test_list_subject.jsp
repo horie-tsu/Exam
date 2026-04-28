@@ -31,10 +31,11 @@
           <select name="f2">
             <option value="">----</option>
             <c:forEach var="c" items="${class_num_set}">
-              <option value="${c.classNum}" <c:if test="${c.classNum == f2}">selected</c:if>>
-                ${c.classNum}
-              </option>
-            </c:forEach>
+    <option value="${c}" 
+        <c:if test="${c == f2}">selected</c:if>>
+        ${c}
+    </option>
+</c:forEach>
           </select>
         </div>
 
