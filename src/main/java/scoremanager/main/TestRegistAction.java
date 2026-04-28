@@ -41,7 +41,7 @@ public class TestRegistAction extends Action {
 	String no = req.getParameter("no");
 
 	// 一覧取得（←ここが重要）
-	List<Test> tests = tDao.filter(teacher.getSchool(), entYear, num);
+	List<Test> tests = tDao.findAll(teacher.getSchool());
 
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
@@ -71,6 +71,11 @@ public class TestRegistAction extends Action {
 	req.setAttribute("class_num_set", classNumList);
 	req.setAttribute("ent_year_set", entYearSet);
 	req.setAttribute("no_set", noSet);
+	
+	req.setAttribute("f1",entYear);
+	req.setAttribute("f2",num);
+	req.setAttribute("f3",sub);
+	req.setAttribute("f4",no);
 
 	// JSPへ
 	req.getRequestDispatcher("test_regist.jsp").forward(req, res);

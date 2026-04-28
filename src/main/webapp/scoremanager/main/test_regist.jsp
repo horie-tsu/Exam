@@ -49,7 +49,7 @@
 					
 					<div class="col-4">
 						<label class="form-label" for="test-f3-select">科目</label>
-						<select class="form-select" name="f3">
+						<select class="form-select" id="test-f3-select" name="f3">
 							<option value="">--------</option>
                             
 							<c:forEach var="sub" items="${subject_list}">
@@ -76,7 +76,7 @@
 					</div>
 					
 				<div class="col-2 text-center">
-					<button class="btn btn">絞り込み</button>
+					<button type="submit" class="btn btn-primary" name="search">絞り込み</button>
 				</div>
 				
 			</div>
@@ -97,12 +97,11 @@
 						
 						<c:forEach var="t" items="${tests}">
 							<tr>
-								<td>${t.entYear}</td>
-								<td>${t.student.no}</td>
+								<td>${t.student.entYear}</td>
 								<td>${t.classNum}</td>
+								<td>${t.student.no}</td>
 								<td>${t.student.name}</td>
-								<td></td>
-								
+								<td>${t.point}</td>
 								
 								
 								<td>

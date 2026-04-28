@@ -14,16 +14,17 @@ public class TestRegistExecuteAction extends Action {
 
 	        req.setCharacterEncoding("UTF-8");
 
-	        String cd = req.getParameter("cd");
-	        String name = req.getParameter("name");
-	        int no = 0;
+	        String entYear = req.getParameter("year");
+	    	String num = req.getParameter("num");
+	    	String sub = req.getParameter("sub");
+	    	String no = req.getParameter("no");
 	        
 	        //System.out.println("check:"+cd+name);
 
 	        TestDao dao = new TestDao();
 
 	        // ② 更新前に存在チェック
-	        Test before = dao.get(no);  // ← 修正
+	        Test before = dao.get(1);  // ← 修正
 	        if (before == null) {
 	            req.setAttribute("errorMsg", "科目が存在していません。");
 	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
@@ -32,31 +33,58 @@ public class TestRegistExecuteAction extends Action {
 	        }
 
 	        // ① 科目名未入力チェック
-	        if (name == null || name.trim().isEmpty()) {
-	            req.setAttribute("errorMsg", "科目名を入力してください。");
-	            req.setAttribute("cd", cd);
-	            req.setAttribute("name", name);
+	        if (entYear == null || entYear.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "年度を入力してください。");
+	            req.setAttribute("year",entYear);
+	        	req.setAttribute("num",num);
+	        	req.setAttribute("sub",sub);
+	        	req.setAttribute("no",no);
+
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
+	               .forward(req, res);
+	            return;
+	        }
+	        
+	        if (num == null || num.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "クラスを入力してください。");
+	            req.setAttribute("year",entYear);
+	        	req.setAttribute("num",num);
+	        	req.setAttribute("sub",sub);
+	        	req.setAttribute("no",no);
+
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
+	               .forward(req, res);
+	            return;
+	        }
+	        
+	        if (sub == null || sub.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "科目を入力してください。");
+	            req.setAttribute("year",entYear);
+	        	req.setAttribute("num",num);
+	        	req.setAttribute("sub",sub);
+	        	req.setAttribute("no",no);
+
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
+	               .forward(req, res);
+	            return;
+	        }
+	        
+	        if (no == null || no.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "試験回数を入力してください。");
+	            req.setAttribute("year",entYear);
+	        	req.setAttribute("num",num);
+	        	req.setAttribute("sub",sub);
+	        	req.setAttribute("no",no);
 
 	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
 	               .forward(req, res);
 	            return;
 	        }
 
-	        // 文字数チェック
-	        if (name.length() > 20) {
-	            req.setAttribute("errorMsg", "科目名は20文字以内で入力してください。");
-	            req.setAttribute("cd", cd);
-	            req.setAttribute("name", name);
-
-	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
-	               .forward(req, res);
-	            return;
-	        }
 
 	        // 更新処理
 	        Test test = new Test();
-	        //subject.setCd(cd);
-	        //subject.setName(name);
+	        
 
 	        dao.save(test);  // ← 修正（update → save）
 
