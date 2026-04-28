@@ -49,10 +49,10 @@
 							<th>クラス</th>
 						</tr>
 						
-						<c:forEach var="class" items="${classes}">
+						<c:forEach var="c" items="${classes}">
 							<tr>
-								<td>${class.school}</td>
-								<td>${class.num}</td>
+								<td>${c.school.name}</td>
+								<td>${c.class_num}</td>
 								
 							</tr>
 						</c:forEach>

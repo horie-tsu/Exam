@@ -1,9 +1,11 @@
 package scoremanager.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bean.ClassNum;
 import bean.School;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -32,7 +34,7 @@ public class ClassListAction extends Action {//未完
         // パラメータ取得
         String scName = req.getParameter("f1");
 
-        List<String> classes = null;
+        List<ClassNum> classes = null;
 
         // 検索処理
         if (scName != null && !scName.equals("0")) {
@@ -41,7 +43,17 @@ public class ClassListAction extends Action {//未完
             School school = scDao.get(scName);
 
             if (school != null) {
-                classes = cNumDao.filter(school);
+            	// DAOはList<String>を返すので受け取る
+                List<String> nums = cNumDao.filter(school);
+                
+                // ClassNumに変換
+                classes = new ArrayList();
+                for (String num :nums) {
+                	ClassNum cn = new ClassNum();
+                	cn.setClass_num(num);
+                	cn.setSchool(school);// Schoolをセット
+                	classes.add(cn);
+                }
             } else {
                 errors.put("f1", "学校が見つかりません");
             }

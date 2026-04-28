@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.School;
 
@@ -62,6 +64,31 @@ public class SchoolDao extends Dao {
 				}
 			}
 		}
+		
 		return school;
 	}
+	public List<School> get() throws Exception {
+	    List<School> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+
+	    try {
+	        statement = connection.prepareStatement("select * from school order by cd");
+	        ResultSet rSet = statement.executeQuery();
+
+	        while (rSet.next()) {
+	            School s = new School();
+	            s.setCd(rSet.getString("cd"));
+	            s.setName(rSet.getString("name"));
+	            list.add(s);
+	        }
+
+	    } finally {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+
+	    return list;
+	}
+
 }
