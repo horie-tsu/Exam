@@ -90,7 +90,7 @@ public class TestListSubjectExecuteAction extends Action {
         req.setAttribute("errors", errors);
 
         // JSPへ
-        req.getRequestDispatcher("/scoremanager/main/test_list_subject.jsp")
+        req.getRequestDispatcher("/scoremanager/main/test_list.jsp")
            .forward(req, res);
     }
 }
