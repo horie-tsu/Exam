@@ -22,13 +22,13 @@
         
         <!-- ③科目登録画面へ -->
         <div class="d-flex gap-4 mt-2">
-        <a href="SubjectCreate.action">
+        <a href="SubjectCreate.action" class="me-5">
           戻る
         </a>
        
 
         <!-- ④ 科目一覧へ -->
-        <a href="SubjectList.action" class="d-block mt-5">
+        <a href="SubjectList.action" >
           科目一覧
         </a>
         </div>

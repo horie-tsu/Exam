@@ -21,7 +21,7 @@
        
 
         <!-- ④ 科目一覧へ -->
-        <a href="SubjectList.action" class="btn btn-primary">
+        <a href="SubjectList.action" >
           科目一覧
         </a>
 
