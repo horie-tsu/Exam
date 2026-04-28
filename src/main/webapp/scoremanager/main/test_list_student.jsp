@@ -1,13 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
-
-  <!-- タイトル -->
-  <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-3">
-    成績一覧(学生)
-  </h2>
-
-  
+ 
   <!-- OUTER BORDER BOX (contains BOTH forms) -->
   
   <div class="border px-4 py-3 mb-4" style="border-radius:0;">
@@ -99,8 +92,6 @@
     <a href="${pageContext.request.contextPath}/scoremanager/main/TestList.action">戻る</a>
   </div>
 
-
-  
 
   
  

@@ -29,7 +29,7 @@
 
 				<label class="form-label">学生番号</label>
 				<input type="text"
-					   name="cd"
+					   name="stuId"
 					   class="form-control"
 					   maxlength="10"
 					   required
@@ -41,13 +41,13 @@
 
 				<label class="form-label">氏名</label>
 				<input type="text"
-					   name="cd"
+					   name="stuName"
 					   class="form-control"
 					   maxlength="30"
 					   required
 					   placeholder="氏名を入力してください"
 					   value="${stuId}">
-				<span class="text-danger">${errors.cd}</span>
+				<span class="text-danger">${errors.stuName}</span>
 
 				<br>
 				<label class="form-label" for="student-f2-select">クラス</label>
