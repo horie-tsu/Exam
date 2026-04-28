@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <c:import url="/common/base.jsp">
 	<c:param name="title">
-		得点管理システム
+		 得点管理システム
 	</c:param>
 
 	<c:param name="scripts"></c:param>
@@ -22,10 +22,10 @@
 					<div>
 						<div class="">成績管理</div>
 						<div class="">
-							<a href="TestList.action">成績登録</a>
+							<a href="TestRegist.action">成績登録</a>
 						</div>
 						<div class="">
-							<a href="Tes??.action">成績参照</a>
+							<a href="TestList.action">成績参照</a>
 						</div>
 					</div>
 				</div>
