@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Student;
+import bean.Teacher;
 import bean.Test;
+import dao.ClassNumDao;
 import dao.StudentDao;
+import dao.SubjectDao;
 import dao.TestDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
 public class TestListStudentExecuteAction extends Action {
@@ -18,7 +22,34 @@ public class TestListStudentExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	HttpSession session = request.getSession();
+    	Teacher teacher = (Teacher) session.getAttribute("user");
 
+    	SubjectDao subjectDao = new SubjectDao();
+    	ClassNumDao classNumDao = new ClassNumDao();
+
+    	// 年度リスト
+    	List<Integer> entYearSet = new ArrayList<>();
+    	for (int i = 2020; i <= 2026; i++) {
+    	    entYearSet.add(i);
+    	}
+
+    	// JSP用データセット（←これが無いのが原因）
+    	request.setAttribute("ent_year_set", entYearSet);
+    	try {
+			request.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+    	try {
+			request.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+    	request.setAttribute("mode", "student");
         List<String> errors = new ArrayList<>();
 
         // 学生番号取得

@@ -17,25 +17,25 @@ public class TestListSubjectDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	    	statement = connection.prepareStatement(
-	    		    "SELECT " +
-	    		    " s.ENT_YEAR, " +
-	    		    " s.NO, " +
-	    		    " s.NAME, " +
-	    		    " s.CLASS_NUM, " +
-	    		    " t.NO AS TEST_NO, " +
-	    		    " t.POINT " +
-	    		    "FROM STUDENT s " +
-	    		    "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
-	    		    "WHERE t.SUBJECT_CD = ? " +
-	    		    "AND s.ENT_YEAR = ? " +
-	    		    "AND s.CLASS_NUM = ? " +
-	    		    "ORDER BY s.NO, t.NO"
-	    		);
-	    		
-	    	statement.setString(1, sub.getCd());
-	    	statement.setInt(2, entYear);
-	    	statement.setString(3, classNum);
+	        statement = connection.prepareStatement(
+	            "SELECT " +
+	            " s.ENT_YEAR, " +
+	            " s.NO, " +
+	            " s.NAME, " +
+	            " s.CLASS_NUM, " +
+	            " t.NO AS TEST_NO, " +
+	            " t.POINT " +
+	            "FROM STUDENT s " +
+	            "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
+	            "WHERE t.SUBJECT_CD = ? " +
+	            "AND s.ENT_YEAR = ? " +
+	            "AND s.CLASS_NUM = ? " +
+	            "ORDER BY s.NO, t.NO"
+	        );
+
+	        statement.setString(1, sub.getCd());
+	        statement.setInt(2, entYear);
+	        statement.setString(3, classNum);
 
 	        ResultSet rSet = statement.executeQuery();
 
@@ -46,7 +46,7 @@ public class TestListSubjectDao extends Dao {
 
 	            String studentNo = rSet.getString("NO");
 
-	            // 学生変わったら新しく作る
+	            // 学生変わったら新規
 	            if (current == null || !studentNo.equals(currentStudentNo)) {
 
 	                current = new TestListSubject();
@@ -55,15 +55,21 @@ public class TestListSubjectDao extends Dao {
 	                current.setStudentName(rSet.getString("NAME"));
 	                current.setClassNum(rSet.getString("CLASS_NUM"));
 
-	                current.setPoints(new java.util.HashMap<>());
+	                // ★ LinkedHashMapに変更（順番保証）
+	                current.setPoints(new java.util.LinkedHashMap<>());
 
 	                list.add(current);
 	                currentStudentNo = studentNo;
 	            }
 
-	            // Mapに追加（テスト回数 → 点数）
 	            int testNo = rSet.getInt("TEST_NO");
-	            int point = rSet.getInt("POINT");
+
+	            // ★ NULL対策
+	            Integer point = null;
+	            int p = rSet.getInt("POINT");
+	            if (!rSet.wasNull()) {
+	                point = p;
+	            }
 
 	            current.getPoints().put(testNo, point);
 	        }

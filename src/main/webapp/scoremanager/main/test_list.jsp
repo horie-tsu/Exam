@@ -23,27 +23,41 @@
         <c:choose>
 
         
-            <c:when test="${mode == 'subject'}">
-                <div>検索結果：${test_list.size()}件</div>
+           <c:when test="${mode == 'subject'}">
+    <div>科目：${cdname}</div>
 
-                <table class="table table-bordered">
-                    <tr>
-                        <th>入学年</th>
-                        <th>学生番号</th>
-                        <th>氏名</th>
-                        <th>クラス</th>
-                    </tr>
+    <table class="table table-bordered">
+        <tr>
+            <th>入学年</th>
+            <th>クラス</th>
+            <th>学生番号</th>
+            <th>氏名</th>
+            <th>一回</th>
+            <th>二回</th>
+        </tr>
 
-                    <c:forEach var="t" items="${test_list}">
-                        <tr>
-                            <td>${t.entYear}</td>
-                            <td>${t.studentNo}</td>
-                            <td>${t.studentName}</td>
-                            <td>${t.classNum}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:when>
+        <c:forEach var="t" items="${test_list}">
+            <tr>
+                <td>${t.entYear}</td>
+                <td>${t.classNum}</td>
+                <td>${t.studentNo}</td>
+                <td>${t.studentName}</td>
+                <td><c:choose>
+  <c:when test="${t.points[1] != null}">
+    ${t.points[1]}
+  </c:when>
+  <c:otherwise>-</c:otherwise>
+</c:choose></td>
+                <td><c:choose>
+  <c:when test="${t.points[2] != null}">
+    ${t.points[2]}
+  </c:when>
+  <c:otherwise>-</c:otherwise>
+</c:choose></td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:when>
 
           
             <c:when test="${mode == 'student'}">
