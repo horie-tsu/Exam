@@ -259,4 +259,49 @@ public class TestDao extends Dao {
 
 	    return list;
 	}
+	
+	// 学生番号で成績一覧取得（成績一覧（学生）画面用）
+	public List<Test> findByStudentNo(String studentNo) throws Exception {
+
+	    List<Test> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    ResultSet rSet = null;
+
+	    try {
+	        statement = connection.prepareStatement(
+	            "SELECT t.NO, t.CLASS_NUM, t.POINT, " +
+	            "sub.CD AS SUBJECT_CD, sub.NAME AS SUBJECT_NAME " +
+	            "FROM TEST t " +
+	            "JOIN SUBJECT sub ON t.SUBJECT_CD = sub.CD " +
+	            "WHERE t.STUDENT_NO = ? " +
+	            "ORDER BY sub.CD, t.NO"
+	        );
+
+	        statement.setString(1, studentNo);
+	        rSet = statement.executeQuery();
+
+	        while (rSet.next()) {
+	            Test test = new Test();
+
+	            test.setNo(rSet.getInt("NO"));
+	            test.setClassNum(rSet.getString("CLASS_NUM"));
+	            test.setPoint(rSet.getInt("POINT"));
+
+	            Subject subject = new Subject();
+	            subject.setCd(rSet.getString("SUBJECT_CD"));
+	            subject.setName(rSet.getString("SUBJECT_NAME"));
+	            test.setSubject(subject);
+
+	            list.add(test);
+	        }
+
+	    } finally {
+	        if (rSet != null) rSet.close();
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+
+	    return list;
+	}
 }
