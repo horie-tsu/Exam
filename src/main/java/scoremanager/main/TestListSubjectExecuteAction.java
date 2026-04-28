@@ -6,9 +6,6 @@ import java.util.List;
 import bean.Subject;
 import bean.Teacher;
 import bean.TestListSubject;
-import dao.ClassNumDao;
-import dao.SubjectDao;
-import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -35,27 +32,6 @@ public class TestListSubjectExecuteAction extends Action {
         String entYearStr = req.getParameter("entYear");
         String classNum   = req.getParameter("classNum");
         String subjectCd  = req.getParameter("subjectCd");
-
-        SubjectDao subjectDao = new SubjectDao();
-        TestListSubjectDao testDao = new TestListSubjectDao();
-        ClassNumDao classNumDao = new ClassNumDao();
-
-        // ======================
-        // プルダウン用
-        // ======================
-        List<Integer> entYearSet = new ArrayList<>();
-        for (int i = 2020; i <= 2026; i++) {
-            entYearSet.add(i);
-        }
-
-        req.setAttribute("ent_year_set", entYearSet);
-        req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
-        req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
-
-        // 入力保持
-        req.setAttribute("f1", entYearStr);
-        req.setAttribute("f2", classNum);
-        req.setAttribute("f3", subjectCd);
 
         List<TestListSubject> list = new ArrayList<>();
 
