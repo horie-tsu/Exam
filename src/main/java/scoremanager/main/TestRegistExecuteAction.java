@@ -52,7 +52,7 @@ public class TestRegistExecuteAction extends Action {
 
 	            list.add(t);
 	        }
-//
+
 //	        // ① 科目名未入力チェック
 //	        if (entYearStr == null || entYearStr.trim().isEmpty()) {
 //	            req.setAttribute("errorMsg", "年度を入力してください。");

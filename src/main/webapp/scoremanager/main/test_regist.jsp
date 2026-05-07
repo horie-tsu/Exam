@@ -96,6 +96,7 @@
 							<th>点数</th>
 						</tr>
 						
+						
 						<c:forEach var="t" items="${tests}">
 							<tr>
 								<td>${t.student.entYear}</td>

@@ -164,6 +164,7 @@ public class TestDao extends Dao {
 				//リザルトセット
 				ResultSet rSet=null;
 				
+				
 				String sql = ("select t.*,s.ent_year "
 						+ "from test t join student s on t.student_no = s.no"
 						+ " where t.school_cd=?");

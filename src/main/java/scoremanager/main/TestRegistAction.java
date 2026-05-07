@@ -68,7 +68,6 @@ public class TestRegistAction extends Action {
 	}
 	
 	
-	
 	// セット
 	req.setAttribute("tests", tests);
 	req.setAttribute("subject_list", subjectList);
