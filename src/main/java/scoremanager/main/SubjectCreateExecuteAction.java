@@ -37,8 +37,10 @@ public class SubjectCreateExecuteAction extends Action {
             return;
         }
      // 科目コードチェック
-        if (subDao.get(subcd) != null) {
-            errors.put("subcd", "学生番号が重複しています");
+        if (subDao.get(subcd) == null || subcd.isEmpty()) {
+            errors.put("subcd", "科目コードは3文字で入力してください");
+        } else if (subDao.get(subcd) != null) {
+            errors.put("subcd", "科目コードが重複しています");
         }
      // エラーがある場合
         if (!errors.isEmpty()) {

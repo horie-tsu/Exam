@@ -116,4 +116,47 @@ public class ClassNumDao extends Dao {
 	public boolean save(ClassNum classNum,String newClassNum)throws Exception{
 		
 	}*/
+	
+	public boolean save(ClassNum classNum) throws Exception {
+
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+
+	    int count = 0;
+
+	    try {
+
+	        ClassNum old = get(
+	                classNum.getClass_num(),
+	                classNum.getSchool()
+	        );
+
+	        if (old == null) {
+
+	            statement = connection.prepareStatement(
+	                    "insert into class_num(class_num, school_cd) values(?, ?)");
+
+	            statement.setString(1, classNum.getClass_num());
+	            statement.setString(2, classNum.getSchool().getCd());
+
+	        } else {
+
+	            statement = connection.prepareStatement(
+	                    "update class_num set class_num=? where class_num=? and school_cd=?");
+
+	            statement.setString(1, classNum.getClass_num());
+	            statement.setString(2, classNum.getClass_num());
+	            statement.setString(3, classNum.getSchool().getCd());
+	        }
+
+	        count = statement.executeUpdate();
+
+	    } finally {
+
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+
+	    return count > 0;
+	}
 }
