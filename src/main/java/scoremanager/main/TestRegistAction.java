@@ -35,13 +35,17 @@ public class TestRegistAction extends Action {
 	int year = todaysDate.getYear();
 
 	// パラメータ
-	String entYearStr = req.getParameter("year");
-	String num = req.getParameter("num");
-	String sub = req.getParameter("sub");
-	String no = req.getParameter("no");
+	String entYearStr = req.getParameter("f1");
+	System.out.println("入学年度"+entYearStr);
+	String num = req.getParameter("f2");
+	System.out.println("クラス"+num);
+	String sub = req.getParameter("f3");
+	System.out.println("科目"+sub);
+	String no = req.getParameter("f4");
+	System.out.println("回数"+no);
 
 	// 一覧取得（←ここが重要）
-	List<Test> tests = tDao.findAll(teacher.getSchool());
+	List<Test> tests = tDao.filter(teacher.getSchool(),entYearStr,num,sub,no);
 
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());

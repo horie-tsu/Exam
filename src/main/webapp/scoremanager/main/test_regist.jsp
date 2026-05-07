@@ -82,6 +82,7 @@
 			</div>
 		</form>
 		
+		
 		<c:choose>
 				<c:when test="${not empty tests}">
 					<div>科目:${f3}(${f4}回目)</div>
@@ -101,7 +102,13 @@
 								<td>${t.classNum}</td>
 								<td>${t.student.no}</td>
 								<td>${t.student.name}</td>
-								<td><input type="text" value="${t.point}"</td>
+								<td>
+									<input type="hidden" name="studentNo" value="${t.student.no}">
+									<input type="hidden" name="subjectCd" value="${t.subject.cd}">
+									<input type="hidden" name="schoolCd" value="${t.school.cd}">
+									<input type="hidden" name="no" value="${t.no}">
+									<input type="text" name="point" value="${t.point}">
+								</td>
 								
 								
 								<td>
@@ -113,12 +120,13 @@
 						</c:forEach>
 						
 					</table>
-				<button type="submit" class="btn btn-secondary">
-					登録して終了
-				</button>
+				
 				</c:when>
 				
 			</c:choose>
+				<button type="submit" class="btn btn-secondary">
+					登録して終了
+				</button>
 		<div class="my-2 text-end px-4">
 			<a href="TestList.action">戻る</a>
 		</div>

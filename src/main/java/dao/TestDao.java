@@ -154,6 +154,90 @@ public class TestDao extends Dao {
 		return list;
 	}
 	
+	public List<Test> filter(School school, String entYear, String classNum, String subjectCd, String no) throws Exception {
+				//リストを初期化
+				List<Test>list=new ArrayList<>();
+				//コネクションを確立
+				Connection connection=getConnection();
+				//プリペアードステートメント
+				PreparedStatement statement=null;
+				//リザルトセット
+				ResultSet rSet=null;
+				
+				String sql = ("select t.*,s.ent_year "
+						+ "from test t join student s on t.student_no = s.no"
+						+ " where t.school_cd=?");
+				try {
+					//プリペアードステートメントにSQL文をセット
+					if (entYear != null && !entYear.equals("0"))
+				        sql += "AND s.ent_year = ? ";
+
+				    if (classNum != null && !classNum.equals("0"))
+				        sql += "AND t.class_num = ? ";
+
+				    if (subjectCd != null && !subjectCd.isEmpty())
+				        sql += "AND t.subject_cd = ? ";
+
+				    if (no != null && !no.equals("0"))
+				        sql += "AND t.no = ? ";
+
+				    sql += "ORDER BY t.no ASC";
+
+				    Connection con = getConnection();
+				    statement = con.prepareStatement(sql);
+
+				    int idx = 1;
+				    statement.setString(idx++, school.getCd());
+
+				    if (entYear != null && !entYear.equals("0"))
+				    	statement.setInt(idx++, Integer.parseInt(entYear));
+
+				    if (classNum != null && !classNum.equals("0"))
+				    	statement.setString(idx++, classNum);
+
+				    if (subjectCd != null && !subjectCd.isEmpty())
+				    	statement.setString(idx++, subjectCd);
+
+				    if (no != null && !no.equals("0"))
+				    	statement.setInt(idx++, Integer.parseInt(no));
+
+				    rSet = statement.executeQuery();
+
+				    while (rSet.next()) {
+				        Test t = new Test();
+				        t.setNo(rSet.getInt("no"));
+				        t.setClassNum(rSet.getString("class_num"));
+				        t.setPoint(rSet.getInt("point"));
+
+				        Student st = new Student();
+				        st.setNo(rSet.getString("student_no"));
+				        st.setName(rSet.getString("name"));
+				        st.setEntYear(rSet.getInt("ent_year"));
+				        t.setStudent(st);
+				    }
+				}catch(Exception e) {
+					throw e;
+				}finally{
+				//プリペアードステートメントを閉じる
+				if(statement!=null) {
+					try {
+						statement.close();
+					}catch(SQLException sqle) {
+						throw sqle;
+					}
+				}
+				//コネクションを閉じる
+				if(connection!=null) {
+					try {
+						connection.close();
+					}catch(SQLException sqle) {
+						throw sqle;
+					}
+				}
+		}
+		return list;
+	}
+	
 	// 保存（INSERT or UPDATE）
 	public boolean save(Test test) throws Exception{
 		
@@ -303,5 +387,26 @@ public class TestDao extends Dao {
 	    }
 
 	    return list;
+	}
+
+	//testRegist用保存メソッド
+	public void updatePoints(List<Test> list) throws Exception {
+
+	    String sql = "UPDATE test SET point=? " +
+	                 "WHERE school_cd=? AND student_no=? AND subject_cd=? AND no=?";
+
+	    try (Connection con = getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        for (Test t : list) {
+	            ps.setInt(1, t.getPoint());
+	            ps.setString(2, t.getSchool().getCd());
+	            ps.setString(3, t.getStudent().getNo());
+	            ps.setString(4, t.getSubject().getCd());
+	            ps.setInt(5, t.getNo());
+
+	            ps.executeUpdate();
+	        }
+	    }
 	}
 }
