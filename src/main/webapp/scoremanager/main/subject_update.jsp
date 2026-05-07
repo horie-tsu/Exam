@@ -19,39 +19,35 @@
     </div>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/scoremanager/main/SubjectUpdateExecute.action" method="post">
+<!-- <form action="${pageContext.request.contextPath}/scoremanager/main/SubjectUpdateExecute.action" method="post"> -->
 
-<table>
-    <tr>
-        <td>科目コード</td>
-        <td>
-            ${cd}
-            <input type="hidden" name="cd" value="${cd}">
-        </td>
-    </tr>
-    <tr>
-        <td>科目名</td>
-        <td>
-            <input type="text"
+<form method="post" action="SubjectUpdateExecute.action">
+			<div class="col-11 px-4 my-3">
+        		<label class="form-label">科目コード</label>
+            	<input 
+            		type="text" 
+            		name="cd" 
+            		class="form-control"
+            		value="${cd}"
+            		readonly>
+            </div>
+            <div class="col-11 px-4 my-3">
+        		<label class="form-label">科目名</label>
+            	<input type="text"
                    name="name"
+                   class="form-control"
                    value="${name}"
                    maxlength="20">
-        </td>
-    </tr>
-</table>
+             </div>
 
 <!-- ボタン -->
-          <button type="submit" class="btn btn-primary">
-            更新
-          </button>
+          <div class="col-11 px-4 my-3">
+          	<button type="submit" class="btn btn-primary">変更</button>
+          </div>
           
-		<div class="mt-2">
-          <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action"
-             class="btn btn-secondary ms-2">
-            戻る
-          </a>
-
-        </div>
+        <div class="col-11 px-4 my-3">
+			<a href="SubjectList.action">戻る</a>
+		</div>
 
       </form>
 

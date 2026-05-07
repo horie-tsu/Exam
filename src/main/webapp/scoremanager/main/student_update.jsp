@@ -57,14 +57,15 @@
 				</div>
 				
 				<label>
-				在学中
-					<input
-						type="checkbox"
-						name="attend"
-						value="true"
-						${student.attend ? "checked" : ""}>
+					<div class="px-4">
+						在学中
+						<input
+							type="checkbox"
+							name="attend"
+							value="true"
+							${student.attend ? "checked" : ""}>
+					</div>
 				</label>
-
 				<div class="col-11 px-4 my-3">
 					<button type="submit" class="btn btn-primary">変更</button>
 				</div>
