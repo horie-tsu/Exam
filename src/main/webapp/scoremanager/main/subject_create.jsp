@@ -18,7 +18,7 @@
 		</section>
 
 		<form method="post" action="SubjectCreateExecute.action">
-			<div class="col-11 px-4">
+			<div class="col-11 px-4 my-3">
 
 				<label class="form-label">科目コード</label>
 				<input type="text"
@@ -29,9 +29,9 @@
 					   placeholder="科目コードを入力してください"
 					   value="${param.cd}">
 				<span class="text-danger">${errors.cd}</span>
-
-				<br>
-
+			</div>
+			
+			<div class="col-11 px-4 my-3">
 				<label class="form-label">科目名</label>
 				<input type="text"
 					   name="name"
@@ -42,13 +42,16 @@
 					   value="${param.name}">
 				<span class="text-danger">${errors.name}</span>
 
-				<br>
-
-				<button type="submit" class="btn btn-primary">
-					登録
-				</button>
-				<a href="SubjectList.action" class="d-block mt-2">戻る</a>
-			</div>
+				</div>
+				
+				<div class="col-11 px-4 my-3">
+					<button type="submit" class="btn btn-primary">
+						登録
+					</button>
+					<a href="SubjectList.action" class="d-block mt-2">
+						戻る
+					</a>
+				</div>
 		</form>
 	</c:param>
 </c:import>

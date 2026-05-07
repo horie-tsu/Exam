@@ -14,7 +14,7 @@
 		</section>
 		
 		<form method="post" action="StudentCreateExecute.action">
-			<div class="col-11">
+			<div class="col-11 px-4 my-3">
 				
 				<label class="form-label">入学年度</label>
 				<select name="entYear" class="form-select">
@@ -25,8 +25,12 @@
 						</option>
 					</c:forEach>
 				</select>
-				<span class="text-danger">${errors.entYear}</span>
-
+			</div>
+				<div>
+					<span class="text-danger">${errors.entYear}</span>
+				</div>
+				
+				<div class="col-11 px-4 my-3">
 				<label class="form-label">学生番号</label>
 				<input type="text"
 					   name="stuId"
@@ -35,9 +39,13 @@
 					   required
 					   placeholder="学生番号を入力してください"
 					   value="${stuId}">
-				<span class="text-danger">${errors.stuId}</span>
-
-				<br>
+				</div>
+				
+				<div>
+					<span class="text-danger">${errors.stuId}</span>
+				</div>
+				
+				<div class="col-11 px-4 my-3">
 
 				<label class="form-label">氏名</label>
 				<input type="text"
@@ -46,10 +54,13 @@
 					   maxlength="30"
 					   required
 					   placeholder="氏名を入力してください"
-					   value="${stuId}">
-				<span class="text-danger">${errors.stuName}</span>
-
-				<br>
+					   value="${stuName}">
+				</div>
+				<div>
+					<span class="text-danger">${errors.stuName}</span>
+				</div>
+				
+				<div class="col-11 px-4 my-3">
 				<label class="form-label" for="student-f2-select">クラス</label>
 				<select class="form-select" id="student-f2-select" name="f2">
 					<c:forEach var="num" items="${class_num_set}">
@@ -59,11 +70,14 @@
 						</option>
 					</c:forEach>
 				</select>
-				<br>
-
-				<button type="submit" class="btn btn-secondary">登録して終了</button>
-				<a href="StudentList.action" class="d-block mt-2">戻る</a>
-			</div>
+				</div>
+				
+				<div class="col-11 px-4 my-3">
+					<button type="submit" class="btn btn-secondary">登録して終了</button>
+				</div>
+				<div class="col-11 px-4 my-3">
+					<a href="StudentList.action" class="d-block mt-2">戻る</a>
+				</div>
 		</form>
 
 	</c:param>
