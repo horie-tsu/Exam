@@ -10,10 +10,9 @@
         <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-4">
             テスト成績一覧
         </h2>
+      
 
-        <div class="text-end px-4">
-            <a href="TestRegist.action">新規登録</a>
-        </div>
+                     
 
         <!-- 検索フォーム -->
         <jsp:include page="test_list_subject.jsp" />
@@ -23,7 +22,22 @@
         <c:choose>
 
         
-           <c:when test="${mode == 'subject'}">
+          <c:when test="${mode eq 'subject'}">
+           
+            <!-- エラー表示 -->
+  
+  <c:if test="${not empty errors}">
+    <div class="text-danger mt-2 px-4">
+      <c:forEach var="e" items="${errors}">
+        ${e}<br>
+      </c:forEach>
+    </div>
+  </c:if>
+
+<c:forEach var="t" items="${test_list}">
+    ${t.studentName}
+</c:forEach>
+  
     <div>科目：${cdname}</div>
 
     <table class="table table-bordered">
@@ -36,21 +50,21 @@
             <th>二回</th>
         </tr>
 
-        <c:forEach var="t" items="${test_list}">
+        <c:forEach var="t" items="${subjectList}">
             <tr>
                 <td>${t.entYear}</td>
                 <td>${t.classNum}</td>
                 <td>${t.studentNo}</td>
                 <td>${t.studentName}</td>
                 <td><c:choose>
-  <c:when test="${t.points[1] != null}">
-    ${t.points[1]}
+  <c:when test="${t.points['1'] != null}">
+    ${t.points['1']}
   </c:when>
   <c:otherwise>-</c:otherwise>
 </c:choose></td>
                 <td><c:choose>
-  <c:when test="${t.points[2] != null}">
-    ${t.points[2]}
+  <c:when test="${t.points['2'] != null}">
+    ${t.points['2']}
   </c:when>
   <c:otherwise>-</c:otherwise>
 </c:choose></td>
@@ -60,56 +74,55 @@
 </c:when>
 
           
-            <c:when test="${mode == 'student'}">
+          <c:when test="${mode eq 'student'}">
 
-                 <!-- エラー表示 -->
-  
-  <c:if test="${not empty errors}">
-    <div class="text-danger mt-2 px-4">
-      <c:forEach var="e" items="${errors}">
-        ${e}<br>
-      </c:forEach>
-    </div>
-  </c:if>
+    <!-- エラー表示 -->
+    <c:if test="${not empty errors}">
+        <div class="text-danger mt-2 px-4">
+            <c:forEach var="e" items="${errors}">
+                ${e}<br>
+            </c:forEach>
+        </div>
+    </c:if>
 
-  <hr>
+    <hr>
 
-  
-  <!-- 学生情報表示 -->
-  
-  <c:if test="${student != null}">
-    <div class="fw-bold px-4 mb-2">
-      氏名：${student.name}（${student.no}）
-    </div>
-  </c:if>
+    <!-- 学生情報 -->
+    <c:if test="${student != null}">
+        <div class="fw-bold px-4 mb-2">
+            氏名：${student.name}（${student.no}）
+        </div>
+    </c:if>
 
- 
-  <!-- 成績一覧テーブル -->
+    <!-- 成績一覧 -->
+    <c:if test="${student != null}">
+        <table class="table table-bordered table-striped w-75 ms-4">
 
-  <c:if test="${student != null}">
-    <table class="table table-bordered table-striped w-75 ms-4">
-      <thead class="table-secondary">
-        <tr>
-            <th>科目コード</th>
-            <th>科目名</th>
-            <th>回数</th>
-            <th>点数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach var="t" items="${test_list}">
-          <tr>
-          <td>${t.subject.cd}</td>
-            <td>${t.subject.name}</td>
-            <td>${t.no}</td>
-            <td>${t.point}</td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
-  </c:if>
+            <thead class="table-secondary">
+                <tr>
+                    <th>科目コード</th>
+                    <th>科目名</th>
+                    <th>回数</th>
+                    <th>点数</th>
+                </tr>
+            </thead>
 
-            </c:when>
+            <tbody>
+                <c:forEach var="t" items="${studentTestList}">
+                    <tr>
+                        <td>${t.subject.cd}</td>
+                        <td>${t.subject.name}</td>
+                        <td>${t.no}</td>
+                        <td>${t.point}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+
+        </table>
+    </c:if>
+
+</c:when>
+
 
         </c:choose>
 

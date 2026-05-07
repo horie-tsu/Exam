@@ -84,7 +84,7 @@ public class TestListStudentExecuteAction extends Action {
 
             // JSP に渡す
             request.setAttribute("student", student);
-            request.setAttribute("test_list", testList);
+            request.setAttribute("studentTestList", testList);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -90,19 +90,21 @@ public class TestListSubjectExecuteAction extends Action {
 	        // ★ 応用：最大テスト回数を渡す（JSPで列自動生成できる）
 	        int maxTestNo = 0;
 	        for (TestListSubject t : list) {
-	            for (Integer key : t.getPoints().keySet()) {
-	                if (key != null && key > maxTestNo) {
-	                    maxTestNo = key;
-	                }
-	            }
+	        	for (String key : t.getPoints().keySet()) {
+
+	        	    int testNo = Integer.parseInt(key);
+
+	        	    if (testNo > maxTestNo) {
+	        	        maxTestNo = testNo;
+	        	    }
+	        	}
 	        }
 	        req.setAttribute("maxTestNo", maxTestNo);
 	    }
-
 	    // モード
 	    req.setAttribute("mode", "subject");
 
-	    req.setAttribute("test_list", list);
+	    req.setAttribute("subjectList", list);
 	    req.setAttribute("errors", errors);
 
 	    req.getRequestDispatcher("/scoremanager/main/test_list.jsp")

@@ -17,21 +17,21 @@ public class TestListSubjectDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement(
-	            "SELECT " +
-	            " s.ENT_YEAR, " +
-	            " s.NO, " +
-	            " s.NAME, " +
-	            " s.CLASS_NUM, " +
-	            " t.NO AS TEST_NO, " +
-	            " t.POINT " +
-	            "FROM STUDENT s " +
-	            "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
-	            "WHERE t.SUBJECT_CD = ? " +
-	            "AND s.ENT_YEAR = ? " +
-	            "AND s.CLASS_NUM = ? " +
-	            "ORDER BY s.NO, t.NO"
-	        );
+	    	statement = connection.prepareStatement(
+	    		    "SELECT " +
+	    		    " s.ENT_YEAR, " +
+	    		    " s.NO AS STUDENT_NO, " +
+	    		    " s.NAME, " +
+	    		    " s.CLASS_NUM, " +
+	    		    " t.NO AS TEST_NO, " +
+	    		    " t.POINT " +
+	    		    "FROM STUDENT s " +
+	    		    "INNER JOIN TEST t ON s.NO = t.STUDENT_NO " +
+	    		    "WHERE t.SUBJECT_CD = ? " +
+	    		    "AND s.ENT_YEAR = ? " +
+	    		    "AND s.CLASS_NUM = ? " +
+	    		    "ORDER BY s.NO, t.NO"
+	    		);
 
 	        statement.setString(1, sub.getCd());
 	        statement.setInt(2, entYear);
@@ -44,7 +44,7 @@ public class TestListSubjectDao extends Dao {
 
 	        while (rSet.next()) {
 
-	            String studentNo = rSet.getString("NO");
+	        	String studentNo = rSet.getString("STUDENT_NO");
 
 	            // 学生変わったら新規
 	            if (current == null || !studentNo.equals(currentStudentNo)) {
@@ -70,8 +70,7 @@ public class TestListSubjectDao extends Dao {
 	            if (!rSet.wasNull()) {
 	                point = p;
 	            }
-
-	            current.getPoints().put(testNo, point);
+	            current.getPoints().put(String.valueOf(testNo), point);
 	        }
 
 	    } finally {
