@@ -28,7 +28,7 @@
 					   required
 					   placeholder="科目コードを入力してください"
 					   value="${param.cd}">
-				<span class="text-danger">${errors.cd}</span>
+				<span class="text-danger">${errors.subcd}</span>
 			</div>
 			
 			<div class="col-11 px-4 my-3">
@@ -48,6 +48,8 @@
 					<button type="submit" class="btn btn-primary">
 						登録
 					</button>
+				</div>
+				<div class="col-11 px-4 my-3">
 					<a href="SubjectList.action" class="d-block mt-2">
 						戻る
 					</a>
