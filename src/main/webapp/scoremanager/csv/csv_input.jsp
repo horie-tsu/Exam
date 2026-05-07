@@ -13,7 +13,7 @@
 			</h2>
 		</section>
 
-		<form action="Csv.action" method="POST" enctype="multipart/form-data" class="px-4">
+		<form action="/scoremanager/main/Csv.action" method="POST" enctype="multipart/form-data" class="px-4">
 			<div class="mb-3">
 				<label for="csv" class="form-label">CSVファイル</label>
 				<input type="file" id="csv" name="csv" class="form-control" required>

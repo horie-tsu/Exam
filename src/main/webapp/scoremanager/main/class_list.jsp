@@ -11,6 +11,11 @@
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">クラス管理</h2>
 			<div class="my-2 text-end px-4">
+	<a href="Csv.action" class="btn btn-success">
+		CSV取り込み
+	</a>
+</div>
+			<div class="my-2 text-end px-4">
 				<a href="ClassCreate.action">新規登録</a>
 			</div>
 			<form method="get">
