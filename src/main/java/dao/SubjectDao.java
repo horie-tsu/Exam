@@ -61,6 +61,51 @@ public class SubjectDao extends Dao {
 		return subject;
 		
 	}
+	
+	public Subject get(String cd, School school) throws Exception {
+
+		Subject subject = null;
+
+		Connection connection = getConnection();
+
+		PreparedStatement statement = null;
+
+		try {
+
+			statement = connection.prepareStatement(
+				"select * from subject where cd=? and school_cd=?"
+			);
+
+			statement.setString(1, cd);
+			statement.setString(2, school.getCd());
+
+			ResultSet rSet = statement.executeQuery();
+
+			if (rSet.next()) {
+
+				subject = new Subject();
+
+				subject.setCd(rSet.getString("cd"));
+				subject.setName(rSet.getString("name"));
+			}
+
+		} catch (Exception e) {
+
+			throw e;
+
+		} finally {
+
+			if (statement != null) {
+				statement.close();
+			}
+
+			if (connection != null) {
+				connection.close();
+			}
+		}
+
+		return subject;
+	}
 	public List<Subject> filter(School school)throws Exception{
 		//リストを初期化
 		List<Subject>list=new ArrayList<>();
