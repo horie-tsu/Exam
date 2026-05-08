@@ -164,28 +164,29 @@ public class TestDao extends Dao {
 				//リザルトセット
 				ResultSet rSet=null;
 				
-				
-				String sql = ("select t.*,s.ent_year "
-						+ "from test t join student s on t.student_no = s.no"
-						+ " where t.school_cd=?");
+				//joinを使うのでbasesqlを使わず作成
+				String sql = ("select t.STUDENT_NO,t.SUBJECT_CD,t.SCHOOL_CD,t.NO,t.POINT,t.CLASS_NUM,s.ent_year,s.name "
+						+ "from test t join student s on t.student_no = s.no "
+						+ "where t.school_cd=? ");
 				try {
-					//プリペアードステートメントにSQL文をセット
+					
 					if (entYear != null && !entYear.equals("0"))
-				        sql += "AND s.ent_year = ? ";
+				        sql += " AND s.ent_year = ? ";
 
 				    if (classNum != null && !classNum.equals("0"))
-				        sql += "AND t.class_num = ? ";
+				        sql += " AND t.class_num = ? ";
 
 				    if (subjectCd != null && !subjectCd.isEmpty())
-				        sql += "AND t.subject_cd = ? ";
+				        sql += " AND t.subject_cd = ? ";
 
 				    if (no != null && !no.equals("0"))
-				        sql += "AND t.no = ? ";
+				        sql += " AND t.no = ? ";
 
-				    sql += "ORDER BY t.no ASC";
-
-				    Connection con = getConnection();
-				    statement = con.prepareStatement(sql);
+				    sql += " ORDER BY t.no ASC";
+				    
+				    System.out.println(sql);
+				  //プリペアードステートメントにSQL文をセット
+				    statement = connection.prepareStatement(sql);
 
 				    int idx = 1;
 				    statement.setString(idx++, school.getCd());
@@ -204,6 +205,7 @@ public class TestDao extends Dao {
 
 				    rSet = statement.executeQuery();
 
+				    System.out.println("テスト"+no);
 				    while (rSet.next()) {
 				        Test t = new Test();
 				        t.setNo(rSet.getInt("no"));

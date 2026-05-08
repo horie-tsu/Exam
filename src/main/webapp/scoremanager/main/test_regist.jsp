@@ -85,7 +85,7 @@
 		
 		<c:choose>
 				<c:when test="${not empty tests}">
-					<div>科目:${f3}(${f4}回目)</div>
+					<div>科目:${sub.name}(${f4}回目)</div>
 					
 					<table class="table table-hover">
 						<tr>

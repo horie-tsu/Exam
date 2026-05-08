@@ -47,6 +47,7 @@ public class TestRegistAction extends Action {
 	// 一覧取得（←ここが重要）
 	List<Test> tests = tDao.filter(teacher.getSchool(),entYearStr,num,sub,no);
 
+	
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
