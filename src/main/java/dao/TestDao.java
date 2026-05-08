@@ -253,6 +253,7 @@ public class TestDao extends Dao {
 		return list;
 	}
 	
+
 	// 保存（INSERT or UPDATE）
 	public boolean save(Test test) throws Exception{
 		

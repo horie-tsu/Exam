@@ -78,7 +78,6 @@
 				<div class="col-2 text-center">
 						<button class="btn btn-primary" id="search-button">検索</button>
 				</div>
-				
 			</div>
 		</form>
 		

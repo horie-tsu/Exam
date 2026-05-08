@@ -70,7 +70,6 @@ public class TestRegistAction extends Action {
 		noSet.add(j);
 	}
 	
-	
 	// セット
 	req.setAttribute("tests", tests);
 	req.setAttribute("subject_list", subjectList);
