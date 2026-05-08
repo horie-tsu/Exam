@@ -56,6 +56,10 @@ public class StudentCreateExecuteAction extends Action {
 
         // エラーがある場合
         if (!errors.isEmpty()) {
+        	req.setAttribute("entYear", entYearStr);
+        	req.setAttribute("stuId", stuId);
+        	req.setAttribute("stuName", stuName);
+        	req.setAttribute("stuClass", stuClass);
             req.setAttribute("errors", errors);
             req.getRequestDispatcher("StudentCreate.action").forward(req, res);
             return;

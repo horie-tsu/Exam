@@ -7,20 +7,20 @@
 		得点管理システム
 	</c:param>
 	<c:param name="scripts"></c:param>
-	
+
 	<c:param name="content">
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生情報登録</h2>
 		</section>
-		
+
 		<form method="post" action="StudentCreateExecute.action">
 			<div class="col-11 px-4 my-3">
-				
+
 				<label class="form-label">入学年度</label>
 				<select name="entYear" class="form-select">
 					<option value="0">-------</option>
 					<c:forEach var="year" items="${ent_year_set}">
-						<option value="${year}" <c:if test="${year==param.entYear}">selected</c:if>>
+						<option value="${year}" <c:if test="${year==entYear}">selected</c:if>>
 							${year}
 						</option>
 					</c:forEach>
@@ -29,7 +29,7 @@
 				<div>
 					<span class="text-danger">${errors.entYear}</span>
 				</div>
-				
+
 				<div class="col-11 px-4 my-3">
 				<label class="form-label">学生番号</label>
 				<input type="text"
@@ -40,11 +40,11 @@
 					   placeholder="学生番号を入力してください"
 					   value="${stuId}">
 				</div>
-				
+
 				<div>
 					<span class="text-danger">${errors.stuId}</span>
 				</div>
-				
+
 				<div class="col-11 px-4 my-3">
 
 				<label class="form-label">氏名</label>
@@ -59,19 +59,21 @@
 				<div>
 					<span class="text-danger">${errors.stuName}</span>
 				</div>
-				
+
 				<div class="col-11 px-4 my-3">
 				<label class="form-label" for="student-f2-select">クラス</label>
 				<select class="form-select" id="student-f2-select" name="f2">
 					<c:forEach var="num" items="${class_num_set}">
-						<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-						<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
+						<option value="${num}" <c:if test="${num==stuClass}">selected</c:if>>
 							${num}
 						</option>
 					</c:forEach>
 				</select>
 				</div>
-				
+				<div>
+					<span class="text-danger">${errors.f2}</span>
+				</div>
+
 				<div class="col-11 px-4 my-3">
 					<button type="submit" class="btn btn-secondary">登録して終了</button>
 				</div>
@@ -81,5 +83,5 @@
 		</form>
 
 	</c:param>
-	
+
 </c:import>
