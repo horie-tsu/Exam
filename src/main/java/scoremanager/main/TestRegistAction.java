@@ -43,11 +43,13 @@ public class TestRegistAction extends Action {
 	System.out.println("科目"+sub);
 	String no = req.getParameter("f4");
 	System.out.println("回数"+no);
+	//科目表示用に返しているもの
+	Subject subject = sDao.get(sub);
 
 	// 一覧取得（←ここが重要）
 	List<Test> tests = tDao.filter(teacher.getSchool(),entYearStr,num,sub,no);
 
-	
+	System.out.println("テスト"+tests);
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
@@ -72,6 +74,7 @@ public class TestRegistAction extends Action {
 	// セット
 	req.setAttribute("tests", tests);
 	req.setAttribute("subject_list", subjectList);
+	req.setAttribute("subject", subject);
 	req.setAttribute("class_num_set", classNumList);
 	req.setAttribute("ent_year_set", entYearSet);
 	req.setAttribute("no_set", noSet);

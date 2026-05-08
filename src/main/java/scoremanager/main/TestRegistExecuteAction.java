@@ -20,14 +20,14 @@ public class TestRegistExecuteAction extends Action {
 
 	        req.setCharacterEncoding("UTF-8");
 
-	        String[] studentNo = req.getParameterValues("studentNo");
-	        String[] subjectCd = req.getParameterValues("subjectCd");
-	        String[] schoolCd = req.getParameterValues("schoolCd");
-	        String[] no = req.getParameterValues("no");
-	        String[] point = req.getParameterValues("point");
+	        String[] studentNo = req.getParameterValues("studentNo[]");
+	        String[] subjectCd = req.getParameterValues("subjectCd[]");
+	        String[] schoolCd = req.getParameterValues("schoolCd[]");
+	        String[] no = req.getParameterValues("no[]");
+	        String[] point = req.getParameterValues("point[]");
 
 	        List<Test> list = new ArrayList<>();
-
+	        
 	        for (int i = 0; i < point.length; i++) {
 
 	            Test t = new Test();
@@ -107,7 +107,6 @@ public class TestRegistExecuteAction extends Action {
 	        
 	        TestDao dao = new TestDao();
 	        dao.updatePoints(list);  // ← 修正（update → save）
-
 	        req.getRequestDispatcher("/scoremanager/main/test_regist_done.jsp")
 	           .forward(req, res);
 	    }

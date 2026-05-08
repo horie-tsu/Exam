@@ -165,8 +165,9 @@ public class TestDao extends Dao {
 				ResultSet rSet=null;
 				
 				//joinを使うのでbasesqlを使わず作成
-				String sql = ("select t.STUDENT_NO,t.SUBJECT_CD,t.SCHOOL_CD,t.NO,t.POINT,t.CLASS_NUM,s.ent_year,s.name "
+				String sql = ("select t.STUDENT_NO,t.SUBJECT_CD,t.SCHOOL_CD,t.NO,t.POINT,t.CLASS_NUM,s.ent_year,s.name,sub.name as subject_name "
 						+ "from test t join student s on t.student_no = s.no "
+						+ " join subject sub on t.subject_cd = sub.cd "
 						+ "where t.school_cd=? ");
 				try {
 					
@@ -184,7 +185,7 @@ public class TestDao extends Dao {
 
 				    sql += " ORDER BY t.no ASC";
 				    
-				    System.out.println(sql);
+				    //System.out.println(sql);
 				  //プリペアードステートメントにSQL文をセット
 				    statement = connection.prepareStatement(sql);
 
@@ -205,18 +206,29 @@ public class TestDao extends Dao {
 
 				    rSet = statement.executeQuery();
 
-				    System.out.println("テスト"+no);
+				    //System.out.println("テスト"+no);
 				    while (rSet.next()) {
 				        Test t = new Test();
 				        t.setNo(rSet.getInt("no"));
 				        t.setClassNum(rSet.getString("class_num"));
 				        t.setPoint(rSet.getInt("point"));
+				        
+				        Subject sub = new Subject();
+				        sub.setCd(rSet.getString("subject_cd"));
+				        sub.setName(rSet.getString("subject_name"));
+				        t.setSubject(sub);
 
 				        Student st = new Student();
 				        st.setNo(rSet.getString("student_no"));
 				        st.setName(rSet.getString("name"));
 				        st.setEntYear(rSet.getInt("ent_year"));
 				        t.setStudent(st);
+				        
+				        School sc = new School();
+				        sc.setCd(rSet.getString("school_cd"));
+				        t.setSchool(sc);
+				        
+				        list.add(t);
 				    }
 				}catch(Exception e) {
 					throw e;

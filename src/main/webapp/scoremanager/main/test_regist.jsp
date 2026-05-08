@@ -76,16 +76,16 @@
 					</div>
 					
 				<div class="col-2 text-center">
-						<button class="btn btn-primary" id="search-button">絞り込み</button>
+						<button class="btn btn-primary" id="search-button">検索</button>
 				</div>
 				
 			</div>
 		</form>
 		
-		
-		<c:choose>
+		<form method="post" action="TestRegistExecute.action">
+			<c:choose>
 				<c:when test="${not empty tests}">
-					<div>科目:${sub.name}(${f4}回目)</div>
+					<div>科目:${subject.name}(${f4}回目)</div>
 					
 					<table class="table table-hover">
 						<tr>
@@ -94,8 +94,7 @@
 							<th>学生番号</th>
 							<th>氏名</th>
 							<th>点数</th>
-						</tr>
-						
+						</tr>						
 						
 						<c:forEach var="t" items="${tests}">
 							<tr>
@@ -104,18 +103,11 @@
 								<td>${t.student.no}</td>
 								<td>${t.student.name}</td>
 								<td>
-									<input type="hidden" name="studentNo" value="${t.student.no}">
-									<input type="hidden" name="subjectCd" value="${t.subject.cd}">
-									<input type="hidden" name="schoolCd" value="${t.school.cd}">
-									<input type="hidden" name="no" value="${t.no}">
-									<input type="text" name="point" value="${t.point}">
-								</td>
-								
-								
-								<td>
-									<a href="TestRegistExecute.action?no=${test.student.no}">
-										変更
-									</a>
+									<input type="hidden" name="studentNo[]" value="${t.student.no}">
+									<input type="hidden" name="subjectCd[]" value="${t.subject.cd}">
+									<input type="hidden" name="schoolCd[]" value="${t.school.cd}">
+									<input type="hidden" name="no[]" value="${t.no}">
+									<input type="text" name="point[]" value="${t.point}">
 								</td>
 							</tr>
 						</c:forEach>
@@ -125,9 +117,10 @@
 				</c:when>
 				
 			</c:choose>
-				<button type="submit" class="btn btn-secondary">
+				<button type="submit" class="btn btn-secondary" >
 					登録して終了
 				</button>
+		</form>
 		<div class="my-2 text-end px-4">
 			<a href="TestList.action">戻る</a>
 		</div>
