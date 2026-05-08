@@ -35,6 +35,7 @@ public class SchoolDao extends Dao {
 			ResultSet rSet = statement.executeQuery();
 
 			if (rSet.next()) {
+				school = new School();
 				// リザルトセットが存在する場合
 				// 学校インスタンスに学校コードと学校名をセット
 				school.setCd(rSet.getString("cd"));
@@ -67,6 +68,47 @@ public class SchoolDao extends Dao {
 		
 		return school;
 	}
+	public School getByName(String name) throws Exception {
+		School school = null;
+		Connection connection = getConnection();
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("select * from school where name = ?");
+			statement.setString(1, name);
+			
+			ResultSet rSet = statement.executeQuery();
+			if (rSet.next()) {
+				school = new School();
+				school.setCd(rSet.getString("cd"));
+				school.setName(rSet.getString("name"));
+			}
+		} finally {
+			if (statement != null) statement.close();
+			if (connection != null) connection.close();
+		}
+		
+		return school;
+	}
+	public void save(School school) throws Exception {
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+
+	    try {
+	        statement = connection.prepareStatement(
+	            "insert into school (cd, name) values (?, ?)"
+	        );
+	        statement.setString(1, school.getCd());
+	        statement.setString(2, school.getName());
+
+	        statement.executeUpdate();
+
+	    } finally {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+	}
+
 	public List<School> get() throws Exception {
 	    List<School> list = new ArrayList<>();
 	    Connection connection = getConnection();
