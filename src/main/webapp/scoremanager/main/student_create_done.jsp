@@ -21,7 +21,7 @@
        
 
    
-        <a href="StendutList.action" >
+        <a href="StudentList.action" >
           学生一覧
         </a>
 
