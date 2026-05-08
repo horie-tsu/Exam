@@ -17,7 +17,7 @@
 			</h2>
 		</section>
 
-		<form method="post" action="SubjectCreateExecute.action">
+		<form method="post" action="ClassCreateExecute.action">
 			<div class="col-11 px-4">
 			
 				<label class="form-label">学校名</label>
@@ -27,19 +27,29 @@
 					   maxlength="20"
 					   required
 					   placeholder="学校名を入力してください"
-					   value="${param.name}">
-				<span class="text-danger">${errors.name}</span>
+					   value="${param.school_name}">
+				<span class="text-danger">${errors.school_name}</span>
+
+				<br>
+				<label class="form-label">学校コード</label>
+				<input type="text"
+					   name="school_cd"
+					   class="form-control"
+					   maxlength="3"
+					   required
+					   placeholder="学校コードを入力してください"
+					   value="${param.school_cd}">
 
 				<br>
 				<label class="form-label">クラス番号</label>
 				<input type="text"
-					   name="cd"
+					   name="class_num"
 					   class="form-control"
 					   maxlength="3"
 					   required
 					   placeholder="クラス番号を入力してください"
-					   value="${param.cd}">
-				<span class="text-danger">${errors.cd}</span>
+					   value="${param.class_num}">
+				<span class="text-danger">${errors.class_num}</span>
 
 				<br>
 

@@ -1,0 +1,39 @@
+<%-- クラス登録完了JSP --%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<c:import url="/common/base.jsp">
+  <c:param name="title">クラス情報登録</c:param>
+
+  <c:param name="content">
+    <section class="me-4">
+
+      <!-- ① 画面タイトル -->
+      <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-4">
+        クラス登録
+      </h2>
+		
+      <div class="px-4">
+
+        <!-- ② 完了メッセージ -->
+        <p class="alert alert-success text-center">
+          登録が完了しました
+        </p>
+        
+        <!-- ③科目登録画面へ -->
+        <div class="d-flex gap-4 mt-2">
+        <a href="ClassCreate.action" class="me-5">
+          戻る
+        </a>
+       
+
+        <!-- ④ 科目一覧へ -->
+        <a href="ClassList.action" >
+          クラス一覧
+        </a>
+        </div>
+      </div>
+
+    </section>
+  </c:param>
+</c:import>
