@@ -20,17 +20,9 @@
 		<form method="post" action="ClassCreateExecute.action">
 			<div class="col-11 px-4">
 			
-				<label class="form-label">学校名</label>
-				<input type="text"
-					   name="name"
-					   class="form-control"
-					   maxlength="20"
-					   required
-					   placeholder="学校名を入力してください"
-					   value="${param.school_name}">
-				<span class="text-danger">${errors.school_name}</span>
+			
 
-				<br>
+				
 				<label class="form-label">学校コード</label>
 				<input type="text"
 					   name="school_cd"

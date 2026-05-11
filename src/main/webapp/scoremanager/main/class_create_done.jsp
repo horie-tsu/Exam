@@ -1,39 +1,42 @@
-<%-- クラス登録完了JSP --%>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c"
+    uri="jakarta.tags.core"%>
 
 <c:import url="/common/base.jsp">
-  <c:param name="title">クラス情報登録</c:param>
 
-  <c:param name="content">
-    <section class="me-4">
+    <c:param name="title">
+        クラス登録完了
+    </c:param>
 
-      <!-- ① 画面タイトル -->
-      <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-4">
-        クラス登録
-      </h2>
-		
-      <div class="px-4">
+    <c:param name="content">
 
-        <!-- ② 完了メッセージ -->
-        <p class="alert alert-success text-center">
-          登録が完了しました
-        </p>
-        
-        <!-- ③科目登録画面へ -->
-        <div class="d-flex gap-4 mt-2">
-        <a href="ClassCreate.action" class="me-5">
-          戻る
-        </a>
-       
+        <section class="me-4">
 
-        <!-- ④ 科目一覧へ -->
-        <a href="ClassList.action" >
-          クラス一覧
-        </a>
-        </div>
-      </div>
+            <h2 class="h3 mb-3 fw-normal
+                bg-secondary bg-opacity-10
+                py-2 px-4">
 
-    </section>
-  </c:param>
+                クラス登録完了
+
+            </h2>
+
+            <div class="alert alert-success">
+
+                クラスを登録しました。
+
+            </div>
+
+            <a href="ClassList.action">
+
+                クラス一覧へ
+
+            </a>
+
+        </section>
+
+    </c:param>
+
 </c:import>

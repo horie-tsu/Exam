@@ -4,70 +4,95 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bean.ClassNum;
-import bean.School;
-import bean.Teacher;
 import dao.ClassNumDao;
-import dao.SchoolDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
 public class ClassCreateExecuteAction extends Action {
 
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		HttpSession session = req.getSession();
-		Teacher teacher = (Teacher) session.getAttribute("user");
-		
-		ClassNumDao classDao = new ClassNumDao();
-        SchoolDao schoolDao = new SchoolDao();
-        Map<String, String> errors = new HashMap<>();
-        
-        
-        
+    @Override
+    public void execute(
+            HttpServletRequest req,
+            HttpServletResponse res)
+            throws Exception {
+
+        // 文字コード
+        req.setCharacterEncoding("UTF-8");
+
         // パラメータ取得
-        String schoolName = req.getParameter("name");
-        String classnum = req.getParameter("class_num");
-        String schoolCd = req.getParameter("school_cd");
+        String schoolCd =
+                req.getParameter("school_cd");
 
-        
-        //ログインチェック
-        if (teacher == null) {
-            errors.put("teacher", "ログイン情報がありません");
-            req.setAttribute("errors", errors);
-            return;
+        String classNum =
+                req.getParameter("class_num");
+
+        // エラー
+        Map<String, String> errors =
+                new HashMap<>();
+
+        // DAO
+        ClassNumDao dao =
+                new ClassNumDao();
+
+        // 入力チェック
+        if (classNum == null ||
+            classNum.equals("")) {
+
+            errors.put(
+                "class_num",
+                "クラス番号を入力してください"
+            );
         }
-        
-        School school = schoolDao.getByName(schoolName);
-     // 学校名チェック
-        if (school != null ) {
-            errors.put("school_name", "学校名が重複しています");
+
+        // 重複チェック
+        ClassNum old =
+                dao.get(
+                    schoolCd,
+                    classNum
+                );
+
+        if (old != null) {
+
+            errors.put(
+                "class_num",
+                "すでに存在しています"
+            );
         }
-     // エラーがある場合
+
+        // エラーあり
         if (!errors.isEmpty()) {
-            req.setAttribute("errors", errors);
-            req.getRequestDispatcher("ClassCreate.action").forward(req, res);
+
+            req.setAttribute(
+                "errors",
+                errors
+            );
+
+            req.getRequestDispatcher(
+                "class_create.jsp"
+            ).forward(req, res);
+
             return;
         }
-     // 登録処理
-        School newSchool = new School();
-        newSchool.setCd(schoolCd);
-        newSchool.setName(schoolName);
-        schoolDao.save(newSchool);
-        
-        
-        ClassNum class_num = new ClassNum();
-        class_num.setClass_num(classnum);
-        
-        class_num.setSchool(newSchool);
-        
-        classDao.save(class_num);
 
-        // 完了後
-        res.sendRedirect("class_create_done.jsp");
+        // Beanにセット
+        ClassNum c =
+                new ClassNum();
 
-	}
+        c.setSchoolCd(
+            schoolCd
+        );
 
+        c.setClassNum(
+            classNum
+        );
+
+        // 保存
+        dao.save(c);
+
+        // 完了画面
+        req.getRequestDispatcher(
+            "class_create_done.jsp"
+        ).forward(req, res);
+    }
 }

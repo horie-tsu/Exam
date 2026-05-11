@@ -1,6 +1,5 @@
 package scoremanager.main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,57 +14,90 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tool.Action;
 
-public class ClassListAction extends Action {//未完
+public class ClassListAction extends Action {
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    public void execute(
+            HttpServletRequest req,
+            HttpServletResponse res)
+            throws Exception {
 
-        HttpSession session = req.getSession();
-        Teacher teacher = (Teacher) session.getAttribute("user");
+        HttpSession session =
+                req.getSession();
 
-        SchoolDao scDao = new SchoolDao();
-        ClassNumDao cNumDao = new ClassNumDao();
-        Map<String, String> errors = new HashMap<>();
+        Teacher teacher =
+                (Teacher)session.getAttribute("user");
 
-        // 学校一覧（プルダウン用）
-        List<School> schools = scDao.get();
-        req.setAttribute("schools", schools);
+        // ログイン確認
+        if (teacher == null) {
+
+            res.sendRedirect("../login.jsp");
+            return;
+        }
+
+        // DAO
+        SchoolDao scDao =
+                new SchoolDao();
+
+        ClassNumDao cNumDao =
+                new ClassNumDao();
+
+        // エラー
+        Map<String, String> errors =
+                new HashMap<>();
+
+        // 学校一覧
+        List<School> schools =
+                scDao.get();
+
+        req.setAttribute(
+                "schools",
+                schools
+        );
 
         // パラメータ取得
-        String scName = req.getParameter("f1");
+        String schoolCd =
+                req.getParameter("f1");
 
-        List<ClassNum> classes = null;
+        // クラス一覧
+        List<ClassNum> classes =
+                null;
 
-        // 検索処理
-        if (scName != null && !scName.equals("0")) {
+        // 学校選択時
+        if (schoolCd != null &&
+            !schoolCd.equals("") &&
+            !schoolCd.equals("0")) {
 
-            // 学校取得（名前 or コードに応じて）
-            School school = scDao.get(scName);
+            // 選択学校のみ表示
+            classes =
+                cNumDao.filter(schoolCd);
 
-            if (school != null) {
-            	// DAOはList<String>を返すので受け取る
-                List<String> nums = cNumDao.filter(school);
-                
-                // ClassNumに変換
-                classes = new ArrayList();
-                for (String num :nums) {
-                	ClassNum cn = new ClassNum();
-                	cn.setClass_num(num);
-                	cn.setSchool(school);// Schoolをセット
-                	classes.add(cn);
-                }
-            } else {
-                errors.put("f1", "学校が見つかりません");
-            }
+        } else {
 
+            // 全学校表示
+            classes =
+                cNumDao.all();
         }
 
         // 値保持
-        req.setAttribute("f1", scName);
-        req.setAttribute("classes", classes);
-        req.setAttribute("errors", errors);
+        req.setAttribute(
+                "f1",
+                schoolCd
+        );
 
-        // フォワード
-        req.getRequestDispatcher("class_list.jsp").forward(req, res);
+        req.setAttribute(
+                "classList",
+                classes
+        );
+
+        req.setAttribute(
+                "errors",
+                errors
+        );
+
+        // JSPへ
+        req.getRequestDispatcher(
+            "class_list.jsp"
+        ).forward(req, res);
     }
 }
