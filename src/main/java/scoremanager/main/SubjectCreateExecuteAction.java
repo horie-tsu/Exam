@@ -81,7 +81,7 @@ public class SubjectCreateExecuteAction extends Action {
 		// 保存
 		subDao.save(sub);
 
-		// 一覧画面へ戻る
-		res.sendRedirect("SubjectList.action");
+		// 完了画面へ
+		res.sendRedirect("subject_create_done.jsp");
 	}
 }
