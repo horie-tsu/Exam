@@ -21,18 +21,9 @@ public class SubjectUpdateExecuteAction extends Action {
 
         SubjectDao dao = new SubjectDao();
 
-        // ② 更新前に存在チェック
-        Subject before = dao.get(cd);  // ← 修正
-        if (before == null) {
-            req.setAttribute("errorMsg", "科目が存在していません。");
-            req.getRequestDispatcher("/scoremanager/main/subject_update.jsp")
-               .forward(req, res);
-            return;
-        }
-
         // ① 科目名未入力チェック
         if (name == null || name.trim().isEmpty()) {
-            req.setAttribute("errorMsg", "科目名を入力してください。");
+            req.setAttribute("errorMsg", "科目が存在していません");
             req.setAttribute("cd", cd);
             req.setAttribute("name", name);
 
