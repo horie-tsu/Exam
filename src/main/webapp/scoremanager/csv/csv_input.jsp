@@ -51,9 +51,6 @@
 						科目CSV
 					</option>
 
-					<option value="test">
-						成績CSV
-					</option>
 
 					<option value="classnum">
 						クラスCSV
