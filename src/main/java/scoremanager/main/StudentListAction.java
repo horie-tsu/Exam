@@ -20,83 +20,127 @@ public class StudentListAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
-		HttpSession session=req.getSession();//セッション
-		Teacher teacher =(Teacher)session.getAttribute("user");
-		
-		String entYearStr="";//入力された入学年度
-		String classNum="";//入力されたクラス番号
-		String isAttendStr="";//入力された在学フラグ
-		int entYear=0;//入学年度
-		boolean isAttend=false;//在学フラグ
-		List<Student> students=null;//学生リスト
-		LocalDate todaysDate=LocalDate.now();//LocalDateインスタンスを取得
-		int year=todaysDate.getYear();//現在の年を取得
-		StudentDao sDao=new StudentDao();//学生DAO 
-		ClassNumDao cNumDao=new ClassNumDao();//クラス番号Daoを初期化
-		Map<String,String> errors=new HashMap<>();//エラーメッセージ
-		
-		//リクエストパラメータの取得
-		entYearStr=req.getParameter("f1");
-		classNum=req.getParameter("f2");
-		isAttendStr=req.getParameter("f3");
-		
-		//ビジネスロジック
-		if (entYearStr != null) {
-			//数値に変換
+
+		// セッション
+		HttpSession session = req.getSession();
+
+		// ログインユーザー取得
+		Teacher teacher = (Teacher) session.getAttribute("user");
+
+		// パラメータ
+		String entYearStr = "";
+		String classNum = "";
+		String isAttendStr = "";
+
+		// 変数
+		int entYear = 0;
+		boolean isAttend = false;
+
+		// 学生リスト
+		List<Student> students = null;
+
+		// 現在年取得
+		LocalDate todaysDate = LocalDate.now();
+		int year = todaysDate.getYear();
+
+		// DAO
+		StudentDao sDao = new StudentDao();
+		ClassNumDao cNumDao = new ClassNumDao();
+
+		// エラー
+		Map<String, String> errors = new HashMap<>();
+
+		// リクエストパラメータ取得
+		entYearStr = req.getParameter("f1");
+		classNum = req.getParameter("f2");
+		isAttendStr = req.getParameter("f3");
+
+		// 入学年度変換
+		if (entYearStr != null && !entYearStr.equals("0")) {
 			entYear = Integer.parseInt(entYearStr);
 		}
-		//リストを初期化
-		List<Integer> entYearSet=new ArrayList<>();
-		//十年前から一年後まで年をリストに追加
-		for (int i=year-10;i<year+1;i++) {
+
+		// 在学フラグ
+		if (isAttendStr != null) {
+			isAttend = true;
+		}
+
+		// 入学年度リスト
+		List<Integer> entYearSet = new ArrayList<>();
+
+		// 10年前〜現在年
+		for (int i = year - 10; i <= year; i++) {
 			entYearSet.add(i);
 		}
-		//DBからデータ取得
-		//ログインユーザの学校コードをもとにクラス番号の一覧を取得
-		List<ClassNum> list =
-		        cNumDao.filter(
-		            teacher.getSchool().getCd()
-		        );
-		if (entYear != 0&& !classNum.equals("0")) {
-			//入学年度とクラス番号を指定
-			students=sDao.filter(teacher.getSchool(), entYear,classNum, isAttend);
-		}else if(entYear!=0&&classNum.equals("0")){
-			//入学年度のみ指定
-			students=sDao.filter(teacher.getSchool(), entYear, isAttend);
-		}else if(entYear==0&& classNum==null||entYear==0&&classNum.equals("0")) {
-			//指定なしの場合
-			//全学生情報を取得
-			students=sDao.filter(teacher.getSchool(), isAttend);
-		}else {
-			errors.put("f1", "クラスを指定する場合は入学年度も指定してください");
-			req.setAttribute("errors", errors);
-			//全学生情報を取得
-			students=sDao.filter(teacher.getSchool(), isAttend);
-		}
-		
-		//レスポンス値をセット
-		//リクエストに入学年度をセット
-		req.setAttribute("f1", entYear);
-		//リクエストにクラス番号をセット
-		req.setAttribute("f2", classNum);
-		//在学フラグが送信されていた場合
-		if(isAttendStr!=null) {
-			//在学フラグを立てる
-			isAttend=true;
-			//リクエストに在学フラグをセット
-			req.setAttribute("f3",isAttendStr);
-		}
-			//リクエストに学生リストをセット
-			req.setAttribute("students", students);
-			//リクエストにデータをセット
-			req.setAttribute("class_num_set", list);
-			req.setAttribute("ent_year_set", entYearSet);
-			
-			
-		//JSPへフォワード
-		req.getRequestDispatcher("student_list.jsp").forward(req, res);
-		
-	}
 
+		// クラス一覧取得
+		List<ClassNum> list =
+				cNumDao.filter(
+						teacher.getSchool().getCd()
+				);
+
+		// 学生検索
+		if (entYear != 0 &&
+				classNum != null &&
+				!classNum.equals("0")) {
+
+			// 入学年度 + クラス
+			students = sDao.filter(
+					teacher.getSchool(),
+					entYear,
+					classNum,
+					isAttend
+			);
+
+		} else if (entYear != 0 &&
+				(classNum == null || classNum.equals("0"))) {
+
+			// 入学年度のみ
+			students = sDao.filter(
+					teacher.getSchool(),
+					entYear,
+					isAttend
+			);
+
+		} else if (entYear == 0 &&
+				(classNum == null || classNum.equals("0"))) {
+
+			// 条件なし
+			students = sDao.filter(
+					teacher.getSchool(),
+					isAttend
+			);
+
+		} else {
+
+			// クラスだけ選択
+			errors.put(
+					"f1",
+					"クラスを指定する場合は入学年度も指定してください"
+			);
+
+			req.setAttribute("errors", errors);
+
+			// 全件取得
+			students = sDao.filter(
+					teacher.getSchool(),
+					isAttend
+			);
+		}
+
+		// リクエストセット
+		req.setAttribute("f1", entYear);
+		req.setAttribute("f2", classNum);
+		req.setAttribute("f3", isAttend);
+
+		req.setAttribute("students", students);
+
+		req.setAttribute("class_num_set", list);
+
+		req.setAttribute("ent_year_set", entYearSet);
+
+		// JSPへフォワード
+		req.getRequestDispatcher("student_list.jsp")
+				.forward(req, res);
+	}
 }
