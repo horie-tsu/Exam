@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ClassNum;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
@@ -54,7 +55,11 @@ public class TestRegistAction extends Action {
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
 	// クラス一覧
-	List<String> classNumList = cDao.filter(teacher.getSchool());
+	// クラス一覧
+	List<ClassNum> classNumList =
+	        cDao.filter(
+	            teacher.getSchool().getCd()
+	        );
 	
 	//入学年度
 	List<Integer> entYearSet = new ArrayList<>();

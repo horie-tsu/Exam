@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ClassNum;
 import bean.Teacher;
 import dao.ClassNumDao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +33,10 @@ public class StudentCreateAction extends Action {
 
 		// DBからデータ取得
 		// ログインユーザの学校コードをもとにクラス番号の一覧を取得
-		List<String> list = cNumDao.filter(teacher.getSchool());
+		List<ClassNum> list =
+		        cNumDao.filter(
+		            teacher.getSchool().getCd()
+		        );
 
 		req.setAttribute("ent_year_set", entYearSet);
 		req.setAttribute("class_num_set", list);

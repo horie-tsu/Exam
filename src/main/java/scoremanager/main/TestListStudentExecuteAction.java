@@ -38,7 +38,12 @@ public class TestListStudentExecuteAction extends Action {
     	// JSP用データセット（←これが無いのが原因）
     	request.setAttribute("ent_year_set", entYearSet);
     	try {
-			request.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+    		request.setAttribute(
+    			    "class_num_set",
+    			    classNumDao.filter(
+    			        teacher.getSchool().getCd()
+    			    )
+    			);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

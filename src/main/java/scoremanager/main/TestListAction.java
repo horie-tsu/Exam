@@ -3,6 +3,7 @@ package scoremanager.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ClassNum;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
@@ -42,7 +43,10 @@ public class TestListAction extends Action {
 		    entYearSet.add(i);
 		}
 
-		List<String> classNumList = cDao.filter(teacher.getSchool());
+		List<ClassNum> classNumList =
+		        cDao.filter(
+		            teacher.getSchool().getCd()
+		        );
 		List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
 		// 入力保持

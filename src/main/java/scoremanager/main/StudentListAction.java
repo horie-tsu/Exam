@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bean.ClassNum;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -53,7 +54,10 @@ public class StudentListAction extends Action {
 		}
 		//DBからデータ取得
 		//ログインユーザの学校コードをもとにクラス番号の一覧を取得
-		List<String>list=cNumDao.filter(teacher.getSchool());
+		List<ClassNum> list =
+		        cNumDao.filter(
+		            teacher.getSchool().getCd()
+		        );
 		if (entYear != 0&& !classNum.equals("0")) {
 			//入学年度とクラス番号を指定
 			students=sDao.filter(teacher.getSchool(), entYear,classNum, isAttend);

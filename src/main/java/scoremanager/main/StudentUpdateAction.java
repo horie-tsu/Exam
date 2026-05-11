@@ -2,6 +2,7 @@ package scoremanager.main;
 
 import java.util.List;
 
+import bean.ClassNum;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -28,7 +29,10 @@ public class StudentUpdateAction extends Action {
 		ClassNumDao cNumDao = new ClassNumDao(); // クラス番号Daoを初期化
 
 		// ログインユーザの学校コードをもとにクラス番号の一覧を取得
-		List<String> list = cNumDao.filter(teacher.getSchool());
+		List<ClassNum> list =
+		        cNumDao.filter(
+		            teacher.getSchool().getCd()
+		        );
 		
 		// DBから取得
 		Student student = studentDao.get(no);

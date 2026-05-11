@@ -47,7 +47,12 @@ public class TestListSubjectExecuteAction extends Action {
 	    }
 
 	    req.setAttribute("ent_year_set", entYearSet);
-	    req.setAttribute("class_num_set", classNumDao.filter(teacher.getSchool()));
+	    req.setAttribute(
+	    	    "class_num_set",
+	    	    classNumDao.filter(
+	    	        teacher.getSchool().getCd()
+	    	    )
+	    	);
 	    req.setAttribute("subject_set", subjectDao.filter(teacher.getSchool()));
 
 	    // 入力保持
