@@ -55,7 +55,7 @@ public class TestRegistAction extends Action {
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
 
 	// クラス一覧
-	// クラス一覧
+	
 	List<ClassNum> classNumList =
 	        cDao.filter(
 	            teacher.getSchool().getCd()
