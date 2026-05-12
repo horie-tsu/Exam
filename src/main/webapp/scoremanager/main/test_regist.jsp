@@ -79,12 +79,17 @@
 						<button class="btn btn-secondary" id="search-button">検索</button>
 				</div>
 			</div>
+			<c:if test="${not empty error.filter}">
+    <div style="color:red; margin-bottom:10px;">
+        ${error.filter}
+    </div>
+</c:if>
 		</form>
 		
 		<form method="post" action="TestRegistExecute.action">
 			<c:choose>
 				<c:when test="${not empty tests}">
-					<div>科目:${subject.name}(${f4}回目)</div>
+					<div>科目:${sub.name}(${f4}回目)</div>
 					
 					<table class="table table-hover">
 						<tr>

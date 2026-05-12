@@ -2,7 +2,9 @@ package scoremanager.main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bean.ClassNum;
 import bean.Subject;
@@ -36,6 +38,9 @@ public class TestRegistAction extends Action {
 	int year = todaysDate.getYear();
 
 	// パラメータ
+	// エラー
+    Map<String, String> error = new HashMap<>();
+	
 	String entYearStr = req.getParameter("f1");
 	System.out.println("入学年度"+entYearStr);
 	String num = req.getParameter("f2");
@@ -45,12 +50,25 @@ public class TestRegistAction extends Action {
 	String no = req.getParameter("f4");
 	System.out.println("回数"+no);
 	//科目表示用に返しているもの
-	Subject subject = sDao.get(sub);
+	Subject subBean = (sub != null && !sub.isEmpty()) ? sDao.get(sub) : null;
 	boolean searched = req.getParameter("f1") != null;
-
-	// 一覧取得（←ここが重要）
-	List<Test> tests = tDao.filter(teacher.getSchool(),entYearStr,num,sub,no);
-
+	
+	
+	// 検索欄バリデーション
+	if (searched) {
+	    if ((entYearStr == null || entYearStr.equals("0"))
+	     || (num == null || num.equals("0"))
+	     || (sub == null || sub.isEmpty())
+	     || (no == null || no.equals("0"))) {
+	        error.put("filter", "入学年度とクラスと科目と回数を選択してください。");
+	    }
+	}
+	
+	// 一覧取得（エラーがない場合のみ）
+	List<Test> tests = error.isEmpty() && searched
+	    ? tDao.filter(teacher.getSchool(), entYearStr, num, sub, no)
+	    : new ArrayList<>();
+	
 	System.out.println("テスト"+tests);
 	// 科目一覧（プルダウン用）
 	List<Subject> subjectList = sDao.filter(teacher.getSchool());
@@ -76,10 +94,16 @@ public class TestRegistAction extends Action {
 		noSet.add(j);
 	}
 	
+	// 入力のほうのエラーの引き継ぎ
+	Object errors = req.getAttribute("errors");
+	if (errors != null) {
+	    req.setAttribute("errors", errors);
+	}
 	// セット
+	req.setAttribute("error", error);
 	req.setAttribute("tests", tests);
 	req.setAttribute("subject_list", subjectList);
-	req.setAttribute("subject", subject);
+	req.setAttribute("sub", subBean);
 	req.setAttribute("class_num_set", classNumList);
 	req.setAttribute("ent_year_set", entYearSet);
 	req.setAttribute("no_set", noSet);
