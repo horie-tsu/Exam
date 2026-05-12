@@ -24,7 +24,7 @@ public class TestRegistAction extends Action {
 	Teacher teacher = (Teacher) session.getAttribute("user");
 	
 	if (teacher == null) {
-	    res.sendRedirect("login.jsp"); // またはログインAction
+	    res.sendRedirect("login.Action"); // またはログインAction
 	    return;
 	}
 	
@@ -46,6 +46,7 @@ public class TestRegistAction extends Action {
 	System.out.println("回数"+no);
 	//科目表示用に返しているもの
 	Subject subject = sDao.get(sub);
+	boolean searched = req.getParameter("f1") != null;
 
 	// 一覧取得（←ここが重要）
 	List<Test> tests = tDao.filter(teacher.getSchool(),entYearStr,num,sub,no);
@@ -82,7 +83,7 @@ public class TestRegistAction extends Action {
 	req.setAttribute("class_num_set", classNumList);
 	req.setAttribute("ent_year_set", entYearSet);
 	req.setAttribute("no_set", noSet);
-	
+	req.setAttribute("searched", searched);
 	req.setAttribute("f1",entYearStr);
 	req.setAttribute("f2",num);
 	req.setAttribute("f3",sub);

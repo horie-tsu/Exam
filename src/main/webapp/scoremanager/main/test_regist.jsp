@@ -13,14 +13,14 @@
 	<c:param name="content">
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-				成績登録
+				成績管理
 			</h2>
 		</section>
 
 		<form method="post" action="TestRegist.action">
 				<div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 					
-					<div class="col-4">
+					<div class="col-2">
 						<label class="form-label" for="test-f1-select">入学年度</label>
 						<select class="form-select" id="test-f1-select" name="f1">
 							<option value="0">-------</option>
@@ -33,10 +33,10 @@
 						</select>
 					</div>
 					
-					<div class="col-4">
+					<div class="col-2">
 						<label class="form-label" for="test-f2-select">クラス</label>
 						<select class="form-select" id="test-f2-select" name="f2">
-							<option value="0">-------</option>
+							<option value="0">--------</option>
 							
 							<c:forEach var="num" items="${class_num_set}">
 								<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
@@ -61,7 +61,7 @@
 						</select>
 					</div>
 					
-					<div class="col-4">
+					<div class="col-2">
 						<label class="form-label" for="test-f4-select">回数</label>
 						<select class="form-select" id="test-f4-select" name="f4">
 							<option value="0">-------</option>
@@ -76,7 +76,7 @@
 					</div>
 					
 				<div class="col-2 text-center">
-						<button class="btn btn-primary" id="search-button">検索</button>
+						<button class="btn btn-secondary" id="search-button">検索</button>
 				</div>
 			</div>
 		</form>
@@ -116,9 +116,11 @@
 				</c:when>
 				
 			</c:choose>
-				<button type="submit" class="btn btn-secondary" >
+			<c:if test="${searched}">
+				 <button type="submit" class="btn btn-secondary" >
 					登録して終了
-				</button>
+				</button> 
+			</c:if>
 		</form>
 		<div class="my-2 text-end px-4">
 			<a href="TestList.action">戻る</a>
