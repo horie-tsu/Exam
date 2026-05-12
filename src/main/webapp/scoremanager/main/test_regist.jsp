@@ -87,6 +87,11 @@
 		</form>
 		
 		<form method="post" action="TestRegistExecute.action">
+		<c:if test="${not empty errors.filter}">
+    <div style="color:red; margin-bottom:10px;">
+        ${errors.filter}
+    </div>
+    </c:if>
 			<c:choose>
 				<c:when test="${not empty tests}">
 					<div>科目:${sub.name}(${f4}回目)</div>
