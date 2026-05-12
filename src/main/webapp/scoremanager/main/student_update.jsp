@@ -49,8 +49,8 @@
 					<select class="form-select" id="student-f2-select" name="f2">
 						<c:forEach var="num" items="${class_num_set}">
 							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
-							<option value="${num}" <c:if test="${num==f2}">selected</c:if>>
-								${num}
+							<option value="${num.classNum}" <c:if test="${num.classNum==f2}">selected</c:if>>
+								${num.classNum}
 							</option>
 						</c:forEach>
 					</select>
