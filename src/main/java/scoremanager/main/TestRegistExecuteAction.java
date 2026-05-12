@@ -52,54 +52,46 @@ public class TestRegistExecuteAction extends Action {
 	            list.add(t);
 	        }
 
-//	        // ① 科目名未入力チェック
-//	        if (entYearStr == null || entYearStr.trim().isEmpty()) {
-//	            req.setAttribute("errorMsg", "年度を入力してください。");
-//	            req.setAttribute("year",entYearStr);
-//	        	req.setAttribute("num",num);
-//	        	req.setAttribute("sub",sub);
-//	        	req.setAttribute("no",no);
-//
-//	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
-//	               .forward(req, res);
-//	            return;
-//	        }
-//	        
-//	        if (num == null || num.trim().isEmpty()) {
-//	            req.setAttribute("errorMsg", "クラスを入力してください。");
-//	            req.setAttribute("year",entYearStr);
-//	        	req.setAttribute("num",num);
-//	        	req.setAttribute("sub",sub);
-//	        	req.setAttribute("no",no);
-//
-//	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
-//	               .forward(req, res);
-//	            return;
-//	        }
-//	        
-//	        if (sub == null || sub.trim().isEmpty()) {
-//	            req.setAttribute("errorMsg", "科目を入力してください。");
-//	            req.setAttribute("year",entYearStr);
-//	        	req.setAttribute("num",num);
-//	        	req.setAttribute("sub",sub);
-//	        	req.setAttribute("no",no);
-//
-//	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
-//	               .forward(req, res);
-//	            return;
-//	        }
-//	        
-//	        if (no == null || no.trim().isEmpty()) {
-//	            req.setAttribute("errorMsg", "試験回数を入力してください。");
-//	            req.setAttribute("year",entYearStr);
-//	        	req.setAttribute("num",num);
-//	        	req.setAttribute("sub",sub);
-//	        	req.setAttribute("no",no);
-//
-//	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp")
-//	               .forward(req, res);
-//	            return;
-//	        }
+	     // ① 科目名未入力チェック
+	        if (entYearStr == null || entYearStr.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "年度を入力してください。");
+	            req.setAttribute("year", entYearStr);
+	            req.setAttribute("num", num);
+	            req.setAttribute("sub", sub);
+	            req.setAttribute("no", no);
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
+	            return;
+	        }
+
+	        if (num == null || num.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "クラスを入力してください。");
+	            req.setAttribute("year", entYearStr);
+	            req.setAttribute("num", num);
+	            req.setAttribute("sub", sub);
+	            req.setAttribute("no", no);
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
+	            return;
+	        }
+
+	        if (sub == null || sub.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "科目を入力してください。");
+	            req.setAttribute("year", entYearStr);
+	            req.setAttribute("num", num);
+	            req.setAttribute("sub", sub);
+	            req.setAttribute("no", no);
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
+	            return;
+	        }
+
+	        if (no == null || no.trim().isEmpty()) {
+	            req.setAttribute("errorMsg", "試験回数を入力してください。");
+	            req.setAttribute("year", entYearStr);
+	            req.setAttribute("num", num);
+	            req.setAttribute("sub", sub);
+	            req.setAttribute("no", no);
+	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
+	            return;
+	        }
 
 
 	        // 更新処理
