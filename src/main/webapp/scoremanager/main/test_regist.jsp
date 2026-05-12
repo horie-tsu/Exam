@@ -116,9 +116,11 @@
 				</c:when>
 				
 			</c:choose>
-				<!-- <button type="submit" class="btn btn-secondary" >
+			<c:if test="${searched}">
+				 <button type="submit" class="btn btn-secondary" >
 					登録して終了
-				</button> -->
+				</button> 
+			</c:if>
 		</form>
 		<div class="my-2 text-end px-4">
 			<a href="TestList.action">戻る</a>

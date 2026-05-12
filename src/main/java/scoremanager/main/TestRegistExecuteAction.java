@@ -1,7 +1,9 @@
 package scoremanager.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bean.School;
 import bean.Student;
@@ -16,9 +18,13 @@ public class TestRegistExecuteAction extends Action {
 	    @Override
 	    public void execute(HttpServletRequest req, HttpServletResponse res)
 	            throws Exception {
-
+	    	
 	        req.setCharacterEncoding("UTF-8");
-
+	        
+	        String entYearStr = req.getParameter("f1");
+	        String num = req.getParameter("f2");
+	        String subCd = req.getParameter("f3");
+	        String testNo = req.getParameter("f4");
 	        String[] studentNo = req.getParameterValues("studentNo[]");
 	        String[] subjectCd = req.getParameterValues("subjectCd[]");
 	        String[] schoolCd = req.getParameterValues("schoolCd[]");
@@ -26,6 +32,34 @@ public class TestRegistExecuteAction extends Action {
 	        String[] point = req.getParameterValues("point[]");
 
 	        List<Test> list = new ArrayList<>();
+	       
+	        
+	        // エラー
+	        Map<String, String> errors = new HashMap<>();
+
+	        for (int i = 0; i < point.length; i++) {
+	            int p;
+	            try {
+	                p = Integer.parseInt(point[i]);
+	            } catch (NumberFormatException e) {
+	                errors.put("point" + i, (i + 1) + "行目：数値を入力してください。");
+	                continue;
+	            }
+
+	            if (p < 0 || p > 100) {
+	                errors.put("point" + i, (i + 1) + "行目：0〜100の値を入力してください。");
+	            }
+	        }
+
+	        if (!errors.isEmpty()) {//もしエラーが遭ったら検索結果をそのままにするために一度レジストアクションに送る
+	            req.setAttribute("errors", errors);
+	            req.setAttribute("f1", entYearStr);
+	            req.setAttribute("f2", num);
+				req.setAttribute("f3", subCd);
+	            req.setAttribute("f4", testNo);
+	            req.getRequestDispatcher("TestRegist.action").forward(req, res);
+	            return;
+	        }
 	        
 	        for (int i = 0; i < point.length; i++) {
 
@@ -52,46 +86,7 @@ public class TestRegistExecuteAction extends Action {
 	            list.add(t);
 	        }
 
-	     // ① 科目名未入力チェック
-	        if (entYearStr == null || entYearStr.trim().isEmpty()) {
-	            req.setAttribute("errorMsg", "年度を入力してください。");
-	            req.setAttribute("year", entYearStr);
-	            req.setAttribute("num", num);
-	            req.setAttribute("sub", sub);
-	            req.setAttribute("no", no);
-	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
-	            return;
-	        }
-
-	        if (num == null || num.trim().isEmpty()) {
-	            req.setAttribute("errorMsg", "クラスを入力してください。");
-	            req.setAttribute("year", entYearStr);
-	            req.setAttribute("num", num);
-	            req.setAttribute("sub", sub);
-	            req.setAttribute("no", no);
-	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
-	            return;
-	        }
-
-	        if (sub == null || sub.trim().isEmpty()) {
-	            req.setAttribute("errorMsg", "科目を入力してください。");
-	            req.setAttribute("year", entYearStr);
-	            req.setAttribute("num", num);
-	            req.setAttribute("sub", sub);
-	            req.setAttribute("no", no);
-	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
-	            return;
-	        }
-
-	        if (no == null || no.trim().isEmpty()) {
-	            req.setAttribute("errorMsg", "試験回数を入力してください。");
-	            req.setAttribute("year", entYearStr);
-	            req.setAttribute("num", num);
-	            req.setAttribute("sub", sub);
-	            req.setAttribute("no", no);
-	            req.getRequestDispatcher("/scoremanager/main/test_regist.jsp").forward(req, res);
-	            return;
-	        }
+	    
 
 
 	        // 更新処理
