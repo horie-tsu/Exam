@@ -30,8 +30,8 @@ public class SubjectCreateExecuteAction extends Action {
 		Map<String, String> errors = new HashMap<>();
 
 		// パラメータ取得
-		String subcd = req.getParameter("cd");
-		String subname = req.getParameter("name");
+		String cd = req.getParameter("cd");
+		String name = req.getParameter("name");
 
 		// ログインチェック
 		if (teacher == null) {
@@ -41,21 +41,21 @@ public class SubjectCreateExecuteAction extends Action {
 		}
 
 		// 科目コードチェック
-		if (subcd == null || subcd.isEmpty()) {
+		if (cd == null || cd.isEmpty()) {
 
-			errors.put("subcd", "科目コードを入力してください");
+			errors.put("cd", "科目コードを入力してください");
 
-		} else if (subcd.length() != 3) {
+		} else if (cd.length() != 3) {
 
-			errors.put("subcd", "科目コードは3文字で入力してください");
+			errors.put("cd", "科目コードは3文字で入力してください");
 
-		} else if (subDao.get(subcd, teacher.getSchool()) != null) {
+		} else if (subDao.get(cd, teacher.getSchool()) != null) {
 
-			errors.put("subcd", "科目コードが重複しています");
+			errors.put("cd", "科目コードが重複しています");
 		}
 
 		// 科目名チェック
-		if (subname == null || subname.isEmpty()) {
+		if (name == null || name.isEmpty()) {
 
 			errors.put("name", "科目名を入力してください");
 		}
@@ -74,8 +74,8 @@ public class SubjectCreateExecuteAction extends Action {
 		// 科目登録
 		Subject sub = new Subject();
 
-		sub.setCd(subcd);
-		sub.setName(subname);
+		sub.setCd(cd);
+		sub.setName(name);
 		sub.setSchool(teacher.getSchool());
 
 		// 保存

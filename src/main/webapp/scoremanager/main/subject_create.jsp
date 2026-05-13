@@ -27,7 +27,7 @@
 					   maxlength="3"
 					   required
 					   placeholder="科目コードを入力してください"
-					   value="${param.cd}">
+					   value="${cd}">
 				<span class="text-danger">${errors.subcd}</span>
 			</div>
 			
@@ -39,7 +39,7 @@
 					   maxlength="20"
 					   required
 					   placeholder="科目名を入力してください"
-					   value="${param.name}">
+					   value="${name}">
 				<span class="text-danger">${errors.name}</span>
 
 				</div>
