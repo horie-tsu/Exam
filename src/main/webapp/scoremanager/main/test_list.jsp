@@ -8,7 +8,15 @@
     <section class="me-4">
 
         <h2 class="h3 mb-3 bg-secondary bg-opacity-10 py-2 px-4">
-            テスト成績一覧
+            <c:if test="${mode eq 'subject'}">
+            成績一覧(科目)
+            </c:if>
+            <c:if test="${mode eq 'student'}">
+            成績一覧(学生)
+            </c:if>
+            <c:if test="${mode eq null}">
+            成績参照
+            </c:if>
         </h2>
         
 
