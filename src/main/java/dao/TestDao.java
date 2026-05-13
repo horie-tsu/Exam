@@ -15,7 +15,7 @@ import bean.Test;
 //コミットテスト
 public class TestDao extends Dao {
 	private String baseSql = "select * from test where school_cd=?";
-	public Test get(int no) throws Exception{
+	/*public Test get(int no) throws Exception{
 		//テストインスタンスを初期化
 		Test test=new Test();
 		//データベースへのコネクションを確立
@@ -73,7 +73,7 @@ public class TestDao extends Dao {
 		}
 		return test;
 		
-	}
+	}*/
 	public List<Test> postFilter(ResultSet rSet, School school) throws Exception {
 	    List<Test> list = new ArrayList<>();
 	    StudentDao studentDao = new StudentDao();
@@ -253,53 +253,165 @@ public class TestDao extends Dao {
 		return list;
 	}
 	
+	public Test get(
+	        String studentNo,
+	        String subjectCd,
+	        String schoolCd,
+	        int no
+	) throws Exception {
+
+	    // テストインスタンス
+	    Test test = null;
+
+	    // DB接続
+	    Connection connection = getConnection();
+
+	    PreparedStatement statement = null;
+
+	    try {
+
+	        // SQL
+	        statement = connection.prepareStatement(
+	            "select * from test " +
+	            "where student_no=? " +
+	            "and subject_cd=? " +
+	            "and school_cd=? " +
+	            "and no=?"
+	        );
+
+	        // バインド
+	        statement.setString(1, studentNo);
+	        statement.setString(2, subjectCd);
+	        statement.setString(3, schoolCd);
+	        statement.setInt(4, no);
+
+	        // 実行
+	        ResultSet rSet = statement.executeQuery();
+
+	        // DAO
+	        StudentDao studentDao = new StudentDao();
+	        SubjectDao subjectDao = new SubjectDao();
+	        SchoolDao schoolDao = new SchoolDao();
+
+	        if (rSet.next()) {
+
+	            test = new Test();
+
+	            test.setNo(rSet.getInt("no"));
+	            test.setClassNum(rSet.getString("class_num"));
+	            test.setPoint(rSet.getInt("point"));
+
+	            // 外部キー
+	            test.setStudent(
+	                studentDao.get(
+	                    rSet.getString("student_no")
+	                )
+	            );
+
+	            test.setSubject(
+	                subjectDao.get(
+	                    rSet.getString("subject_cd")
+	                )
+	            );
+
+	            test.setSchool(
+	                schoolDao.get(
+	                    rSet.getString("school_cd")
+	                )
+	            );
+	        }
+
+	    } finally {
+
+	        if (statement != null) {
+	            statement.close();
+	        }
+
+	        if (connection != null) {
+	            connection.close();
+	        }
+	    }
+
+	    return test;
+	}
 
 	// 保存（INSERT or UPDATE）
-	public boolean save(Test test) throws Exception{
-		
-		Connection connection = getConnection();
-		PreparedStatement statement = null;
-		int count = 0;
-		try {
-			Test old = get(test.getNo());
-			if (old == null) {
-				// INSERT
-				statement = connection.prepareStatement(
-					"insert into test(no, student_no, class_num, subject_cd, school_cd, point)"	
-						+"values(?,?,?,?,?,?)"
-				);
-				statement.setInt(1, test.getNo());
-				statement.setString(2, test.getStudent().getNo());
-				statement.setString(3, test.getClassNum());
-				statement.setString(4, test.getSubject().getCd());
-				statement.setString(5, test.getSchool().getCd());
-				statement.setInt(6, test.getPoint());
-			} else {
-				// UPDATE
-				statement = connection.prepareStatement(
-					"update test set student_no=?, class_num=?, subject_cd=?, school_cd=?, point=? where no = ?"
-				);
-				statement.setString(1, test.getStudent().getNo());
-				statement.setString(2, test.getClassNum());
-				statement.setString(3, test.getSubject().getCd());
-				statement.setString(4, test.getSchool().getCd());
-				statement.setInt(5, test.getPoint());
-				statement.setInt(6, test.getNo());
-			}
-			
-			count = statement.executeUpdate();
-		}finally {
-			if (statement != null) {
-				try {statement.close();} catch (SQLException sqle) 
-				{throw sqle;}
-			}
-			if (connection != null) {
-				try { connection.close();} catch (SQLException sqle)
-				{throw sqle;}
-			}
-		}
-	return count > 0;
+	// 登録・更新
+	public boolean save(List<Test> list) throws Exception {
+
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+
+	    int count = 0;
+
+	    try {
+
+	        for (Test test : list) {
+
+	            // 既存確認
+	            Test old = get(
+	                test.getStudent().getNo(),
+	                test.getSubject().getCd(),
+	                test.getSchool().getCd(),
+	                test.getNo()
+	            );
+
+	            if (old == null) {
+
+	                // INSERT
+	                statement = connection.prepareStatement(
+	                    "insert into test(" +
+	                    "student_no, subject_cd, school_cd, no, class_num, point" +
+	                    ") values(?,?,?,?,?,?)"
+	                );
+
+	                statement.setString(1, test.getStudent().getNo());
+	                statement.setString(2, test.getSubject().getCd());
+	                statement.setString(3, test.getSchool().getCd());
+	                statement.setInt(4, test.getNo());
+	                statement.setString(5, test.getClassNum());
+	                statement.setInt(6, test.getPoint());
+
+	            } else {
+
+	                // UPDATE
+	                statement = connection.prepareStatement(
+	                    "update test set " +
+	                    "class_num=?, point=? " +
+	                    "where student_no=? " +
+	                    "and subject_cd=? " +
+	                    "and school_cd=? " +
+	                    "and no=?"
+	                );
+
+	                statement.setString(1, test.getClassNum());
+	                statement.setInt(2, test.getPoint());
+
+	                statement.setString(3, test.getStudent().getNo());
+	                statement.setString(4, test.getSubject().getCd());
+	                statement.setString(5, test.getSchool().getCd());
+	                statement.setInt(6, test.getNo());
+	            }
+
+	            count += statement.executeUpdate();
+
+	            statement.close();
+	        }
+
+	    } finally {
+
+	        if (statement != null) {
+	            statement.close();
+	        }
+
+	        if (connection != null) {
+	            connection.close();
+	        }
+	    }
+
+	    return count > 0;
 	}
+	
 	public List<Test> findAll(School school) throws Exception {//一覧表示
 
 	    List<Test> list = new ArrayList<>();

@@ -45,35 +45,39 @@ public class TestRegistExecuteAction extends Action {
 		// エラー
 		Map<String, String> errors = new HashMap<>();
 
+		// =========================
+		// 点数バリデーション
+		// =========================
 		for (int i = 0; i < point.length; i++) {
-			
-			System.out.println("no=" + no[i]);
-			System.out.println("point=" + point[i]);
-			
 
-			int p;
+		    // 空欄ならスキップ
+		    if (point[i] == null || point[i].isEmpty()) {
+		        continue;
+		    }
 
-			try {
+		    int p;
 
-				p = Integer.parseInt(point[i]);
+		    try {
 
-			} catch (NumberFormatException e) {
+		        p = Integer.parseInt(point[i]);
 
-				errors.put(
-					"point" + i,
-					(i + 1) + "行目：数値を入力してください。"
-				);
+		    } catch (NumberFormatException e) {
 
-				continue;
-			}
+		        errors.put(
+		            "point" + i,
+		            (i + 1) + "行目：数値を入力してください。"
+		        );
 
-			if (p < 0 || p > 100) {
+		        continue;
+		    }
 
-				errors.put(
-					"point" + i,
-					(i + 1) + "行目：0〜100の値を入力してください。"
-				);
-			}
+		    if (p < 0 || p > 100) {
+
+		        errors.put(
+		            "point" + i,
+		            (i + 1) + "行目：0〜100の値を入力してください。"
+		        );
+		    }
 		}
 		
 	
@@ -140,39 +144,56 @@ public class TestRegistExecuteAction extends Action {
 			return;
 		}
 
+		
+		
+		// =========================
 		// 保存用データ作成
+		// =========================
 		for (int i = 0; i < point.length; i++) {
 
-			Test t = new Test();
+		    // 点数未入力なら保存しない
+		    if (point[i] == null || point[i].isEmpty()) {
+		        continue;
+		    }
 
-			// 学生
-			Student st = new Student();
-			st.setNo(studentNo[i]);
-			t.setStudent(st);
+		    // 回数未設定ならスキップ
+		    if (no[i] == null || no[i].isEmpty()) {
+		        continue;
+		    }
 
-			// 科目
-			Subject sub = new Subject();
-			sub.setCd(subjectCd[i]);
-			t.setSubject(sub);
+		    Test t = new Test();
 
-			// 学校
-			School sc = new School();
-			sc.setCd(schoolCd[i]);
-			t.setSchool(sc);
+		    // 学生
+		    Student st = new Student();
+		    st.setNo(studentNo[i]);
+		    t.setStudent(st);
 
-			// 回数
-			t.setNo(Integer.parseInt(no[i]));
+		    // 科目
+		    Subject sub = new Subject();
+		    sub.setCd(subjectCd[i]);
+		    t.setSubject(sub);
 
-			// 点数
-			t.setPoint(Integer.parseInt(point[i]));
+		 // 学校
+		    School sc = new School();
+		    sc.setCd(teacher.getSchool().getCd());  // schoolCd[i] → teacher から取得
+		    t.setSchool(sc);
 
-			list.add(t);
+		    // クラス
+		    t.setClassNum(num);
+
+		    // 回数
+		    t.setNo(Integer.parseInt(no[i]));
+
+		    // 点数
+		    t.setPoint(Integer.parseInt(point[i]));
+
+		    list.add(t);
 		}
 
 		// 更新処理
 		TestDao dao = new TestDao();
 
-		dao.updatePoints(list);
+		dao.save(list);
 
 		req.getRequestDispatcher("/scoremanager/main/test_regist_done.jsp")
 			.forward(req, res);
