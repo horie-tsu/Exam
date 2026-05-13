@@ -41,17 +41,26 @@ public class TestRegistAction extends Action {
 	// エラー
     Map<String, String> error = new HashMap<>();
 	
-	String entYearStr = req.getParameter("f1");
-	System.out.println("入学年度"+entYearStr);
-	String num = req.getParameter("f2");
-	System.out.println("クラス"+num);
-	String sub = req.getParameter("f3");
-	System.out.println("科目"+sub);
-	String no = req.getParameter("f4");
+    String entYearStr = req.getParameter("f1") != null
+    	    ? req.getParameter("f1")
+    	    : (String) req.getAttribute("f1");
+
+    	String num = req.getParameter("f2") != null
+    	    ? req.getParameter("f2")
+    	    : (String) req.getAttribute("f2");
+
+    	String sub = req.getParameter("f3") != null
+    	    ? req.getParameter("f3")
+    	    : (String) req.getAttribute("f3");
+
+    	String no = req.getParameter("f4") != null
+    	    ? req.getParameter("f4")
+    	    : (String) req.getAttribute("f4");
 	System.out.println("回数"+no);
 	//科目表示用に返しているもの
 	Subject subBean = (sub != null && !sub.isEmpty()) ? sDao.get(sub) : null;
-	boolean searched = req.getParameter("f1") != null;
+	boolean searched = req.getParameter("f1") != null
+            || req.getAttribute("f1") != null;
 	
 	
 	// 検索欄バリデーション

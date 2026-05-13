@@ -39,7 +39,6 @@
 						<option value="0">--------</option>
 							
 						<c:forEach var="num" items="${class_num_set}">
-							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
 							<option value="${num.classNum}" <c:if test="${num.classNum==f2}">selected</c:if>>
 								${num.classNum}
 							</option>
@@ -67,7 +66,6 @@
 						<option value="0">-------</option>
 							
 						<c:forEach var="no" items="${no_set}">
-							<%--現在のnumと選択されていたf2が一致していた場合selectedを追記 --%>
 							<option value="${no}" <c:if test="${no==f4}">selected</c:if>>
 								${no}
 							</option>
@@ -90,15 +88,11 @@
 		</form>
 		
 		<form method="post" action="TestRegistExecute.action">
-
-			<c:if test="${not empty errors.filter}">
-				<c:forEach var="entry" items="${errors}">
-					<div style="color:red; margin-bottom:10px;">
-						${entry.value}
-					</div>
-				</c:forEach>
-				
-			</c:if>
+		
+		<input type="hidden" name="f1" value="${f1}">
+<input type="hidden" name="f2" value="${f2}">
+<input type="hidden" name="f3" value="${f3}">
+<input type="hidden" name="f4" value="${f4}">
 
 			<c:if test="${searched}">
 				<c:choose>
@@ -115,18 +109,24 @@
 								<th>点数</th>
 							</tr>						
 						
-							<c:forEach var="t" items="${tests}">
+							<c:forEach var="t" items="${tests}" varStatus="status">
 								<tr>
 									<td>${t.student.entYear}</td>
 									<td>${t.classNum}</td>
 									<td>${t.student.no}</td>
 									<td>${t.student.name}</td>
+
 									<td>
 										<input type="hidden" name="studentNo[]" value="${t.student.no}">
 										<input type="hidden" name="subjectCd[]" value="${t.subject.cd}">
 										<input type="hidden" name="schoolCd[]" value="${t.school.cd}">
 										<input type="hidden" name="no[]" value="${t.no}">
+
 										<input type="text" name="point[]" value="${t.point}">
+
+										<div style="color:red;">
+											${errors['point'.concat(status.index)]}
+										</div>
 									</td>
 								</tr>
 							</c:forEach>
@@ -140,9 +140,9 @@
 					</c:when>
 				
 					<c:otherwise>
-					<c:if test="${empty error}">
-                		学生情報が存在しませんでした。
-            		</c:if>
+						<c:if test="${empty error}">
+                			学生情報が存在しませんでした。
+            			</c:if>
 					</c:otherwise>
 				
 				</c:choose>
