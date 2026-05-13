@@ -98,7 +98,7 @@
 				<c:choose>
 			
 					<c:when test="${not empty tests}">
-						<div>科目:${sub.name}(${f4}回目)</div>
+						<div>科目:${sub.name}(${f4}回)</div>
 					
 						<table class="table table-hover">
 							<tr>
@@ -109,21 +109,21 @@
 								<th>点数</th>
 							</tr>						
 						
-							<c:forEach var="t" items="${tests}" varStatus="status">
+							<c:forEach var="test" items="${tests}" varStatus="status">
 								<tr>
-									<td>${t.student.entYear}</td>
-									<td>${t.classNum}</td>
-									<td>${t.student.no}</td>
-									<td>${t.student.name}</td>
+									<td>${test.student.entYear}</td>
+									<td>${test.classNum}</td>
+									<td>${test.student.no}</td>
+									<td>${test.student.name}</td>
 
 									<td>
-										<input type="hidden" name="studentNo[]" value="${t.student.no}">
-										<input type="hidden" name="subjectCd[]" value="${t.subject.cd}">
-										<input type="hidden" name="schoolCd[]" value="${t.school.cd}">
-										<input type="hidden" name="no[]" value="${t.no}">
+										<input type="hidden" name="studentNo[]" value="${test.student.no}">
+										<input type="hidden" name="subjectCd[]" value="${test.subject.cd}">
+										<input type="hidden" name="schoolCd[]" value="${test.school.cd}">
+										<input type="hidden" name="no[]" value="${test.no}">
 
 										<input type="text" name="point[]"
-    value="${t.point == 0 ? '' : t.point}">
+    value="${test.point == 0 ? '' : test.point}">
 
 										<div style="color:red;">
 											${errors['point'.concat(status.index)]}
@@ -151,10 +151,6 @@
 			</c:if>
 
 		</form>
-
-		<div class="my-2 text-end px-4">
-			<a href="TestList.action">戻る</a>
-		</div>
 
 	</c:param>
 	
