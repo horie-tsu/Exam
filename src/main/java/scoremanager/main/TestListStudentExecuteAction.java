@@ -79,7 +79,7 @@ public class TestListStudentExecuteAction extends Action {
             Student student = studentDao.get(studentNo);
 
             if (student == null) {
-                errors.add("該当する学生が存在しません。");
+                errors.add("成績情報が存在しませんでした");
                 request.setAttribute("errors", errors);
                 request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
                        .forward(request, response);
