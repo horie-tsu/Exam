@@ -59,12 +59,14 @@ public class TestListStudentExecuteAction extends Action {
 
         // 学生番号取得
         String studentNo = request.getParameter("f4");
+        // 入力保持
+        request.setAttribute("f4", studentNo);
 
         // 入力チェック
         if (studentNo == null || studentNo.isBlank()) {
             errors.add("学生番号を入力してください。");
             request.setAttribute("errors", errors);
-            request.getRequestDispatcher("/scoremanager/main/test_list_student.jsp")
+            request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
                    .forward(request, response);
             return;
         }
