@@ -122,7 +122,8 @@
 										<input type="hidden" name="schoolCd[]" value="${t.school.cd}">
 										<input type="hidden" name="no[]" value="${t.no}">
 
-										<input type="text" name="point[]" value="${t.point}">
+										<input type="text" name="point[]"
+    value="${t.point == 0 ? '' : t.point}">
 
 										<div style="color:red;">
 											${errors['point'.concat(status.index)]}

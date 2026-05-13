@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import bean.ClassNum;
+import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
 import dao.ClassNumDao;
+import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +32,7 @@ public class TestRegistAction extends Action {
 	    return;
 	}
 	
-
+	StudentDao stDao =new StudentDao();
 	SubjectDao sDao = new SubjectDao();
 	TestDao tDao = new TestDao();
 	ClassNumDao cDao=new ClassNumDao(); 
@@ -73,34 +75,110 @@ public class TestRegistAction extends Action {
 	    }
 	}
 	
-	// 一覧取得（エラーがない場合のみ）
-	List<Test> tests = error.isEmpty() && searched
-	    ? tDao.filter(teacher.getSchool(), entYearStr, num, sub, no)
-	    : new ArrayList<>();
-	
-	System.out.println("テスト"+tests);
-	// 科目一覧（プルダウン用）
-	List<Subject> subjectList = sDao.filter(teacher.getSchool());
+	// 一覧
+	List<Test> tests = new ArrayList<>();
+
+	// 科目一覧
+	List<Subject> subjectList =
+	    sDao.filter(teacher.getSchool());
 
 	// クラス一覧
-	
 	List<ClassNum> classNumList =
-	        cDao.filter(
-	            teacher.getSchool().getCd()
-	        );
-	
-	//入学年度
-	List<Integer> entYearSet = new ArrayList<>();
-	// 10年前から1年後まで年をリストに追加
+	    cDao.filter(
+	        teacher.getSchool().getCd()
+	    );
+
+	// 入学年度
+	List<Integer> entYearSet =
+	    new ArrayList<>();
+
 	for (int i = year - 10; i < year + 1; i++) {
-		entYearSet.add(i);
+	    entYearSet.add(i);
 	}
-	
-	//試験回数
-	List<Integer> noSet = new ArrayList<>();
-	// 10年前から1年後まで年をリストに追加
+
+	// 試験回数
+	List<Integer> noSet =
+	    new ArrayList<>();
+
 	for (int j = 1; j < 11; j++) {
-		noSet.add(j);
+	    noSet.add(j);
+	}
+
+	try {
+
+	    // エラーなし＆検索済み
+	    if (error.isEmpty() && searched) {
+
+	        // 学生一覧
+	        List<Student> students =
+	            stDao.filter(
+	                teacher.getSchool(),
+	                Integer.parseInt(entYearStr),
+	                num,
+	                true
+	            );
+
+	        // DBの成績
+	        List<Test> dbTests =
+	            tDao.filter(
+	                teacher.getSchool(),
+	                entYearStr,
+	                num,
+	                sub,
+	                no
+	            );
+
+	        for (Student st : students) {
+
+	            Test found = null;
+
+	            // 既存成績探す
+	            for (Test t : dbTests) {
+
+	                if (t.getStudent()
+	                     .getNo()
+	                     .equals(st.getNo())) {
+
+	                    found = t;
+	                    break;
+	                }
+	            }
+
+	            // あれば追加
+	            if (found != null) {
+
+	                tests.add(found);
+
+	            } else {
+
+	                // なければ空行
+	                Test empty = new Test();
+
+	                empty.setStudent(st);
+
+	                empty.setClassNum(num);
+
+	                Subject subject =
+	                    new Subject();
+
+	                subject.setCd(sub);
+
+	                empty.setSubject(subject);
+
+	                empty.setNo(
+	                    Integer.parseInt(no)
+	                );
+
+	                empty.setPoint(0);
+
+	                tests.add(empty);
+	            }
+	        }
+	    }
+
+	} catch(Exception e) {
+
+	    e.printStackTrace();
 	}
 	
 	// 入力のほうのエラーの引き継ぎ
