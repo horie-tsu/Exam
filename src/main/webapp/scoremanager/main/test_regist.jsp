@@ -90,9 +90,9 @@
 		<form method="post" action="TestRegistExecute.action">
 		
 		<input type="hidden" name="f1" value="${f1}">
-<input type="hidden" name="f2" value="${f2}">
-<input type="hidden" name="f3" value="${f3}">
-<input type="hidden" name="f4" value="${f4}">
+		<input type="hidden" name="f2" value="${f2}">
+		<input type="hidden" name="f3" value="${f3}">
+		<input type="hidden" name="f4" value="${f4}">
 
 			<c:if test="${searched}">
 				<c:choose>
