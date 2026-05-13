@@ -1,6 +1,7 @@
 package scoremanager.main;
 
 import java.io.IOException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,16 @@ public class TestListStudentExecuteAction extends Action {
 
     	SubjectDao subjectDao = new SubjectDao();
     	ClassNumDao classNumDao = new ClassNumDao();
+    	
+    	
+    	int year = Year.now().getValue();
+    	// 入学年度リスト
+    			List<Integer> entYearSet = new ArrayList<>();
 
-    	// 年度リスト
-    	List<Integer> entYearSet = new ArrayList<>();
-    	for (int i = 2020; i <= 2026; i++) {
-    	    entYearSet.add(i);
-    	}
+    			// 10年前〜現在年
+    			for (int i = year - 10; i <= year; i++) {
+    				entYearSet.add(i);
+    			}
 
     	// JSP用データセット（←これが無いのが原因）
     	request.setAttribute("ent_year_set", entYearSet);

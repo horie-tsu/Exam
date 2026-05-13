@@ -1,5 +1,6 @@
 package scoremanager.main;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +38,13 @@ public class TestListAction extends Action {
 		String classNum   = req.getParameter("f2");
 		String subjectCd  = req.getParameter("f3");
 
-		// プルダウン用
+		int year = Year.now().getValue();
+		// 入学年度リスト
 		List<Integer> entYearSet = new ArrayList<>();
-		for (int i = 2020; i <= 2026; i++) {
-		    entYearSet.add(i);
+
+		// 10年前〜現在年
+		for (int i = year - 10; i <= year; i++) {
+			entYearSet.add(i);
 		}
 
 		List<ClassNum> classNumList =
