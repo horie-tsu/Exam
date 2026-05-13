@@ -23,7 +23,7 @@
 
             </h2>
 
-            <div class="alert alert-danger">
+            <div class="alert alert-success">
 
                 クラスを削除しました。
 

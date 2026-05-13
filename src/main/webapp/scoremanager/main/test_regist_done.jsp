@@ -10,10 +10,22 @@
 	<c:param name="scripts"></c:param>
 	
 	<c:param name="content">
+	 <section class="me-4">
+
+            <h2 class="h3 mb-3 fw-normal
+                bg-secondary bg-opacity-10
+                py-2 px-4">
+
+                成績管理
+
+            </h2>
+	<div class="alert alert-success">
 		登録が完了しました。
-		<div class="my-2 text-end px-4">
-			<a href="StudentList.action">学生一覧へ戻る</a>
-		</div>
+	</div>
+			<a href="TestRegist.action">戻る</a>
+			<a href="TestList.action">成績参照</a>
+			
+		</section>
 	</c:param>
 	
 </c:import>
