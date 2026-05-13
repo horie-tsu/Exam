@@ -97,6 +97,7 @@
 						${entry.value}
 					</div>
 				</c:forEach>
+				
 			</c:if>
 
 			<c:if test="${searched}">
@@ -139,7 +140,9 @@
 					</c:when>
 				
 					<c:otherwise>
-						学生情報が存在しませんでした。
+					<c:if test="${empty error}">
+                		学生情報が存在しませんでした。
+            		</c:if>
 					</c:otherwise>
 				
 				</c:choose>
