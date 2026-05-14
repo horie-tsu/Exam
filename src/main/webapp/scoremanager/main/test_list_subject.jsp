@@ -6,7 +6,9 @@
 		<!-- 上段：科目情報検索 -->
 		 <div class="border px-4 py-3 mb-4" style="border-radius:0;">
     
-    <form action="${pageContext.request.contextPath}/scoremanager/main/TestListSubjectExecute.action" method="post">
+    <form id="form-subject" 
+      action="${pageContext.request.contextPath}/scoremanager/main/TestListSubjectExecute.action" 
+      method="post">
 
       <div class="fw-bold mb-2">科目情報</div>
 
@@ -54,7 +56,7 @@
 
         <!-- 検索ボタン -->
         <div class="ms-auto mb-2">
-          <input type="submit" value="検索" class="btn btn-primary btn-sm">
+          <button type="button" class="btn btn-primary btn-sm" onclick="submitSubject()">検索</button>
         </div>
 
       </div>

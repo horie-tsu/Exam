@@ -7,10 +7,11 @@
 
    
    
-    
     <!-- 下段：学生番号検索 -->
    
-    <form action="${pageContext.request.contextPath}/scoremanager/main/TestListStudentExecute.action" method="post">
+    <form id="form-student" 
+      action="${pageContext.request.contextPath}/scoremanager/main/TestListStudentExecute.action" 
+      method="post">
 
 
 
@@ -23,7 +24,7 @@
         <input type="text"
 			   name="f4"
 			   class="form-control"
-			   maxlength="30"
+			   maxlength="10"
 			   required
 			   placeholder="学生番号を入力してください"
 			   value="${f4}">
@@ -33,7 +34,7 @@
 		</div>
 
         <div class="ms-auto mb-2">
-          <input type="submit" value="検索" class="btn btn-primary btn-sm">
+          <button type="button" class="btn btn-primary btn-sm" onclick="submitStudent()">検索</button>
         </div>
 
       </div>
@@ -43,6 +44,3 @@
 
 
 
-  
- 
- 

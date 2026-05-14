@@ -135,7 +135,25 @@
 
 
         </c:choose>
+    	<script>
+			function submitSubject() {
+    		// 科目検索はバリデーション不要
+    		document.getElementById("form-subject").submit();
+			}
 
+			function submitStudent() {
+    			const form = document.getElementById("form-student");
+
+    			// 標準バリデーション
+    			if (!form.reportValidity()) {
+        		// reportValidity()がfalseの場合、ブラウザが自動表示
+        		return;
+    		}
+
+    		// バリデーションOKなら送信
+    		form.submit();
+		}
+		</script>
     </section>
 </c:param>
 </c:import>
