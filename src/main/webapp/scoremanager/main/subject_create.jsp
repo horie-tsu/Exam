@@ -16,6 +16,12 @@
 				科目情報登録
 			</h2>
 		</section>
+		
+		<div class="my-2 text-end px-4">
+	<a href="Csv.action" class="btn btn-success">
+		CSV取り込み
+	</a>
+</div>
 
 		<form method="post" action="SubjectCreateExecute.action">
 			<div class="col-11 px-4 my-3">

@@ -12,6 +12,12 @@
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">学生情報登録</h2>
 		</section>
+		
+		<div class="my-2 text-end px-4">
+				<a href="Csv.action" class="btn btn-success">
+					CSV取り込み
+				</a>
+			</div>
 
 		<form method="post" action="StudentCreateExecute.action">
 			<div class="col-11 px-4 my-3">

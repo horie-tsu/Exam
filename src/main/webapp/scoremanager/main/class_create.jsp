@@ -20,7 +20,11 @@
 		<form method="post" action="ClassCreateExecute.action">
 			<div class="col-11 px-4">
 			
-			
+			 <div class="my-2 text-end px-4">
+	<a href="Csv.action" class="btn btn-success">
+		CSV取り込み
+	</a>
+</div>
 
 				
 				<label class="form-label">学校コード</label>

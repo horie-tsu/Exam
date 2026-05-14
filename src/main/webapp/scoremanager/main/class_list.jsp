@@ -26,12 +26,7 @@
                 クラス管理
 
             </h2>
-            
-            <div class="my-2 text-end px-4">
-	<a href="Csv.action" class="btn btn-success">
-		CSV取り込み
-	</a>
-</div>
+       
 
             <div class="my-2 text-end px-4">
 
