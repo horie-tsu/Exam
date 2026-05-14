@@ -12,14 +12,26 @@
    
     <form action="${pageContext.request.contextPath}/scoremanager/main/TestListStudentExecute.action" method="post">
 
+
+
+
       <div class="fw-bold mb-2">学生情報</div>
 
       <div class="d-flex align-items-center flex-wrap">
 
         <div class="me-3 mb-2">
-          <span class="me-1">学生番号：</span>
-          <input type="text" name="f4" value="${f4}">
-        </div>
+          <span class="me-1">学生番号</span>
+        <input type="text"
+			   name="f4"
+			   class="form-control"
+			   maxlength="30"
+			   required
+			   placeholder="学生番号を入力して下さい"
+			   value="${f4}">
+		</div>
+		<div>
+			<span class="text-danger">${errors.f4}</span>
+		</div>
 
         <div class="ms-auto mb-2">
           <input type="submit" value="検索" class="btn btn-primary btn-sm">
