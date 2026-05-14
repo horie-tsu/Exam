@@ -133,7 +133,6 @@
 
 </c:when>
 
-
         </c:choose>
     	<script>
 			function submitSubject() {
