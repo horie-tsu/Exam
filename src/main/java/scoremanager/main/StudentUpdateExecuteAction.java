@@ -25,8 +25,8 @@ public class StudentUpdateExecuteAction extends Action {
         
         // パラメータ取得
         String entYearStr = req.getParameter("entYear");
-        String stuId = req.getParameter("stuId");
-        String stuName = req.getParameter("stuName");
+        String stuId = req.getParameter("no");
+        String stuName = req.getParameter("name");
         String stuClass = req.getParameter("f2");
         boolean isAttend = Boolean.parseBoolean(req.getParameter("attend"));
 
