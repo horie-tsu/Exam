@@ -1,5 +1,6 @@
 package scoremanager.main;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,7 +102,7 @@ public class TestRegistExecuteAction extends Action {
 			
 
 			// 検索条件を戻す
-			req.setAttribute("f1", Integer.parseInt(entYearStr));
+			req.setAttribute("f1", entYearStr);
 			req.setAttribute("f2", num);
 			req.setAttribute("f3", subCd);
 			req.setAttribute("f4", Integer.parseInt(testNo));
@@ -117,7 +118,14 @@ public class TestRegistExecuteAction extends Action {
 			SubjectDao sDao = new SubjectDao();
 			
 			
-			
+			// 入学年度セット
+			int year = Year.now().getValue();
+			List<Integer> entYearSet = new ArrayList<>();
+			for (int i = year - 10; i <= year; i++) {
+				entYearSet.add(i);
+			}
+			req.setAttribute("ent_year_set", entYearSet);
+
 			
 			req.setAttribute(
 				    "class_num_set",
