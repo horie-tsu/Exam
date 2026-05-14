@@ -15,6 +15,7 @@
 		
       <div class="px-4">
 
+
         <!-- ② 完了メッセージ -->
         <label class="d-block p-1 mb-1 text-black bg-success bg-opacity-50 border text-center">
     		<p class="m-0">登録が完了しました</p>

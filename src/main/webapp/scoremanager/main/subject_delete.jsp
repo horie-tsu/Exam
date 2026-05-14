@@ -11,7 +11,7 @@
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
                 科目情報削除
             </h2>
-            <div>「${subject.name}」を削除してもよろしいですか</div>
+            <label>「${subject.name}」を削除してもよろしいですか</label>
             	<div class="row mt-3">
             		<div class="col-2 text-left">
                         	<a href = "SubjectDeleteExecute.action?cd=${subject.cd}"" class="btn btn-danger mb-3">削除</button>
