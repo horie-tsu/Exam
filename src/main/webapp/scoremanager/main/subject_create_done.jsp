@@ -17,7 +17,7 @@
 
         <!-- ② 完了メッセージ -->
         <p class="alert alert-success text-center">
-          変更が完了しました
+          登録が完了しました
         </p>
         
         <!-- ③科目登録画面へ -->
