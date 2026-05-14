@@ -14,7 +14,6 @@
 
 
 
-
       <div class="fw-bold mb-2">学生情報</div>
 
       <div class="d-flex align-items-center flex-wrap">
