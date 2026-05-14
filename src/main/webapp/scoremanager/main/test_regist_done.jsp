@@ -19,7 +19,7 @@
                 成績管理
 
             </h2>
-	<div class="alert alert-success">
+	<div class="alert alert-success text-center">
 		登録が完了しました。
 	</div>
 			<a href="TestRegist.action">戻る</a>
