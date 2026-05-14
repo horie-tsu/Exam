@@ -28,7 +28,7 @@
 				<label class="form-label">学生番号</label>
 				<input
 					type="text"
-					name="stuId"
+					name="no"
 					class="form-control"
 					value="${student.no}"
 					readonly>
@@ -37,7 +37,7 @@
 				<label class="form-label">氏名</label>
 				<input
 					type="text"
-					name="stuName"
+					name="name"
 					class="form-control"
 					maxlength="30"
 					required
