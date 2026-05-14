@@ -15,9 +15,9 @@
       <div class="px-4">
 
         <!-- ② 完了メッセージ -->
-        <p class="alert alert-success text-center">
-          削除が完了しました
-        </p>
+        <label class="d-block p-1 mb-1 text-black bg-success bg-opacity-50 border text-center">
+    		<p class="m-0">削除が完了しました</p>
+		</label>
        
 
         <!-- ④ 科目一覧へ -->

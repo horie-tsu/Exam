@@ -19,9 +19,11 @@
                 成績管理
 
             </h2>
-	<div class="alert alert-success text-center">
-		登録が完了しました。
-	</div>
+	<label class="d-block p-1 mb-1 text-black bg-success bg-opacity-50 border text-center">
+    	<p class="m-0">登録が完了しました</p>
+	</label>
+
+
 			<a href="TestRegist.action">戻る</a>
 			<a href="TestList.action">成績参照</a>
 			

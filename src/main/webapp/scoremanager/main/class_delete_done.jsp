@@ -23,11 +23,9 @@
 
             </h2>
 
-            <div class="alert alert-success">
-
-                クラスを削除しました。
-
-            </div>
+            <label class="d-block p-1 mb-1 text-black bg-success bg-opacity-50 border text-center">
+    			<p class="m-0">削除が完了しました</p>
+			</label>
 
             <a href="ClassList.action">
 
