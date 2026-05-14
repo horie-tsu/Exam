@@ -64,6 +64,10 @@ public class SubjectCreateExecuteAction extends Action {
 		if (!errors.isEmpty()) {
 
 			req.setAttribute("errors", errors);
+			
+			//入力値を保持
+			req.setAttribute("cd", cd);
+			req.setAttribute("name", name);
 
 			req.getRequestDispatcher("subject_create.jsp")
 			   .forward(req, res);
