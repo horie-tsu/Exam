@@ -25,7 +25,7 @@
 			   class="form-control"
 			   maxlength="30"
 			   required
-			   placeholder="学生番号を入力して下さい"
+			   placeholder="学生番号を入力してください"
 			   value="${f4}">
 		</div>
 		<div>
