@@ -18,10 +18,6 @@
             成績参照
             </c:if>
         </h2>
-        
-
-                     
-
         <!-- 検索フォーム -->
         <jsp:include page="test_list_subject.jsp" />
         <jsp:include page="test_list_student.jsp" />
