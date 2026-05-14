@@ -24,8 +24,8 @@ public class StudentCreateExecuteAction extends Action {
 
         // パラメータ取得
         String entYearStr = req.getParameter("entYear");
-        String stuId = req.getParameter("stuId");
-        String stuName = req.getParameter("stuName");
+        String stuId = req.getParameter("no");
+        String stuName = req.getParameter("name");
         String stuClass = req.getParameter("f2");
 
         int entYear = 0;
@@ -57,8 +57,8 @@ public class StudentCreateExecuteAction extends Action {
         // エラーがある場合
         if (!errors.isEmpty()) {
         	req.setAttribute("entYear", entYearStr);
-        	req.setAttribute("stuId", stuId);
-        	req.setAttribute("stuName", stuName);
+        	req.setAttribute("no", stuId);
+        	req.setAttribute("name", stuName);
         	req.setAttribute("stuClass", stuClass);
             req.setAttribute("errors", errors);
             req.getRequestDispatcher("StudentCreate.action").forward(req, res);

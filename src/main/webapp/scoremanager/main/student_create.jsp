@@ -33,12 +33,12 @@
 				<div class="col-11 px-4 my-3">
 				<label class="form-label">学生番号</label>
 				<input type="text"
-					   name="stuId"
+					   name="no"
 					   class="form-control"
 					   maxlength="10"
 					   required
 					   placeholder="学生番号を入力してください"
-					   value="${stuId}">
+					   value="${no}">
 				</div>
 
 				<div>
@@ -49,12 +49,12 @@
 
 				<label class="form-label">氏名</label>
 				<input type="text"
-					   name="stuName"
+					   name="name"
 					   class="form-control"
 					   maxlength="30"
 					   required
 					   placeholder="氏名を入力してください"
-					   value="${stuName}">
+					   value="${name}">
 				</div>
 				<div>
 					<span class="text-danger">${errors.stuName}</span>
