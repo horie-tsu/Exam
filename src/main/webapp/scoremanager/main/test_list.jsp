@@ -25,6 +25,12 @@
         <!-- 検索フォーム -->
         <jsp:include page="test_list_subject.jsp" />
         <jsp:include page="test_list_student.jsp" />
+        
+        <c:if test="${mode == null}">
+    <p class="text-info mt-3 px-4">
+        科目情報を選択または学生情報を入力して検索ボタンをクリックしてください。
+    </p>
+</c:if>
 
         <!-- ▼ 結果表示 -->
         <c:choose>
