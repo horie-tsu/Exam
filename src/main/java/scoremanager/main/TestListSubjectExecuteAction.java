@@ -94,7 +94,7 @@ public class TestListSubjectExecuteAction extends Action {
 
 	        // ===== データなし =====
 	        if (list.isEmpty()) {
-	            errors.add("該当する成績が見つかりません");
+	            errors.add("学生情報が存在しませんでした");
 	        }
 
 	        // ★ 応用：最大テスト回数を渡す（JSPで列自動生成できる）
