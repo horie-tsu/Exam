@@ -100,7 +100,7 @@ public class TestRegistAction extends Action {
 	List<Integer> noSet =
 	    new ArrayList<>();
 
-	for (int j = 1; j < 11; j++) {
+	for (int j = 1; j < 3; j++) {
 	    noSet.add(j);
 	}
 
