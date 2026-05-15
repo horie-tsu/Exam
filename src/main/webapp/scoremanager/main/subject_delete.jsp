@@ -14,8 +14,10 @@
             <label>「${subject.name}」を削除してもよろしいですか</label>
             	<div class="row mt-3">
             		<div class="col-2 text-left">
-                        	<a href = "SubjectDeleteExecute.action?cd=${subject.cd}"" class="btn btn-danger mb-3">削除</button>
-            		
+            		<form SubjectDeleteExecute.action>
+            		<buttm
+                        	<a href = "?cd=${subject.cd}"" class="btn btn-danger mb-3">削除</button>
+            		</form>
 					<a href="SubjectList.action" class="d-block mt-5">
 						戻る
 					</a>
