@@ -27,6 +27,11 @@ public class TestListStudentExecuteAction extends Action {
     	HttpSession session = request.getSession();
     	Teacher teacher = (Teacher) session.getAttribute("user");
 
+    	if (teacher == null) {
+    	    response.sendRedirect("Login.action");
+    	    return;
+    	}
+
     	SubjectDao subjectDao = new SubjectDao();
     	ClassNumDao classNumDao = new ClassNumDao();
     	

@@ -29,9 +29,6 @@
 			   placeholder="学生番号を入力してください"
 			   value="${f4}">
 		</div>
-		<div>
-			<span class="text-danger">${errors.f4}</span>
-		</div>
 
         <div class="ms-auto mb-2">
           <button type="button" class="btn btn-primary btn-sm" onclick="submitStudent()">検索</button>
