@@ -25,6 +25,8 @@ public class TestRegistExecuteAction extends Action {
 	public void execute(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 
+		
+
 		req.setCharacterEncoding("UTF-8");
 
 		HttpSession session = req.getSession();
@@ -34,7 +36,9 @@ public class TestRegistExecuteAction extends Action {
 		String num = req.getParameter("f2");
 		String subCd = req.getParameter("f3");
 		String testNo = req.getParameter("f4");
-
+		
+		String[] studentName = req.getParameterValues("studentName[]");
+		String[] studentEntYear = req.getParameterValues("studentEntYear[]");
 		String[] studentNo = req.getParameterValues("studentNo[]");
 		String[] subjectCd = req.getParameterValues("subjectCd[]");
 		String[] schoolCd = req.getParameterValues("schoolCd[]");
@@ -83,74 +87,84 @@ public class TestRegistExecuteAction extends Action {
 		
 	
 
-		// エラー時
-		if (!errors.isEmpty()) {
-
-			TestDao tDao = new TestDao();
-
-			List<Test> tests = tDao.filter(
-				    teacher.getSchool(),
-				    entYearStr,
-				    num,
-				    subCd,
-				    testNo
-				);
-
-			// 検索結果を戻す
-			req.setAttribute("tests", tests);
-			
-			
-
-			// 検索条件を戻す
-			req.setAttribute("f1", entYearStr);
-			req.setAttribute("f2", num);
-			req.setAttribute("f3", subCd);
-			req.setAttribute("f4", Integer.parseInt(testNo));
-
-			// エラー
-			req.setAttribute("errors", errors);
-
-			// 検索済みフラグ
-			req.setAttribute("searched", true);
-
-			// プルダウン再表示用
-			ClassNumDao cNumDao = new ClassNumDao();
-			SubjectDao sDao = new SubjectDao();
-			
-			
-			// 入学年度セット
-			int year = Year.now().getValue();
-			List<Integer> entYearSet = new ArrayList<>();
-			for (int i = year - 10; i <= year; i++) {
-				entYearSet.add(i);
-			}
-			req.setAttribute("ent_year_set", entYearSet);
-
-			
-			req.setAttribute(
-				    "class_num_set",
-				    cNumDao.filter(teacher.getSchool().getCd())
-				);
-
-			req.setAttribute(
-				"subject_list",
-				sDao.filter(teacher.getSchool())
-			);
-
-			// 回数
-			List<Integer> noSet = new ArrayList<>();
-
-			for (int i = 1; i <= 5; i++) {
-				noSet.add(i);
-			}
-
-			req.setAttribute("no_set", noSet);
-
-			req.getRequestDispatcher("test_regist.jsp")
-				.forward(req, res);
-
-			return;
-		}
+		// =========================
+				// エラー時
+				// =========================
+				if (!errors.isEmpty()) {
+		 
+					// 検索結果を取得
+					List<Test> tests = new ArrayList<>();
+					for (int i = 0; i < studentNo.length; i++) {
+					    Test t = new Test();
+					    Student st = new Student();
+					    
+					    st.setNo(studentNo[i]);
+						st.setName(studentName[i]);
+						st.setEntYear(Integer.parseInt(studentEntYear[i]));
+						t.setStudent(st);
+					    st.setNo(studentNo[i]);
+					    t.setStudent(st);
+					    
+					    Subject sub = new Subject();
+					    
+					    sub.setCd(subjectCd[i]);
+					    t.setSubject(sub);
+					    
+					    School sc = new School();
+					    
+					    sc.setCd(schoolCd[i]);
+					    t.setSchool(sc);
+					    t.setNo(Integer.parseInt(no[i]));
+					    t.setClassNum(num);
+					    // pointは送信値をそのままセット
+					    try {
+					        t.setPoint(Integer.parseInt(point[i]));
+					    } catch (NumberFormatException e) {
+					        t.setPoint(0);
+					    }
+					    tests.add(t);
+					}
+		 
+					// 検索結果を戻す
+					req.setAttribute("tests", tests);
+		 
+					// 検索条件を戻す
+					req.setAttribute("f1", entYearStr);
+					req.setAttribute("f2", num);
+					req.setAttribute("f3", subCd);
+					req.setAttribute("f4", Integer.parseInt(testNo));
+		 
+					// エラー
+					req.setAttribute("errors", errors);
+		 
+					// 検索済みフラグ
+					req.setAttribute("searched", true);
+		 
+					// プルダウン再表示用
+					ClassNumDao cNumDao = new ClassNumDao();
+					SubjectDao sDao = new SubjectDao();
+		 
+					// 入学年度セット
+					int year = Year.now().getValue();
+					List<Integer> entYearSet = new ArrayList<>();
+					for (int i = year - 10; i <= year; i++) {
+						entYearSet.add(i);
+					}
+					req.setAttribute("ent_year_set", entYearSet);
+					req.setAttribute("class_num_set", cNumDao.filter(teacher.getSchool().getCd()));
+					req.setAttribute("subject_list", sDao.filter(teacher.getSchool()));
+					
+					
+					// 回数
+					List<Integer> noSet = new ArrayList<>();
+					for (int i = 1; i <= 5; i++) {
+						noSet.add(i);
+					}
+					req.setAttribute("no_set", noSet);
+		 
+					req.getRequestDispatcher("test_regist.jsp").forward(req, res);
+					return;
+				}
 
 		
 		

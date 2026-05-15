@@ -118,9 +118,11 @@
 
 									<td>
 										<input type="hidden" name="studentNo[]" value="${test.student.no}">
-										<input type="hidden" name="subjectCd[]" value="${test.subject.cd}">
-										<input type="hidden" name="schoolCd[]" value="${test.school.cd}">
-										<input type="hidden" name="no[]" value="${test.no}">
+<input type="hidden" name="studentName[]" value="${test.student.name}">
+<input type="hidden" name="studentEntYear[]" value="${test.student.entYear}">
+<input type="hidden" name="subjectCd[]" value="${test.subject.cd}">
+<input type="hidden" name="schoolCd[]" value="${test.school.cd}">
+<input type="hidden" name="no[]" value="${test.no}">
 
 										<input type="text" name="point[]"
     value="${test.point == 0 ? '' : test.point}">
@@ -141,10 +143,10 @@
 					</c:when>
 				
 					<c:otherwise>
-						<c:if test="${empty error}">
-                			学生情報が存在しませんでした。
-            			</c:if>
-					</c:otherwise>
+                        <c:if test="${empty error}">
+                            学生情報が存在しませんでした。
+                        </c:if>
+                    </c:otherwise>
 				
 				</c:choose>
 				
