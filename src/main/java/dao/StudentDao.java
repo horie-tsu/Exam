@@ -12,6 +12,32 @@ import bean.Student;
 //コミットテスト
 public class StudentDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
+	public List<Student> findByKeyword(School school, String keyword) throws Exception {
+	    List<Student> list = new ArrayList<>();
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    ResultSet rSet = null;
+
+	    try {
+	        statement = connection.prepareStatement(
+	            baseSql + " AND name LIKE ? AND is_attend = true ORDER BY no ASC"
+	        );
+	        statement.setString(1, school.getCd());
+	        statement.setString(2, "%" + keyword + "%");
+	        rSet = statement.executeQuery();
+	        list = postFilter(rSet, school);
+	    } catch (Exception e) {
+	        throw e;
+	    } finally {
+	        if (statement != null) {
+	            try { statement.close(); } catch (SQLException sqle) { throw sqle; }
+	        }
+	        if (connection != null) {
+	            try { connection.close(); } catch (SQLException sqle) { throw sqle; }
+	        }
+	    }
+	    return list;
+	}
 	public Student get(String no) throws Exception{
 		//学生インスタンスを初期化
 		Student student=new Student();
