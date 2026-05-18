@@ -103,29 +103,29 @@ public class StudentListAction extends Action {
 			);
 
 		} else if (entYear == 0 &&
-				(classNum == null || classNum.equals("0"))) {
+		        (classNum == null || classNum.equals("0"))) {
 
-			// 条件なし
-			students = sDao.filter(
-					teacher.getSchool(),
-					isAttend
-			);
+		    // 条件なし
+		    students = sDao.filter(
+		            teacher.getSchool(),
+		            isAttend
+		    );
 
 		} else {
 
-			// クラスだけ選択
-			errors.put(
-					"f1",
-					"クラスを指定する場合は入学年度も指定してください"
-			);
+		    // クラスだけ選択
+		    errors.put(
+		            "f1",
+		            "クラスを指定する場合は入学年度も指定してください"
+		    );
 
-			req.setAttribute("errors", errors);
+		    req.setAttribute("errors", errors);
 
-			// 全件取得
-			students = sDao.filter(
-					teacher.getSchool(),
-					isAttend
-			);
+		    // 全件表示
+		    students = sDao.filter(
+		            teacher.getSchool(),
+		            false
+		    );
 		}
 
 		// リクエストセット

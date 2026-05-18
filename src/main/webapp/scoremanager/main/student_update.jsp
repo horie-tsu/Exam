@@ -16,23 +16,29 @@
 		
 		<form method="post" action="StudentUpdateExecute.action">
 			<div class="col-11 px-4 my-3">
-				<label class="form-label">入学年度</label>
-				<input
-					type="text"
-					name="entYear"
-					class="form-control"
-					value="${student.entYear}"
-					readonly>
-			</div>
+	<label class="form-label">入学年度</label>
+
+	<div class="form-control-plaintext">
+		${student.entYear}
+	</div>
+
+	<input
+		type="hidden"
+		name="entYear"
+		value="${student.entYear}">
+</div>
 			<div class="col-11 px-4 my-3">
-				<label class="form-label">学生番号</label>
-				<input
-					type="text"
-					name="no"
-					class="form-control"
-					value="${student.no}"
-					readonly>
-			</div>
+	<label class="form-label">学生番号</label>
+
+	<div class="form-control-plaintext">
+		${student.no}
+	</div>
+
+	<input
+		type="hidden"
+		name="no"
+		value="${student.no}">
+</div>
 			<div class="col-11 px-4 my-3">
 				<label class="form-label">氏名</label>
 				<input
