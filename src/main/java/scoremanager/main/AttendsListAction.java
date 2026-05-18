@@ -8,7 +8,7 @@ import java.util.Map;
 import bean.Attendance;
 import bean.Student;
 import bean.Teacher;
-import dao.AttendanceDao;
+import dao.AttendDao;
 import dao.StudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,7 +53,7 @@ public class AttendsListAction extends Action {
         }
 
         // 出欠データ取得（前日のデータをデフォルトで表示）
-        AttendanceDao aDao = new AttendanceDao();
+        AttendDao aDao = new AttendDao();  
         List<Attendance> attendanceList = aDao.findByDate(teacher.getSchool(), day);
 
         // student_no → attend のマップを作成

@@ -59,6 +59,7 @@
         <%-- 出欠登録フォーム --%>
         <form action="${pageContext.request.contextPath}/scoremanager/main/AttendsAddExecute.action"
               method="post">
+              <input type="hidden" name="classNum" value="${students[0].classNum}">
 
             <input type="hidden" name="day" value="${day}">
 
@@ -68,9 +69,28 @@
         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="checkAll(false)">全員欠席</button>
     </div>
 
-    <table class="table table-bordered table-striped w-75 ms-4">
-        ...
-    </table>
+   <table class="table table-bordered table-striped w-75 ms-4">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>学生番号</th>
+                            <th>名前</th>
+                            <th>出席</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="s" items="${students}">
+                            <tr>
+                                <td>${s.no}</td>
+                                <td>${s.name}</td>
+                                <td>
+                                    <input type="hidden" name="studentNo[]" value="${s.no}">
+                                    <input type="checkbox" name="attend[]" value="${s.no}"
+    <c:if test="${attendMap[s.no] != false}">checked</c:if>>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
     <div class="px-4">
         <button type="submit" class="btn btn-secondary">更新する</button>

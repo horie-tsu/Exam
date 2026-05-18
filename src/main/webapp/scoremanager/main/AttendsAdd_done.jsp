@@ -19,7 +19,7 @@
                 bg-secondary bg-opacity-10
                 py-2 px-4">
 
-                クラス登録完了
+                登録完了
 
             </h2>
 
@@ -27,9 +27,14 @@
     			<p class="m-0">登録が完了しました</p>
 			</label>
 
-            <a href="ClassList.action">
+            <a href="AttendScoreList.action">
 
-                クラス一覧へ
+                生徒出欠スコア一覧へ
+
+            </a>
+            <a href="AttendsList.action">
+
+                登録を続ける
 
             </a>
 

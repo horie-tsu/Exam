@@ -17,10 +17,10 @@ public class AttendDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	        statement = connection.prepareStatement(
-	            "INSERT INTO attendance (date, student_no, attend, school_cd, class_num) " +
-	            "VALUES (?, ?, ?, ?, ?)"
-	        );
+	    	statement = connection.prepareStatement(
+	    		    "MERGE INTO attendance (date, student_no, attend, school_cd, class_num) " +
+	    		    "VALUES (?, ?, ?, ?, ?)"
+	    		);
 	        statement.setObject(1, attendance.getDay());
 	        statement.setString(2, attendance.getStu().getNo());
 	        statement.setBoolean(3, attendance.isAttend());
@@ -66,6 +66,47 @@ public class AttendDao extends Dao {
 	            list.add(a);
 	        }
 
+	    } catch (Exception e) {
+	        throw e;
+	    } finally {
+	        if (statement != null) {
+	            try { statement.close(); } catch (SQLException sqle) { throw sqle; }
+	        }
+	        if (connection != null) {
+	            try { connection.close(); } catch (SQLException sqle) { throw sqle; }
+	        }
+	    }
+	    return list;
+	}
+	public List<Attendance> findByDate(bean.School school, LocalDate day) throws Exception {
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    List<Attendance> list = new ArrayList<>();
+
+	    try {
+	        statement = connection.prepareStatement(
+	            "SELECT student_no, attend, class_num FROM attendance " +
+	            "WHERE date = ? AND school_cd = ? " +
+	            "ORDER BY student_no ASC"
+	        );
+	        statement.setObject(1, day);
+	        statement.setString(2, school.getCd());
+
+	        ResultSet rSet = statement.executeQuery();
+
+	        while (rSet.next()) {
+	            Attendance a = new Attendance();
+	            a.setDay(day);
+	            a.setAttend(rSet.getBoolean("attend"));
+
+	            Student st = new Student();
+	            st.setNo(rSet.getString("student_no"));
+	            st.setClassNum(rSet.getString("class_num"));
+	            st.setSchool(school);
+	            a.setStu(st);
+
+	            list.add(a);
+	        }
 	    } catch (Exception e) {
 	        throw e;
 	    } finally {
