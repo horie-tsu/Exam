@@ -23,14 +23,17 @@
 
 <form method="post" action="SubjectUpdateExecute.action">
 			<div class="col-11 px-4 my-3">
-        		<label class="form-label">科目コード</label>
-            	<input 
-            		type="text" 
-            		name="cd" 
-            		class="form-control"
-            		value="${cd}"
-            		readonly>
-            </div>
+    <label class="form-label">科目コード</label>
+
+    <div class="form-control-plaintext">
+        ${cd}
+    </div>
+
+    <input
+        type="hidden"
+        name="cd"
+        value="${cd}">
+</div>
             <div class="col-11 px-4 my-3">
         		<label class="form-label">科目名</label>
             	<input type="text"
