@@ -101,6 +101,7 @@ public class TestListStudentExecuteAction extends Action {
 
             if (testList.isEmpty()) {
                 errors.add("成績情報が存在しませんでした");
+                request.setAttribute("student", student);
                 request.setAttribute("errors", errors);
                 request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
                        .forward(request, response);

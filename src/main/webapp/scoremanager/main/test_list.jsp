@@ -51,7 +51,7 @@
   <c:if test="${test.cdname != null}">
   	<div>科目：${cdname}</div>
   </c:if>
-	<c:if test="${not empty tests}">
+	<c:if test="${subjectList != null}">
 	    <table class="table table-bordered">
     	    <tr>
         	    <th>入学年度</th>
@@ -82,13 +82,13 @@
 	</c:choose></td>
     	        </tr>
         </c:forEach>
-    </table>
+    	</table>
     </c:if>
 </c:when>
 
           
           <c:when test="${mode eq 'student'}">
-
+          
     <!-- エラー表示 -->
     <c:if test="${not empty errors}">
         <div class="text-danger mt-2 px-4">
@@ -100,15 +100,18 @@
 
     <hr>
 
+
     <!-- 学生情報 -->
     <c:if test="${student != null}">
         <div class="fw-bold px-4 mb-2">
             氏名：${student.name}（${student.no}）
         </div>
     </c:if>
+    
+    
 
     <!-- 成績一覧 -->
-    <c:if test="${tests != null}">
+    <c:if test="${test != null}">
         <table class="table table-bordered table-striped w-75 ms-4">
 
             <thead class="table-secondary">
@@ -126,7 +129,14 @@
                         <td>${t.subject.cd}</td>
                         <td>${t.subject.name}</td>
                         <td>${t.no}</td>
-                        <td>${t.point}</td>
+                        <c:choose>
+                        <c:when test="${t.point == 0}">
+      						<td>未受験</td>
+    					</c:when>
+    					<c:otherwise>
+      						<td>${t.point}</td>
+    					</c:otherwise>
+    					</c:choose>
                     </tr>
                 </c:forEach>
             </tbody>

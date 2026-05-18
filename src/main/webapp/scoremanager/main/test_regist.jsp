@@ -96,7 +96,8 @@
 
 			<c:if test="${searched}">
 				<c:choose>
-					<c:when test="${not empty tests}">
+				<c:when test="${test.point == 0}">
+      hen test="${not empty tests}">
 						<div>科目:${sub.name}(${f4}回)</div>
 					
 						<table class="table table-hover">
@@ -147,7 +148,7 @@
                     </c:otherwise>
 				
 				</c:choose>
-				
+				</c:if>
 			</c:if>
 
 		</form>
