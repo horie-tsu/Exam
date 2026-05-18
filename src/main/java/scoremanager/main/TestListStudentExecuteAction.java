@@ -99,6 +99,13 @@ public class TestListStudentExecuteAction extends Action {
             // 成績一覧取得
             List<Test> testList = testDao.findByStudentNo(studentNo);
 
+            if (testList.isEmpty()) {
+                errors.add("成績情報が存在しませんでした");
+                request.setAttribute("errors", errors);
+                request.getRequestDispatcher("/scoremanager/main/test_list.jsp")
+                       .forward(request, response);
+                return;
+            }
             // JSP に渡す
             request.setAttribute("student", student);
             request.setAttribute("studentTestList", testList);

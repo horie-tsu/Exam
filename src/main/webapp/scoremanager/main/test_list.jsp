@@ -108,7 +108,7 @@
     </c:if>
 
     <!-- 成績一覧 -->
-    <c:if test="${not empty tests}">
+    <c:if test="${tests != null}">
         <table class="table table-bordered table-striped w-75 ms-4">
 
             <thead class="table-secondary">
@@ -132,11 +132,6 @@
             </tbody>
 
         </table>
-    </c:if>
-    <c:if test="${empty tests}">
-    	<div class="text-danger mt-2 px-4">
-            成績情報が存在しませんでした
-        </div>
     </c:if>
 
 
