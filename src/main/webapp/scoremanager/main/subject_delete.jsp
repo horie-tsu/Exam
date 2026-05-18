@@ -19,8 +19,8 @@
             </h2>
 
             <p>
-                「${subject.name}」を削除してもよろしいですか？
-            </p>
+    「${subject.name}（${subject.cd}）」を削除してもよろしいですか？
+</p>
 
             <div class="row mt-4">
                 <div class="col-2">
