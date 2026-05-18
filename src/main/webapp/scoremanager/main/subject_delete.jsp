@@ -18,9 +18,9 @@
                 科目情報削除
             </h2>
 
-            <p>
+            <div class="alert alert-warning">
     「${subject.name}（${subject.cd}）」を削除してもよろしいですか？
-</p>
+</div>
 
             <div class="row mt-4">
                 <div class="col-2">
