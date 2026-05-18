@@ -48,39 +48,42 @@
     ${t.studentName}
 </c:forEach>
   
-    <div>科目：${cdname}</div>
+  <c:if test="${test.cdname != null}">
+  	<div>科目：${cdname}</div>
+  </c:if>
+	<c:if test="${not empty tests}">
+	    <table class="table table-bordered">
+    	    <tr>
+        	    <th>入学年度</th>
+            	<th>クラス</th>
+	            <th>学生番号</th>
+    	        <th>氏名</th>
+        	    <th>1回</th>
+            	<th>2回</th>
+	        </tr>
 
-    <table class="table table-bordered">
-        <tr>
-            <th>入学年</th>
-            <th>クラス</th>
-            <th>学生番号</th>
-            <th>氏名</th>
-            <th>1回</th>
-            <th>2回</th>
-        </tr>
-
-        <c:forEach var="t" items="${subjectList}">
-            <tr>
-                <td>${t.entYear}</td>
-                <td>${t.classNum}</td>
-                <td>${t.studentNo}</td>
-                <td>${t.studentName}</td>
-                <td><c:choose>
-  <c:when test="${t.points['1'] != null}">
-    ${t.points['1']}
-  </c:when>
-  <c:otherwise>-</c:otherwise>
-</c:choose></td>
-                <td><c:choose>
-  <c:when test="${t.points['2'] != null}">
-    ${t.points['2']}
-  </c:when>
-  <c:otherwise>-</c:otherwise>
-</c:choose></td>
-            </tr>
+        	<c:forEach var="t" items="${subjectList}">
+            	<tr>
+                	<td>${t.entYear}</td>
+	                <td>${t.classNum}</td>
+    	            <td>${t.studentNo}</td>
+        	        <td>${t.studentName}</td>
+            	    <td><c:choose>
+	  <c:when test="${t.points['1'] != null}">
+    	${t.points['1']}
+	  </c:when>
+	  <c:otherwise>-</c:otherwise>
+	</c:choose></td>
+ 	               <td><c:choose>
+ 	 <c:when test="${t.points['2'] != null}">
+	    ${t.points['2']}
+  	</c:when>
+  	<c:otherwise>-</c:otherwise>
+	</c:choose></td>
+    	        </tr>
         </c:forEach>
     </table>
+    </c:if>
 </c:when>
 
           
@@ -105,7 +108,7 @@
     </c:if>
 
     <!-- 成績一覧 -->
-    <c:if test="${student != null}">
+    <c:if test="${not empty tests}">
         <table class="table table-bordered table-striped w-75 ms-4">
 
             <thead class="table-secondary">
@@ -129,6 +132,11 @@
             </tbody>
 
         </table>
+    </c:if>
+    <c:if test="${empty tests}">
+    	<div class="text-danger mt-2 px-4">
+            成績情報が存在しませんでした
+        </div>
     </c:if>
 
 </c:when>

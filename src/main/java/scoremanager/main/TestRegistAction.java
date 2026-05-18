@@ -117,6 +117,7 @@ public class TestRegistAction extends Action {
 	                num,
 	                true
 	            );
+	        
 
 	        // DBの成績
 	        List<Test> dbTests =

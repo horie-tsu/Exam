@@ -96,26 +96,25 @@
 
 			<c:if test="${searched}">
 				<c:choose>
-			
 					<c:when test="${not empty tests}">
 						<div>科目:${sub.name}(${f4}回)</div>
 					
 						<table class="table table-hover">
-							<tr>
-								<th>入学年度</th>
-								<th>クラス</th>
-								<th>学生番号</th>
-								<th>氏名</th>
-								<th>点数</th>
-							</tr>						
-						
+								<tr>
+									<th>入学年度</th>
+									<th>クラス</th>
+									<th>学生番号</th>
+									<th>氏名</th>
+									<th>点数</th>
+								</tr>
 							<c:forEach var="test" items="${tests}" varStatus="status">
 								<tr>
-									<td>${test.student.entYear}</td>
-									<td>${test.classNum}</td>
-									<td>${test.student.no}</td>
-									<td>${test.student.name}</td>
-
+									<c:if test="${!empty tests}">
+										<td>${test.student.entYear}</td>
+										<td>${test.classNum}</td>
+										<td>${test.student.no}</td>
+										<td>${test.student.name}</td>
+									</c:if>
 									<td>
 										<input type="hidden" name="studentNo[]" value="${test.student.no}">
 <input type="hidden" name="studentName[]" value="${test.student.name}">
@@ -141,7 +140,6 @@
 						</button> 
 				
 					</c:when>
-				
 					<c:otherwise>
                         <c:if test="${empty error}">
                             学生情報が存在しませんでした。
