@@ -38,7 +38,7 @@
 										<c:when test="${not empty subject.imagePath}">
 											<img alt="科目画像" 
 												src="${pageContext.request.contextPath}/uploads/subject/${subject.imagePath}"
-												style="width:60px; height:auto;">
+												style="width:80px;; height:auto;">
 										</c:when>
 										<c:otherwise>
                         					なし
