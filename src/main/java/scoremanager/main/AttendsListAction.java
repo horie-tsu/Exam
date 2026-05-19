@@ -9,6 +9,7 @@ import bean.Attendance;
 import bean.Student;
 import bean.Teacher;
 import dao.AttendDao;
+import dao.ClassNumDao;
 import dao.StudentDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,6 +41,14 @@ public class AttendsListAction extends Action {
         } else if ("next".equals(move)) {
             day = day.plusDays(1);
         }
+        
+     // クラス取得
+        String classNum = req.getParameter("classNum");
+
+        // クラス一覧（プルダウン用）
+        ClassNumDao cDao = new ClassNumDao();
+        req.setAttribute("class_num_set", cDao.filter(teacher.getSchool().getCd()));
+        req.setAttribute("classNum", classNum);
 
         // 学生取得
         StudentDao sDao = new StudentDao();
@@ -48,6 +57,8 @@ public class AttendsListAction extends Action {
         String keyword = req.getParameter("keyword");
         if (keyword != null && !keyword.trim().isEmpty()) {
             students = sDao.findByKeyword(teacher.getSchool(), keyword);
+        } else if (classNum != null && !classNum.isEmpty()) {
+            students = sDao.filterByClassNum(teacher.getSchool(), classNum);
         } else {
             students = sDao.filter(teacher.getSchool(), true);
         }

@@ -10,41 +10,55 @@
     <c:param name="content">
 
         <%-- 日付ナビゲーション＆検索フォーム --%>
-        <form action="${pageContext.request.contextPath}/scoremanager/main/AttendsList.action"
+       <form action="${pageContext.request.contextPath}/scoremanager/main/AttendsList.action"
               method="post">
 
-            <input type="hidden" name="day" value="${day}">
+    <input type="hidden" name="day" value="${day}">
 
-            <div class="d-flex align-items-center px-4 my-3">
-                <button type="submit" name="move" value="prev" class="btn btn-outline-secondary btn-sm">
-                    &lt; 前日
-                </button>
-                <span class="mx-3 fw-bold">${day}</span>
-                <button type="submit" name="move" value="next" class="btn btn-outline-secondary btn-sm">
-                    翌日 &gt;
-                </button>
-            </div>
+    <div class="d-flex align-items-center px-4 my-3">
+        <button type="submit" name="move" value="prev" class="btn btn-outline-secondary btn-sm">
+            &lt; 前日
+        </button>
+        <span class="mx-3 fw-bold">${day}</span>
+        <button type="submit" name="move" value="next" class="btn btn-outline-secondary btn-sm">
+            翌日 &gt;
+        </button>
+    </div>
 
-            <div class="fw-bold mb-2 px-4">学生情報</div>
+    <div class="d-flex align-items-center flex-wrap px-4 mb-3">
 
-            <div class="d-flex align-items-center flex-wrap px-4">
-                <div class="me-3 mb-2">
-                    <span class="me-1">学生名</span>
-                    <input type="text"
-                           name="keyword"
-                           class="form-control"
-                           maxlength="10"
-                           placeholder="キーワードを入力"
-                           value="${keyword}">
-                </div>
-                <div class="ms-auto mb-2">
-                    <button type="submit" name="move" value="search" class="btn btn-primary btn-sm">
-                        検索
-                    </button>
-                </div>
-            </div>
+        <div class="me-3 mb-2">
+            <label class="form-label mb-1">クラス</label>
+            <select name="classNum" class="form-select form-select-sm">
+                <option value="">すべて</option>
+                <c:forEach var="c" items="${class_num_set}">
+                    <option value="${c.classNum}"
+                        <c:if test="${c.classNum == classNum}">selected</c:if>>
+                        ${c.classNum}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
 
-        </form>
+        <div class="me-3 mb-2">
+            <label class="form-label mb-1">学生名</label>
+            <input type="text"
+                   name="keyword"
+                   class="form-control form-control-sm"
+                   maxlength="10"
+                   placeholder="キーワードを入力"
+                   value="${keyword}">
+        </div>
+
+        <div class="mb-2 mt-auto">
+            <button type="submit" name="move" value="search" class="btn btn-primary btn-sm">
+                検索
+            </button>
+        </div>
+
+    </div>
+
+</form>
 
         <%-- エラー表示 --%>
         <c:if test="${not empty errors}">
