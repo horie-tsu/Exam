@@ -19,7 +19,7 @@
               method="post" class="px-4 mb-3">
             <div class="d-flex gap-2">
                 <button type="submit" name="sort" value="bad" class="btn btn-outline-danger btn-sm">
-                    出席率やばいやつ順
+                    出席率が低い順
                 </button>
                 <button type="submit" name="sort" value="perfect" class="btn btn-outline-success btn-sm">
                     出席率100%のみ（学生番号順）

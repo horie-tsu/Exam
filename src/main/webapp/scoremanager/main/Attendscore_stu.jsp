@@ -22,9 +22,9 @@
 
             <%-- 出席ノルマ：15日 --%>
             <c:choose>
-                <c:when test="${total - attended >= 15}">
+                <c:when test="${total - attended > 20}">
                     <div class="p-3 mb-3 text-danger bg-danger bg-opacity-25 border border-danger rounded fw-bold">
-                        浪人確定
+                        欠席日数を超過しました。
                     </div>
                 </c:when>
                 <c:otherwise>
