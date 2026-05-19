@@ -10,4 +10,7 @@
 	<li class="nav-item mx-3 mb-3"><a href="TestList.action">成績参照</a></li>
 	<li class="nav-item mb-3"><a href="SubjectList.action">科目管理</a></li>
 	<li class="nav-item mb-3"><a href="ClassList.action">クラス管理</a></li>
+	<li class="nav-item">出欠管理</li>
+	<li class="nav-item mx-3 mb-3"><a href="AttendsList.action">出欠確認</a></li>
+	<li class="nav-item mx-3 mb-3"><a href="AttendScoreList.action">個人出席率</a></li>
 </ul>
