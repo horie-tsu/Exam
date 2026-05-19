@@ -13,8 +13,8 @@ import bean.Subject;
 public class SubjectDao extends Dao {
 	private String baseSql = "select * from student where school_cd=?";
 	public Subject get(String cd) throws Exception{
-		//
-		Subject subject = new Subject();
+		//Subject subject = new Subject();
+		Subject subject = null;
 		//データベースへのコネクションを確立
 		Connection connection=getConnection();
 		//プリペアードステートメント
@@ -28,10 +28,12 @@ public class SubjectDao extends Dao {
 			ResultSet rSet=statement.executeQuery();
 			
 			if(rSet.next()) {
+				subject = new Subject();
 				//リザルトセットが存在している場合
 				//学生インスタンスに検索結果をセット
 				subject.setCd(rSet.getString("cd"));
 				subject.setName(rSet.getString("name"));
+				subject.setImagePath(rSet.getString("image_path"));
 				
 			}else {
 				//リザルトセットが存在しない場合
@@ -59,7 +61,7 @@ public class SubjectDao extends Dao {
 			}
 		}
 		return subject;
-		
+	
 	}
 	
 	public Subject get(String cd, School school) throws Exception {
@@ -87,6 +89,7 @@ public class SubjectDao extends Dao {
 
 				subject.setCd(rSet.getString("cd"));
 				subject.setName(rSet.getString("name"));
+				subject.setImagePath(rSet.getString("image_path"));
 			}
 
 		} catch (Exception e) {
@@ -117,7 +120,7 @@ public class SubjectDao extends Dao {
 	    PreparedStatement statement = null;
 
 	    try {
-	        String sql = "SELECT cd, name FROM subject WHERE school_cd = ?";
+	        String sql = "SELECT cd, name, image_path FROM subject WHERE school_cd = ?";
 	        statement = connection.prepareStatement(sql);
 	        statement.setString(1, school.getCd());
 
@@ -127,6 +130,7 @@ public class SubjectDao extends Dao {
 	            Subject subject = new Subject();
 	            subject.setCd(rSet.getString("cd"));
 	            subject.setName(rSet.getString("name"));
+	            subject.setImagePath(rSet.getString("image_path"));
 	            list.add(subject);
 	        }
 
@@ -153,21 +157,23 @@ public class SubjectDao extends Dao {
 				System.out.println("insert");
 				//科目が存在しなかった場合
 				//プリペアードステートメントにINSERT文をセット
-				statement=connection.prepareStatement("insert into subject(cd,name,SCHOOL_CD) values(?,?,?)");
+				statement=connection.prepareStatement("insert into subject(cd,name,SCHOOL_CD) values(?,?,?,?)");
 				//プリペアードステートメントに値をバインド
 				statement.setString(3, subject.getSchool().getCd());
 				statement.setString(1, subject.getCd());
 				statement.setString(2, subject.getName());
+				statement.setString(4, subject.getImagePath());
 				// insertでの登録を実行
 				count = statement.executeUpdate();
 			}else {
 				System.out.println("update");
 				//科目が存在した場合
 				//プリペアードステートメントにupdate文をセット
-				statement=connection.prepareStatement("update subject set name=? where cd=?");
+				statement=connection.prepareStatement("update subject set name=?, image_path=? where cd=?");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, subject.getName());
-				statement.setString(2, subject.getCd());			
+				statement.setString(2, subject.getImagePath());
+				statement.setString(3, subject.getCd());
 			//プリペアードステートメントを実行
 			count=statement.executeUpdate();
 			System.out.println(count);
@@ -202,6 +208,28 @@ public class SubjectDao extends Dao {
 		}
 		
 	}
+	public boolean updateImage(Subject subject) throws Exception {
+
+        Connection connection = getConnection();
+        PreparedStatement statement = null;
+        int count = 0;
+
+        try {
+            statement = connection.prepareStatement(
+                "update subject set image_path=? where cd=?"
+            );
+            statement.setString(1, subject.getImagePath());
+            statement.setString(2, subject.getCd());
+
+            count = statement.executeUpdate();
+
+        } finally {
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+
+        return count > 0;
+    }
 	public boolean delete(String cd) throws Exception {
 		//Conectionを確立
 		Connection connection = getConnection();
@@ -240,4 +268,5 @@ public class SubjectDao extends Dao {
 		//削除成功かどうかを返す
 		return count > 0;
 	}
+	
 }

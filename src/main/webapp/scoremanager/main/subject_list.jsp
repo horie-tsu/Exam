@@ -24,6 +24,7 @@
 						<tr>
 							<th>科目コード</th>
 							<th>科目名</th>
+							<th>画像</th>
 							<th></th>
 							<th></th>
 						</tr>
@@ -32,6 +33,22 @@
 							<tr>
 								<td>${subject.cd}</td>
 								<td>${subject.name}</td>
+								<td>
+									<c:choose>
+										<c:when test="${not empty subject.imagePath}">
+											<img alt="科目画像" 
+												src="${pageContext.request.contextPath}/uploads/subject/${subject.imagePath}"
+												style="width:60px; height:auto;">
+										</c:when>
+										<c:otherwise>
+                        					なし
+                    					</c:otherwise>
+									</c:choose>
+								<td>
+									<a href="${pageContext.request.contextPath}/scoremanager/main/SubjectImage.action?cd=${subject.cd}">
+										画像追加
+									</a>
+								</td>
 								<td>
 									<a href="${pageContext.request.contextPath}/scoremanager/main/SubjectUpdate.action?cd=${subject.cd}">
 										変更

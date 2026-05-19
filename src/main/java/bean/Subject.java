@@ -23,6 +23,8 @@ public class Subject implements Serializable {
 	 * ゲッター・セッター
 	 */
 	
+	private String imagePath;
+	
 	public String getCd() {
 		return cd;
 	}
@@ -45,5 +47,13 @@ public class Subject implements Serializable {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }
