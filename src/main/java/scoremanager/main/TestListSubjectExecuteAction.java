@@ -2,12 +2,17 @@ package scoremanager.main;
 
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.TestListSubject;
 import dao.ClassNumDao;
+import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestListSubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,12 +43,12 @@ public class TestListSubjectExecuteAction extends Action {
 	    String subjectCd  = req.getParameter("f3");
 
 	    SubjectDao subjectDao = new SubjectDao();
+	    StudentDao studentDao = new StudentDao();
 	    TestListSubjectDao testDao = new TestListSubjectDao();
 	    ClassNumDao classNumDao = new ClassNumDao();
 	    
-	    
 	    int year = Year.now().getValue();
-	 // 入学年度リスト
+	    // 入学年度リスト
 	 		List<Integer> entYearSet = new ArrayList<>();
 
 	 		// 10年前〜現在年
@@ -82,8 +87,15 @@ public class TestListSubjectExecuteAction extends Action {
 	        subject.setSchool(teacher.getSchool());
 
 	        // ===== データ取得 =====
-	        list = testDao.filtersub(subject, entYear, classNum);
-
+	        List<Student> students = studentDao.filter(teacher.getSchool(), entYear, classNum, true);
+	        List<TestListSubject> scored = testDao.filtersub(subject, entYear, classNum);
+	        
+	        Map<String, TestListSubject> map = new HashMap<>();
+	        
+	        for (TestListSubject t : scored) {
+	            map.put(t.getStudentNo(), t);
+	        }
+	        
 	        // ===== 科目名取得（NULL安全）=====
 	        Subject fullSubject = subjectDao.get(subjectCd);
 	        if (fullSubject != null) {
@@ -92,10 +104,34 @@ public class TestListSubjectExecuteAction extends Action {
 	            req.setAttribute("cdname", subjectCd); // fallback
 	        }
 
-	        // ===== データなし =====
-	        //if (list.) {  途中なのでいったんコメントアウト
-	        //    errors.add("学生情報が存在しませんでした");
-	        //}
+	        
+	        
+	        // ===== データなし処理 =====
+	        for (Student s : students) {
+
+	            if (map.containsKey(s.getNo())) {
+	                // 成績あり
+	                list.add(map.get(s.getNo()));
+	            } else {
+	                // ★ 未受験者を追加
+	                TestListSubject cleanList = new TestListSubject();
+	                cleanList.setEntYear(s.getEntYear());
+	                cleanList.setStudentNo(s.getNo());
+	                cleanList.setStudentName(s.getName());
+	                cleanList.setClassNum(s.getClassNum());
+
+	                // ★ points は空 Map（null は絶対ダメ）
+	                cleanList.setPoints(new LinkedHashMap<>());
+
+	                list.add(cleanList);
+	            }
+	        }
+	        
+	        
+	        //pointを除く要素がどれかnullであればエラーを返す
+	        if (list.isEmpty()) {
+	            errors.add("学生情報が存在しませんでした");
+	        }
 
 	        // ★ 応用：最大テスト回数を渡す（JSPで列自動生成できる）
 	        int maxTestNo = 0;

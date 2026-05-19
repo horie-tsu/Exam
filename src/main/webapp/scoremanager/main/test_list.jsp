@@ -51,7 +51,7 @@
   <c:if test="${test.cdname != null}">
   	<div>科目：${cdname}</div>
   </c:if>
-	<c:if test="${subjectList != null}">
+	<c:if test="${not empty subjectList}">
 	    <table class="table table-bordered">
     	    <tr>
         	    <th>入学年度</th>
@@ -69,16 +69,16 @@
     	            <td>${t.studentNo}</td>
         	        <td>${t.studentName}</td>
             	    <td><c:choose>
-	  <c:when test="${t.points['1'] != null}">
+	  <c:when test="${t.points != null && t.points['1'] != null}">
     	${t.points['1']}
 	  </c:when>
-	  <c:otherwise>-</c:otherwise>
+	  <c:otherwise>未受験</c:otherwise>
 	</c:choose></td>
  	               <td><c:choose>
- 	 <c:when test="${t.points['2'] != null}">
+ 	 <c:when test="${t.points != null && t.points['2'] != null}">
 	    ${t.points['2']}
   	</c:when>
-  	<c:otherwise>-</c:otherwise>
+  	<c:otherwise>未受験</c:otherwise>
 	</c:choose></td>
     	        </tr>
         </c:forEach>

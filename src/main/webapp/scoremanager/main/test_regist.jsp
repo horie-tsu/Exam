@@ -149,7 +149,6 @@
 				
 				</c:choose>
 				</c:if>
-			</c:if>
 
 		</form>
 

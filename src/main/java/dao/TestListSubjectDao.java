@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import bean.Subject;
@@ -56,7 +57,7 @@ public class TestListSubjectDao extends Dao {
 	                current.setClassNum(rSet.getString("CLASS_NUM"));
 
 	                // ★ LinkedHashMapに変更（順番保証）
-	                current.setPoints(new java.util.LinkedHashMap<>());
+	                current.setPoints(new LinkedHashMap<>());
 
 	                list.add(current);
 	                currentStudentNo = studentNo;
